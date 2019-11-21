@@ -1,0 +1,168 @@
+<div class="meter_report">
+    <div class="report_header">
+        <h2>Метраж</h2>
+    </div>
+
+    {% include baseTemplates ~ 'reports/card.twig' with {
+        title: 'Общая застройка',
+        rows: [
+            {
+                title: '',
+                cells: [
+                {
+                    type: 'numeric',
+                    data: {
+                    subtitle: 'Факт (м<sup>2</sup>)',
+                    number: meter.fact_number
+                }
+                },
+                {
+                    type: 'numeric',
+                    data: {
+                    subtitle: 'План (м<sup>2</sup>)',
+                    number: meter.plan
+                }
+                },
+                {
+                    type: 'bar',
+                    data: {
+                    subtitle: 'Факт (%)',
+                    percents: meter.fact_percent
+                }
+                },
+
+            ]
+            },
+        ]
+    } %}
+
+    {% include baseTemplates ~ 'reports/card.twig' with {
+        title: 'Застройка',
+        rows: [
+            {
+                title: '',
+                cells: [
+                {
+                    type: 'numeric',
+                    data: {
+                    title: 'Индивидуальная',
+                    subtitle: 'Факт (м<sup>2</sup>)',
+                    number: meter_individual
+                }
+                },
+                {
+                    type: 'numeric',
+                    data: {
+                    title: 'Стандартная',
+                    subtitle: 'Факт (м<sup>2</sup>)',
+                    number: meter_standard
+                }
+                },
+            ]
+            },
+        ]
+    } %}
+
+    {% include baseTemplates ~ 'reports/card.twig' with {
+        title: 'Сравнение реализации метража с планом (м<sup>2</sup>)',
+        rows: [
+            {
+                cells: [
+                {
+                    type: 'line_graph',
+                    data: {
+                    title: '',
+                    name : 'meter_meters',
+                }
+                }
+            ]
+            }
+        ]
+    } %}
+
+    {% include baseTemplates ~ 'reports/card.twig' with {
+        title: 'Сравнение реализации метража с планом (%)',
+        rows: [
+            {
+                cells: [
+                {
+                    type: 'line_graph',
+                    data: {
+                    title: '',
+                    name : 'meter_percent',
+                }
+                }
+            ]
+            }
+        ]
+    } %}
+
+    {% include baseTemplates ~ 'reports/card.twig' with {
+        title: 'Сравнение реализации метража с планом (м<sup>2</sup>)',
+        rows: [
+            {
+                cells: [
+                {
+                    type: 'under_graph_table',
+                    data: {
+                    title: '',
+                    labels: graph_meter.labels,
+                    graph_name: graph_meter.fact_name,
+                    graph_values: graph_meter.fact_data,
+                    plan_name: graph_meter.plan_name,
+                    plan_values: graph_meter.plan_data,
+                    prev_name: graph_meter.prev_fact_name,
+                    prev_values: graph_meter.prev_fact_data,
+                }
+                }
+            ]
+            }
+        ]
+    } %}
+
+    {% include baseTemplates ~ 'reports/card.twig' with {
+        title: 'Сравнение реализации метража с планом (%)',
+        rows: [
+            {
+                cells: [
+                {
+                    type: 'under_graph_table',
+                    data: {
+                    title: '',
+                    graph_name: graph_percent.fact_name,
+                    labels: graph_percent.labels,
+                    graph_values: graph_percent.fact_data,
+                    plan_name: graph_percent.plan_name,
+                    plan_values: graph_percent.plan_data,
+                    prev_name: graph_percent.prev_fact_name,
+                    prev_values: graph_percent.prev_fact_data,
+                }
+                }
+            ]
+            }
+        ]
+    } %}
+
+    {% include baseTemplates ~ 'reports/card.twig' with {
+        title: 'Отчет по кластерам',
+        rows: [
+            {
+                cells: [
+                {
+                    type: 'table_with_result',
+                    data: {
+                        title: '',
+                        labels: cluster.labels,
+                        plan_values: cluster.plan,
+                        in_work_number: cluster.in_work_number,
+                        in_work_percent: cluster.in_work_percent,
+                        not_in_work_number: cluster.not_in_work_number,
+                        not_in_work_percent: cluster.not_in_work_percent,
+                    }
+                }
+            ]
+            }
+        ]
+    } %}
+</div>
+

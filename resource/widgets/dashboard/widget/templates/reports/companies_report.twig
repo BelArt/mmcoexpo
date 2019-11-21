@@ -1,0 +1,282 @@
+<div class="companies_report">
+    <div class="report_header">
+        <h2>Компании</h2>
+    </div>
+
+    {% include baseTemplates ~ 'reports/card.twig' with {
+        title: 'Арендуемый метраж теплых компаний',
+        rows: [
+            {
+                title: '',
+                cells: [
+                {
+                    type: 'numeric',
+                    data: {
+                    subtitle: 'Факт (м<sup>2</sup>)',
+                    number: meters.warm_fact_number
+                }
+                },
+                {
+                    type: 'numeric',
+                    data: {
+                    subtitle: 'План (м<sup>2</sup>)',
+                    number: meters.warm_plan
+                }
+                },
+                {
+                    type: 'bar',
+                    data: {
+                    subtitle: 'Факт (%)',
+                    percents: meters.warm_fact_percent
+                }
+                },
+
+            ]
+            },
+        ]
+    } %}
+
+    {% include baseTemplates ~ 'reports/card.twig' with {
+        title: 'Арендуемый метраж новых компаний',
+        rows: [
+            {
+                title: '',
+                cells: [
+                {
+                    type: 'numeric',
+                    data: {
+                    subtitle: 'Факт (м<sup>2</sup>)',
+                    number: meters.new_fact_number
+                }
+                },
+                {
+                    type: 'numeric',
+                    data: {
+                    subtitle: 'План (м<sup>2</sup>)',
+                    number: meters.new_plan
+                }
+                },
+                {
+                    type: 'bar',
+                    data: {
+                    subtitle: 'Факт (%)',
+                    percents: meters.new_fact_percent
+                }
+                },
+
+            ]
+            },
+        ]
+    } %}
+
+    {% include baseTemplates ~ 'reports/card.twig' with {
+        title: 'Арендуемый метраж мертвых компаний',
+        rows: [
+            {
+                title: '',
+                cells: [
+                {
+                    type: 'numeric',
+                    data: {
+                    subtitle: 'Факт (м<sup>2</sup>)',
+                    number: meters.dead_fact_number
+                }
+                },
+                {
+                    type: 'numeric',
+                    data: {
+                    subtitle: 'План (м<sup>2</sup>)',
+                    number: meters.dead_plan
+                }
+                },
+                {
+                    type: 'bar',
+                    data: {
+                    subtitle: 'Факт (%)',
+                    percents: meters.dead_fact_percent
+                }
+                },
+
+            ]
+            },
+        ]
+    } %}
+
+    {% include baseTemplates ~ 'reports/card.twig' with {
+        title: 'Бюджет теплых компаний',
+        rows: [
+            {
+                title: '',
+                cells: [
+                {
+                    type: 'numeric',
+                    data: {
+                    subtitle: 'Факт (₽)',
+                    number: budget.warm_fact_number
+                }
+                },
+                {
+                    type: 'numeric',
+                    data: {
+                    subtitle: 'План (₽)',
+                    number: budget.warm_plan
+                }
+                },
+                {
+                    type: 'bar',
+                    data: {
+                    subtitle: 'Факт (%)',
+                    percents: budget.warm_fact_percent
+                }
+                },
+
+            ]
+            },
+        ]
+    } %}
+
+    {% include baseTemplates ~ 'reports/card.twig' with {
+        title: 'Бюджет новых компаний',
+        rows: [
+            {
+                title: '',
+                cells: [
+                {
+                    type: 'numeric',
+                    data: {
+                    subtitle: 'Факт (₽)',
+                    number: budget.new_fact_number
+                }
+                },
+                {
+                    type: 'numeric',
+                    data: {
+                    subtitle: 'План (₽)',
+                    number: budget.new_plan
+                }
+                },
+                {
+                    type: 'bar',
+                    data: {
+                    subtitle: 'Факт (%)',
+                    percents: budget.new_fact_percent
+                }
+                },
+
+            ]
+            },
+        ]
+    } %}
+
+    {% include baseTemplates ~ 'reports/card.twig' with {
+        title: 'Бюджет мертвых компаний',
+        rows: [
+            {
+                title: '',
+                cells: [
+                {
+                    type: 'numeric',
+                    data: {
+                    subtitle: 'Факт (₽)',
+                    number: budget.dead_fact_number
+                }
+                },
+                {
+                    type: 'numeric',
+                    data: {
+                    subtitle: 'План (₽)',
+                    number: budget.dead_plan
+                }
+                },
+                {
+                    type: 'bar',
+                    data: {
+                    subtitle: 'Факт (%)',
+                    percents: budget.dead_fact_percent
+                }
+                },
+
+            ]
+            },
+        ]
+    } %}
+
+    {% include baseTemplates ~ 'reports/card.twig' with {
+        title: 'Количество теплых компаний',
+        rows: [
+            {
+                title: '',
+                cells: [
+                {
+                    type: 'numeric',
+                    data: {
+                    subtitle: 'Факт (шт)',
+                    number: companies.warm_companies_number
+                }
+                },
+                {
+                    type: 'bar',
+                    data: {
+                    subtitle: 'Факт (%)',
+                    percents: companies.warm_companies_percent
+                }
+                },
+
+            ]
+            },
+        ]
+    } %}
+
+    {% include baseTemplates ~ 'reports/card.twig' with {
+        title: 'Количество новых компаний',
+        rows: [
+            {
+                title: '',
+                cells: [
+                {
+                    type: 'numeric',
+                    data: {
+                    subtitle: 'Факт (шт)',
+                    number: companies.new_companies_number
+                }
+                },
+                {
+                    type: 'bar',
+                    data: {
+                    subtitle: 'Факт (%)',
+                    percents: companies.new_companies_percent
+                }
+                },
+
+            ]
+            },
+        ]
+    } %}
+
+    {% include baseTemplates ~ 'reports/card.twig' with {
+        title: 'Количество мертвых компаний',
+        rows: [
+            {
+                title: '',
+                cells: [
+                {
+                    type: 'numeric',
+                    data: {
+                    subtitle: 'Факт (шт)',
+                    number: companies.dead_companies_number
+                }
+                },
+                {
+                    type: 'bar',
+                    data: {
+                    subtitle: 'Факт (%)',
+                    percents: companies.dead_companies_percent
+                }
+                },
+
+            ]
+            },
+        ]
+    } %}
+</div>
+

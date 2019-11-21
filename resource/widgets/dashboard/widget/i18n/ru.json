@@ -1,0 +1,13 @@
+{
+  "widget": {
+    "name": "Dashboard",
+    "short_description": "Виджет отчетов",
+    "description": "Виджет отчетов в amoCRM"
+  },
+  "settings": {
+    "fake": "fake"
+  },
+  "advanced": {
+    "title": "Отчеты"
+  }
+}

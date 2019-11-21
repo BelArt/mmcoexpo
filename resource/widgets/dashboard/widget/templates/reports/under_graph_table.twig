@@ -1,0 +1,35 @@
+<div class="table-wrapper">
+    <table class="graph-table">
+        <thead>
+        <tr>
+            <th></th>
+            {% for label in labels %}
+                <th>{{ label }}</th>
+            {% endfor %}
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>{{ graph_name }}</td>
+
+            {% for value in graph_values %}
+                <td>{{ value }}</td>
+            {% endfor %}
+        </tr>
+        <tr>
+            <td>{{ plan_name }}</td>
+
+            {% for value in plan_values %}
+                <td>{{ value }}</td>
+            {% endfor %}
+        </tr>
+        <tr>
+            <td>{{ prev_name }}</td>
+
+            {% for value in prev_values %}
+                <td>{{ value }}</td>
+            {% endfor %}
+        </tr>
+        </tbody>
+    </table>
+</div>

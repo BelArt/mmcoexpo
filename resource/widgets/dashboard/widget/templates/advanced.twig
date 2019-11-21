@@ -1,0 +1,19 @@
+{% set links = [
+    {title: 'Отчет верхнего уровня', report_name: 'top_level_report'},
+    {title: 'Метраж', report_name: 'meter_report'},
+    {title: 'Бюджет', report_name: 'budget_report'},
+    {title: 'Компании', report_name: 'companies_report'},
+] %}
+
+<div class="dashboard_sidebar">
+    <div class="dashboard_header">
+        <h2>Отчеты</h2>
+    </div>
+    <div class="dashboard_links">
+        {% for link in links %}
+            {% include baseTemplates ~ 'dashboard_link.twig' with link %}
+        {% endfor %}
+    </div>
+</div>
+
+<div class="dashboard_content"></div>

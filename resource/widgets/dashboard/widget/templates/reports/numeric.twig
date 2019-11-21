@@ -1,0 +1,5 @@
+<div class="numeric-info">
+    <div class="title">{{ title | default('') | raw }}</div>
+    <div class="subtitle">{{ subtitle  | default('') | raw }}</div>
+    <div class="number">{{ number | number_format(0, ',', ' ') }}{{ currency ? ' ' ~ currency : '' }}</div>
+</div>

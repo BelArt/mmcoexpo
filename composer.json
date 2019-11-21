@@ -1,0 +1,8 @@
+{
+  "require": {
+    "ext-json": "*",
+    "ext-pcntl": "*",
+    "ext-curl": "*",
+    "google/apiclient": "2.2.3"
+  }
+}

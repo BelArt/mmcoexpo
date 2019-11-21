@@ -1,0 +1,19 @@
+<div class="dashboard-card">
+    {% if title %}
+        <div class="dashboard-card__title">
+            <h2>{{ title }}</h2>
+        </div>
+    {% endif %}
+    <div class="dashboard-card__content">
+        {% for row in rows %}
+            <div class="dashboard-card__row">
+                <div class="row__title">{{ row.title }}</div>
+                <div class="row__content">
+                    {% for cell in row.cells %}
+                        {% include baseTemplates ~ 'reports/' ~ cell.type ~ '.twig' with cell.data %}
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>

@@ -1,0 +1,185 @@
+<div class="budget_report">
+    <div class="report_header">
+        <h2>Бюджет</h2>
+    </div>
+
+    {% include baseTemplates ~ 'reports/card.twig' with {
+        title: 'Бюджет общий',
+        rows: [
+            {
+                title: '',
+                cells: [
+                {
+                    type: 'numeric',
+                    data: {
+                    subtitle: 'Факт (₽)',
+                    number: budget.total_fact_number
+                }
+                },
+                {
+                    type: 'numeric',
+                    data: {
+                    subtitle: 'План (₽)',
+                    number: budget.total_plan
+                }
+                },
+                {
+                    type: 'bar',
+                    data: {
+                    subtitle: 'Факт (%)',
+                    percents: budget.total_fact_percent
+                }
+                },
+
+            ]
+            },
+        ]
+    } %}
+
+    {% include baseTemplates ~ 'reports/card.twig' with {
+        title: 'Бюджет по стендам',
+        rows: [
+            {
+                title: '',
+                cells: [
+                {
+                    type: 'numeric',
+                    data: {
+                    subtitle: 'Факт (₽)',
+                    number: budget.total_stand_fact_number
+                }
+                },
+                {
+                    type: 'numeric',
+                    data: {
+                    subtitle: 'План (₽)',
+                    number: budget.total_stand_plan
+                }
+                },
+                {
+                    type: 'bar',
+                    data: {
+                    subtitle: 'Факт (%)',
+                    percents: budget.total_stand_fact_percent
+                }
+                },
+
+            ]
+            },
+        ]
+    } %}
+
+    {% include baseTemplates ~ 'reports/card.twig' with {
+        title: 'Бюджет по дополнительным услугам',
+        rows: [
+            {
+                title: '',
+                cells: [
+                {
+                    type: 'numeric',
+                    data: {
+                    subtitle: 'Факт (₽)',
+                    number: budget.total_services_fact_number
+                }
+                },
+                {
+                    type: 'numeric',
+                    data: {
+                    subtitle: 'План (₽)',
+                    number: budget.total_services_plan
+                }
+                },
+                {
+                    type: 'bar',
+                    data: {
+                    subtitle: 'Факт (%)',
+                    percents: budget.total_services_fact_percent
+                }
+                },
+
+            ]
+            },
+        ]
+    } %}
+
+    {% include baseTemplates ~ 'reports/card.twig' with {
+        title: 'Сравнение реализации бюджета с планом (₽)',
+        rows: [
+            {
+                cells: [
+                {
+                    type: 'line_graph',
+                    data: {
+                    title: '',
+                    name : 'budget_rubles',
+                }
+                }
+            ]
+            }
+        ]
+    } %}
+
+    {% include baseTemplates ~ 'reports/card.twig' with {
+        title: 'Сравнение реализации бюджета с планом (%)',
+        rows: [
+            {
+                cells: [
+                {
+                    type: 'line_graph',
+                    data: {
+                    title: '',
+                    name : 'budget_percents',
+                }
+                }
+            ]
+            }
+        ]
+    } %}
+
+    {% include baseTemplates ~ 'reports/card.twig' with {
+        title: 'Сравнение реализации бюджета с планом (₽)',
+        rows: [
+            {
+                cells: [
+                {
+                    type: 'under_graph_table',
+                    data: {
+                    title: '',
+                    labels: graph_budget_rubles.labels,
+                    graph_name: graph_budget_rubles.fact_name,
+                    graph_values: graph_budget_rubles.fact_data,
+                    plan_name: graph_budget_rubles.plan_name,
+                    plan_values: graph_budget_rubles.plan_data,
+                    prev_name: graph_budget_rubles.prev_fact_name,
+                    prev_values: graph_budget_rubles.prev_fact_data,
+                }
+                }
+            ]
+            }
+        ]
+    } %}
+
+    {% include baseTemplates ~ 'reports/card.twig' with {
+        title: 'Сравнение реализации бюджета с планом (%)',
+        rows: [
+            {
+                cells: [
+                {
+                    type: 'under_graph_table',
+                    data: {
+                    title: '',
+                    graph_name: graph_budget_percents.fact_name,
+                    labels: graph_budget_percents.labels,
+                    graph_values: graph_budget_percents.fact_data,
+                    plan_name: graph_budget_percents.plan_name,
+                    plan_values: graph_budget_percents.plan_data,
+                    prev_name: graph_budget_percents.prev_fact_name,
+                    prev_values: graph_budget_percents.prev_fact_data,
+                }
+                }
+            ]
+            }
+        ]
+    } %}
+</div>
+

@@ -1,0 +1,671 @@
+#work_area_dashboard {
+    margin-left: 0;
+    padding: 0;
+    z-index: 101;
+    background-color: #f5f5f5;
+    display: flex;
+}
+
+#work_area_dashboard .dashboard_sidebar {
+    position: fixed;
+    width: 265px;
+    min-width: 265px;
+    max-width: 265px;
+    height: 100vh;
+    background-color: white;
+}
+
+#work_area_dashboard .dashboard_content {
+    margin-left: 265px;
+    flex-grow: 1;
+    padding: 30px;
+    z-index: 0;
+    min-width: 1000px;
+}
+
+/** Dashboard link **/
+#work_area_dashboard sup {
+    vertical-align: super;
+    font-size: 0.7em;
+}
+
+#work_area_dashboard .dashboard_link:not(:last-child) {
+    border-bottom: 1px solid #e8eaeb;
+}
+
+#work_area_dashboard .dashboard_link input {
+    display: none;
+}
+
+#work_area_dashboard .dashboard_link label {
+    width: 100%;
+    padding: 18px 30px;
+    cursor: pointer;
+}
+
+#work_area_dashboard .dashboard_link :checked ~ label {
+    color: #1579d2;
+    font-weight: 700;
+}
+
+#work_area_dashboard .dashboard_link {
+    color: #676e79;
+    cursor: pointer;
+    font-size: 15px;
+    border-bottom: 1px solid #e8eaeb;
+    position: relative;
+    height: 55px;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
+/** /Dashboard link **/
+
+#work_area_dashboard .dashboard_header {
+    height: 65px;
+    font-size: 14px;
+    color: #313942;
+    line-height: 63px;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 1.7px;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    border-bottom: 1px solid #e8eaeb;
+    padding: 0 20px 0 30px;
+}
+
+/** Loader **/
+#work_area_dashboard .dashboard-overlay {
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+#work_area_dashboard .dashboard-overlay__inner {
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+
+#work_area_dashboard .dashboard-overlay__content {
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#work_area_dashboard .dashboard_spinner {
+    width: 75px;
+    height: 75px;
+    display: inline-block;
+    border-width: 2px;
+    border-color: rgba(255, 255, 255, 0.25);
+    border-top-color: #1579d2;
+    animation: spin 1s infinite linear;
+    border-radius: 100%;
+    border-style: solid;
+}
+
+@keyframes spin {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/** /Loader **/
+
+/** Card **/
+#work_area_dashboard .dashboard-card {
+    min-width: 340px;
+    background-color: white;
+    margin: 3px;
+    box-shadow: 3px 5px 8px 0 #cacaca;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid #c3c3c3;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#work_area_dashboard .dashboard-card .subtitle {
+    font-style: italic;
+    color: grey;
+}
+
+#work_area_dashboard .dashboard-card__title {
+    font-size: 1.3em;
+    font-weight: bold;
+    padding: 10px 20px;
+    background-color: lightgrey;
+}
+
+#work_area_dashboard .dashboard-card .row__content {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#work_area_dashboard .dashboard-card .row__content > * {
+    flex-grow: 1;
+    flex-basis: 0;
+    margin: 0 5px;
+    padding: 0 5px;
+}
+
+#work_area_dashboard .dashboard-card__content {
+    display: flex;
+    flex-direction: column;
+    padding: 0 10px;
+    flex-grow: 1;
+    justify-content: center;
+}
+
+#work_area_dashboard .dashboard-card .row__content > *:not(:last-child) {
+    border-right: 1px solid #d8d8d8;
+}
+
+#work_area_dashboard .dashboard-card__row:not(:last-child) {
+    border-bottom: 1px solid #d8d8d8;
+    padding-bottom: 15px;
+}
+
+#work_area_dashboard .dashboard-card__row {
+    padding: 10px 0;
+}
+
+#work_area_dashboard .dashboard-card .row__title:not(:empty) {
+    font-weight: bold;
+    margin: 0 0 5px 9px;
+}
+
+/** /Card **/
+
+/** Top level report **/
+#work_area_dashboard .top_level_report {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 10px;
+}
+
+#work_area_dashboard .top_level_report .dashboard-card:nth-child(2) {
+    grid-column: 2;
+}
+
+#work_area_dashboard .top_level_report .dashboard-card:nth-child(3) {
+    grid-column: 3;
+    grid-row: 1/3;
+}
+
+/** /Top level report **/
+
+/** pie **/
+#work_area_dashboard .pie {
+    border-radius: 100%;
+    height: calc(var(--size, 200) * 1px);
+    max-height: calc(var(--size, 200) * 1px);
+    overflow: hidden;
+    position: relative;
+    max-width: calc(var(--size, 200) * 1px);
+    width: calc(var(--size, 200) * 1px);
+    grid-row: 2/4;
+}
+
+#work_area_dashboard .pie__segment {
+    --a: calc(var(--over50, 0) * -100%);
+    --b: calc((1 + var(--over50, 0)) * 100%);
+    --degrees: calc((var(--offset, 0) / 100) * 360);
+    -webkit-clip-path: polygon(var(--a) var(--a), var(--b) var(--a), var(--b) var(--b), var(--a) var(--b));
+    clip-path: polygon(var(--a) var(--a), var(--b) var(--a), var(--b) var(--b), var(--a) var(--b));
+    height: 100%;
+    position: absolute;
+    transform: translate(0, -50%) rotate(90deg) rotate(calc(var(--degrees) * 1deg));
+    transform-origin: 50% 100%;
+    width: 100%;
+    z-index: calc(1 + var(--over50));
+}
+
+#work_area_dashboard .pie__segment:after,
+#work_area_dashboard .pie__segment:before {
+    background: var(--bg, #e74c3c);
+    content: '';
+    height: 100%;
+    position: absolute;
+    width: 100%;
+}
+
+#work_area_dashboard .pie__segment:before {
+    --degrees: calc((var(--value, 45) / 100) * 360);
+    transform: translate(0, 100%) rotate(calc(var(--degrees) * 1deg));
+    transform-origin: 50% 0%;
+}
+
+#work_area_dashboard .pie__segment:after {
+    opacity: var(--over50, 0);
+}
+
+#work_area_dashboard .legend__item:nth-child(1) .item__color,
+#work_area_dashboard .pie__segment:nth-child(1) {
+    --bg: #606dbc;
+}
+
+#work_area_dashboard .legend__item:nth-child(2) .item__color,
+#work_area_dashboard .pie__segment:nth-child(2) {
+    --bg: #03a9f4;
+}
+
+#work_area_dashboard .legend__item:nth-child(3) .item__color,
+#work_area_dashboard .pie__segment:nth-child(3) {
+    --bg: #ff9800;
+}
+
+#work_area_dashboard .legend__item:nth-child(4) .item__color,
+#work_area_dashboard .pie__segment:nth-child(4) {
+    --bg: #ff5722;
+}
+
+#work_area_dashboard .legend__item:nth-child(5) .item__color,
+#work_area_dashboard .pie__segment:nth-child(5) {
+    --bg: #00bcd4;
+}
+
+#work_area_dashboard .pie-wrapper {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-column-gap: 20px;
+}
+
+@media (max-width: 1850px) {
+    #work_area_dashboard .pie-wrapper {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+        justify-content: space-around;
+    }
+}
+
+#work_area_dashboard .pie-wrapper .title {
+    grid-column: 2;
+}
+
+#work_area_dashboard .pie__legend .item__color {
+    display: block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: var(--bg);
+    margin-right: 10px;
+}
+
+#work_area_dashboard .pie__legend .legend__item {
+    display: flex;
+    align-items: center;
+}
+
+#work_area_dashboard .pie__legend .legend__title {
+    font-weight: bold;
+    font-size: 1.3em;
+    margin-bottom: 10px;
+}
+
+#work_area_dashboard .pie__legend {
+    grid-row: 3;
+}
+
+/** / pie **/
+
+/** Bar */
+#work_area_dashboard .bar {
+    width: 100%;
+    position: relative;
+    /* text-align: center; */
+}
+
+#work_area_dashboard .bar .fill-wrapper {
+    border-radius: 10px 10px;
+    overflow: hidden;
+    margin-top: 5px;
+    background: repeating-linear-gradient(-45deg, #606dbc, #606dbc 10px, #465298 10px, #465298 20px);
+}
+
+#work_area_dashboard .bar .fill {
+    background-color: #03a9f4;
+    font-weight: bold;
+    color: white;
+}
+
+#work_area_dashboard .bar .title {
+    font-weight: bold;
+    min-height: 19px;
+}
+
+#work_area_dashboard .bar .fill span {
+    padding: 10px;
+    line-height: 30px;
+}
+
+#work_area_dashboard .bar.small .fill span {
+    line-height: 15px;
+}
+
+/** /Bar */
+
+/** Numeric */
+#work_area_dashboard .numeric-info {
+    /* text-align: center; */
+}
+
+#work_area_dashboard .numeric-info .number {
+    font-size: 2em;
+    font-weight: bold;
+    /* margin-top: 5px; */
+}
+
+#work_area_dashboard .numeric-info .title {
+    min-height: 19px;
+    font-weight: bold;
+}
+
+/** /Numeric */
+
+#work_area_dashboard .report_header {
+    font-weight: bold;
+    font-size: 3em;
+}
+
+/** Meter report **/
+#work_area_dashboard .meter_report {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 10px;
+}
+
+#work_area_dashboard .meter_report .dashboard-card:nth-child(2) {
+    grid-column-start: 1;
+    grid-column-end: 3;
+}
+#work_area_dashboard .meter_report .dashboard-card:nth-child(3) {
+    grid-column-start: 3;
+    grid-column-end: 5;
+}
+
+#work_area_dashboard .meter_report .dashboard-card:nth-child(4) {
+    grid-column-start: 1;
+    grid-column-end: 3;
+}
+
+#work_area_dashboard .meter_report .dashboard-card:nth-child(5) {
+    grid-column-start: 3;
+    grid-column-end: 5;
+}
+
+#work_area_dashboard .meter_report .dashboard-card:nth-child(6) {
+    grid-column-start: 1;
+    grid-column-end: 3;
+}
+
+#work_area_dashboard .meter_report .dashboard-card:nth-child(7) {
+    grid-column-start: 3;
+    grid-column-end: 5;
+}
+
+#work_area_dashboard .meter_report .dashboard-card:nth-child(8) {
+    grid-column-start: 1;
+    grid-column-end: 5;
+}
+
+#work_area_dashboard .meter_report .graph-table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    empty-cells: show;
+    border: 1px solid #cbcbcb;
+    line-height: 1.5;
+}
+
+#work_area_dashboard .meter_report .line-graph-wrapper,
+#work_area_dashboard .meter_report .table-wrapper {
+    overflow: auto;
+}
+
+#work_area_dashboard .meter_report .graph-table thead {
+    background-color: #e0e0e0;
+    color: #000000;
+    text-align: left;
+    vertical-align: bottom;
+    font-size: .95em;
+    font-weight: 600;
+
+}
+
+#work_area_dashboard .meter_report .graph-table td, th {
+    border-left: 1px solid #cbcbcb;
+    border-width: 0 0 0 1px;
+    font-size: inherit;
+    margin: 0;
+    overflow: visible;
+    vertical-align: middle;
+    text-align: center;
+}
+
+#work_area_dashboard .meter_report .graph-table td {
+    border-bottom: 1px solid #cbcbcb;
+}
+
+#work_area_dashboard .meter_report .graph-table td:nth-child(1) {
+    text-align: left;
+    padding: 4px;
+}
+
+#work_area_dashboard .meter_report .graph-table-with-result {
+    border-collapse: collapse;
+    border-spacing: 0;
+    empty-cells: show;
+    border: 1px solid #cbcbcb;
+    line-height: 1.5;
+    width: 100%
+}
+
+#work_area_dashboard .meter_report .graph-table-with-result thead {
+    background-color: #e0e0e0;
+    color: #000000;
+    text-align: left;
+    vertical-align: bottom;
+    font-size: .95em;
+    font-weight: 600;
+}
+
+#work_area_dashboard .meter_report .graph-table-with-result th {
+    padding: 10px;
+}
+
+#work_area_dashboard .meter_report .graph-table-with-result tbody tr {
+    display: table-cell;
+    border-left: 1px solid #cbcbcb;
+    border-width: 0 0 0 1px;
+    font-size: inherit;
+    margin: 0;
+    overflow: visible;
+    vertical-align: middle;
+    text-align: center;
+}
+
+#work_area_dashboard .meter_report .graph-table-with-result tr td {
+    display: block;
+    border-bottom: 1px solid #cbcbcb;
+    text-align: left;
+    padding: 4px;
+}
+
+#work_area_dashboard .meter_report .graph-table-with-result tr td:last-child {
+    font-weight: bold;
+    background-color: #e0e0e0;
+}
+
+/** /Meter report **/
+
+/** Budget report **/
+#work_area_dashboard .budget_report {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 10px;
+}
+
+#work_area_dashboard .budget_report .dashboard-card:nth-child(2) {
+    grid-column-start: 1;
+    grid-column-end: 5;
+}
+
+#work_area_dashboard .budget_report .dashboard-card:nth-child(3) {
+    grid-column-start: 1;
+    grid-column-end: 3;
+}
+
+
+#work_area_dashboard .budget_report .dashboard-card:nth-child(4) {
+    grid-column-start: 3;
+    grid-column-end: 5;
+}
+
+
+#work_area_dashboard .budget_report .dashboard-card:nth-child(5) {
+    grid-column-start: 1;
+    grid-column-end: 3;
+}
+
+#work_area_dashboard .budget_report .dashboard-card:nth-child(6) {
+    grid-column-start: 3;
+    grid-column-end: 5;
+}
+
+#work_area_dashboard .budget_report .dashboard-card:nth-child(7) {
+    grid-column-start: 1;
+    grid-column-end: 3;
+}
+
+#work_area_dashboard .budget_report .dashboard-card:nth-child(8) {
+    grid-column-start: 3;
+    grid-column-end: 5;
+}
+
+
+#work_area_dashboard .budget_report .graph-table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    empty-cells: show;
+    border: 1px solid #cbcbcb;
+    line-height: 1.5;
+}
+
+#work_area_dashboard .budget_report .line-graph-wrapper,
+#work_area_dashboard .budget_report .table-wrapper {
+    overflow: auto;
+}
+
+#work_area_dashboard .budget_report .graph-table thead {
+    background-color: #e0e0e0;
+    color: #000000;
+    text-align: left;
+    vertical-align: bottom;
+    font-size: .95em;
+    font-weight: 600;
+
+}
+
+#work_area_dashboard .budget_report .graph-table td, th {
+    border-left: 1px solid #cbcbcb;
+    border-width: 0 0 0 1px;
+    font-size: inherit;
+    margin: 0;
+    overflow: visible;
+    vertical-align: middle;
+    text-align: center;
+    padding: 5px;
+}
+
+#work_area_dashboard .budget_report .graph-table td {
+    border-bottom: 1px solid #cbcbcb;
+}
+
+#work_area_dashboard .budget_report .graph-table td:nth-child(1) {
+    text-align: left;
+    padding: 4px;
+}
+
+#work_area_dashboard .budget_report .graph-table-with-result {
+    border-collapse: collapse;
+    border-spacing: 0;
+    empty-cells: show;
+    border: 1px solid #cbcbcb;
+    line-height: 1.5;
+    width: 100%
+}
+
+/** /Budget report **/
+
+/** Companies report **/
+#work_area_dashboard .companies_report {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 10px;
+}
+
+#work_area_dashboard .companies_report .dashboard-card:nth-child(2) {
+    grid-column-start: 1;
+    grid-column-end: 2;
+}
+
+#work_area_dashboard .companies_report .dashboard-card:nth-child(3) {
+    grid-column-start: 2;
+    grid-column-end: 3;
+}
+
+
+#work_area_dashboard .companies_report .dashboard-card:nth-child(4) {
+    grid-column-start: 3;
+    grid-column-end:4;
+}
+
+
+#work_area_dashboard .companies_report .dashboard-card:nth-child(5) {
+    grid-column-start: 1;
+    grid-column-end: 2;
+}
+
+#work_area_dashboard .companies_report .dashboard-card:nth-child(6) {
+    grid-column-start: 2;
+    grid-column-end: 3;
+}
+
+#work_area_dashboard .companies_report .dashboard-card:nth-child(7) {
+    grid-column-start: 3;
+    grid-column-end: 4;
+}
+
+#work_area_dashboard .companies_report .dashboard-card:nth-child(8) {
+    grid-column-start: 1;
+    grid-column-end: 2;
+}
+
+#work_area_dashboard .companies_report .dashboard-card:nth-child(9) {
+    grid-column-start: 2;
+    grid-column-end: 3;
+}
+
+/** /Companies report **/

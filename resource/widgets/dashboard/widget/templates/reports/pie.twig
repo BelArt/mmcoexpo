@@ -1,0 +1,31 @@
+<div class="pie-wrapper">
+    <div class="title">{{ title | default('') }}</div>
+    <div class="pie" style="--size: 300;">
+        {% set offset = 0 %}
+        {% for segment in segments %}
+            <div class="pie__segment"
+                 style="--offset: {{ offset }}; --value: {{ segment.value }}; --over50: {{ segment.value > 50 ? 1 : 0 }};"
+            ></div>
+            {% set offset = offset + segment.value %}
+        {% endfor %}
+    </div>
+    <div class="pie__additional_content">
+        {% if additionalContent %}
+            {% include baseTemplates ~ 'reports/' ~ additionalContent.type ~ '.twig'
+                with additionalContent.data %}
+        {% endif %}
+    </div>
+    <div class="pie__legend">
+        <div class="legend__title">
+            Обозначения:
+        </div>
+        <div class="legend__items">
+            {% for segment in segments %}
+                <div class="legend__item">
+                    <span class="item__color"></span>
+                    <span class="item__title">{{ segment.title }} - {{ segment.legend }}</span>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>

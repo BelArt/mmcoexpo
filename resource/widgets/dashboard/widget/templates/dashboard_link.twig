@@ -1,0 +1,5 @@
+<div class="dashboard_link">
+    {% set linkId = 'dashboard_link_' ~ random() %}
+    <input id="{{ linkId }}" type="radio" name="dashboard_link" value="{{ report_name }}" {{ checked ? 'checked' : null }}>
+    <label for="{{ linkId }}" class="dashboard_link__title">{{ title }}</label>
+</div>

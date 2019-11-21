@@ -1,0 +1,382 @@
+<div class="top_level_report">
+    <div class="report_header">
+        <h2>Отчет верхнего</h2>
+        <h2>уровня</h2>
+    </div>
+
+    {% include baseTemplates ~ 'reports/card.twig' with {
+        title: 'Компании',
+        rows: [
+            {
+                cells: [
+                {
+                    type: 'numeric',
+                    data: {
+                    title: 'Прошлый год',
+                    number: retention_rate.plan
+                }
+                },
+                {
+                    type: 'numeric',
+                    data: {
+                    title: 'На данный год',
+                    number: retention_rate.fact_number
+                }
+                },
+                {
+                    type: 'bar',
+                    data: {
+                    title: 'Коэф. удержания',
+                    percents: retention_rate.fact_percent
+                }
+                },
+
+            ]
+            }
+        ]
+    } %}
+
+    {% include baseTemplates ~ 'reports/card.twig' with {
+        title: 'Выручка',
+        rows: [
+            {
+                title: 'План по выручке',
+                cells: [
+                {
+                    type: 'numeric',
+                    data: {
+                    title: '',
+                    subtitle: 'План (₽)',
+                    number: revenue.expected.fact_number,
+                    currency: '₽'
+
+                }
+                }
+            ]
+            },
+            {
+                title: 'Подписанная выручка',
+                cells: [
+                {
+                    type: 'numeric',
+                    data: {
+                    title: '',
+                    subtitle: 'Факт (₽)',
+                    number: revenue.fact.fact_number,
+                    currency: '₽'
+                }
+                },
+                {
+                    type: 'bar',
+                    data: {
+                    title: '',
+                    subtitle: 'Факт (%)',
+                    percents: revenue.fact.fact_percent
+                }
+                }
+            ]
+            },
+            {
+                title: '',
+                cells: [
+                {
+                    type: 'numeric',
+                    data: {
+                        title: 'Ожидаемые поступления',
+                        subtitle: 'Факт (₽)',
+                        number: revenue.income.fact_number,
+                        currency: '₽'
+                    }
+                },
+                {
+                    type: 'numeric',
+                    data: {
+                        title: 'Выручка в переговорах',
+                        subtitle: 'Факт (₽)',
+                        number: revenue.in_negotiations.fact_number,
+                        currency: '₽'
+                    }
+                }
+            ]
+            },
+            {
+                title: 'Объем проданных услуг',
+                cells: [
+                {
+                    type: 'numeric',
+                    data: {
+                    title: 'По аренде',
+                    subtitle: 'Факт (₽)',
+                    number: revenue.rent.fact_number,
+                    currency: '₽'
+                }
+                },
+                {
+                    type: 'numeric',
+                    data: {
+                    title: 'По доп.услугам',
+                    subtitle: 'Факт (₽)',
+                    number: revenue.services.fact_number,
+                    currency: '₽'
+                }
+                },
+            ]
+            },
+            {
+                title: 'По обзорности',
+                cells: [
+                {
+                    type: 'numeric',
+                    data: {
+                    title: 'Угловая',
+                    subtitle: 'Факт (шт)',
+                    number: revenue.corner_visibility.fact_number,
+                }
+                },
+                {
+                    type: 'numeric',
+                    data: {
+                    title: 'Полуостров',
+                    subtitle: 'Факт (шт)',
+                    number: revenue.pen_visibility.fact_number,
+                }
+                },
+                {
+                    type: 'numeric',
+                    data: {
+                    title: 'Остров',
+                    subtitle: 'Факт (шт)',
+                    number: revenue.isle_visibility.fact_number,
+                }
+                },
+            ]
+            },
+            {
+                title: '',
+                cells: [
+                {
+                    type: 'numeric',
+                    data: {
+                    title: 'Партнер 1 и 2',
+                    subtitle: 'Факт (₽)',
+                    number: revenue.partner.fact_number,
+                    currency: '₽'
+                }
+                },
+                {
+                    type: 'numeric',
+                    data: {
+                    title: 'Делегат 1 и 2',
+                    subtitle: 'Факт (₽)',
+                    number: revenue.delegate.fact_number,
+                    currency: '₽'
+                }
+                }
+            ]
+            }
+        ]
+    } %}
+
+    {% include baseTemplates ~ 'reports/card.twig' with {
+        title: 'Количество метров',
+        rows: [
+            {
+                title: 'Проданных и подписанных',
+                cells: [
+                {
+                    type: 'numeric',
+                    data: {
+                    subtitle: 'Факт (м<sup>2</sup>)',
+                    number: meter.fact_number
+                }
+                },
+                {
+                    type: 'numeric',
+                    data: {
+                    subtitle: 'План (м<sup>2</sup>)',
+                    number: meter.plan
+                }
+                },
+                {
+                    type: 'bar',
+                    data: {
+                    subtitle: 'Факт (%)',
+                    percents: meter.fact_percent
+                }
+                },
+
+            ]
+            },
+            {
+                cells: [
+                {
+                    type: 'numeric',
+                    data: {
+                    title: 'В переговорах',
+                    subtitle: 'Факт (м<sup>2</sup>)',
+                    number: meter.in_negotiations
+                }
+                },
+                {
+                    type: 'numeric',
+                    data: {
+                    title: 'Без номера стенда',
+                    subtitle: 'Факт (м<sup>2</sup>)',
+                    number: meter.no_stand
+                }
+                },
+            ]
+            },
+            {
+                cells: [
+                {
+                    type: 'bar',
+                    data: {
+                    title: 'В переговорах',
+                    subtitle: 'Факт (%)',
+                    percents: meter.in_negotiations_percent,
+                    small: true
+                }
+                },
+            ]
+            }
+        ]
+    } %}
+
+    {% include baseTemplates ~ 'reports/card.twig' with {
+        rows: [
+            {
+                cells: [
+                {
+                    type: 'pie',
+                    data: {
+                    segments:  [
+                        {value: companies.cold_companies_percent, title: 'Новые', legend: companies.cold_companies_number},
+                        {value: companies.warm_companies_percent, title: 'Теплые', legend: companies.warm_companies_number},
+                        {value: companies.dead_companies_percent, title: 'Мертвые', legend: companies.dead_companies_number},
+                    ],
+                    additionalContent: {
+                        type: 'numeric',
+                        data: {
+                            title    : 'Компании в работе',
+                            subtitle : 'Компаний',
+                            number : companies.companies_in_work,
+                        }
+                    }
+                }
+                },
+            ]
+            }
+        ]
+    } %}
+
+    {% include baseTemplates ~ 'reports/card.twig' with {
+        title : 'Стенды',
+        rows  : [
+            {
+                title : '',
+                cells : [
+                {
+                    type : 'numeric',
+                    data : {
+                    title    : 'Индивидуальные',
+                    subtitle : 'Факт (м<sup>2</sup>)',
+                    number   : stands.individual.fact_number,
+                },
+                },
+                {
+                    type : 'bar',
+                    data : {
+                    title    : '',
+                    subtitle : 'План (%)',
+                    percents : stands.individual.fact_percent,
+                },
+                },
+                {
+                    type : 'numeric',
+                    data : {
+                    title    : 'Стандартные',
+                    subtitle : 'Факт (м<sup>2</sup>)',
+                    number   : stands.standard.fact_number,
+                },
+                },
+                {
+                    type : 'bar',
+                    data : {
+                    title    : '',
+                    subtitle : 'План (%)',
+                    percents : stands.standard.fact_percent,
+                },
+                },
+            ],
+            },
+        ],
+    } %}
+
+    {% include baseTemplates ~ 'reports/card.twig' with {
+        title : 'Выручка теплых компаний',
+        rows  : [
+            {
+                title : '',
+                cells : [
+                {
+                    type : 'numeric',
+                    data : {
+                    title    : 'Прошлый год',
+                    subtitle : '',
+                    number   : warm_companies.revenue_last_year,
+                },
+                },
+                {
+                    type : 'numeric',
+                    data : {
+                    title    : 'Текущий год',
+                    subtitle : '',
+                    number   : warm_companies.revenue_this_year,
+                },
+                },
+                {
+                    type : 'numeric',
+                    data : {
+                    title    : 'Изменение чека',
+                    subtitle : '',
+                    number   : warm_companies.revenue_difference_number,
+                },
+                },
+            ],
+            },
+            {
+                cells: [
+                {
+                    type: 'bar',
+                    data: {
+                    title: 'Изменение чека',
+                    subtitle: '',
+                    percents: warm_companies.revenue_difference_percent,
+                    small: true
+                }
+                },
+            ]
+            }
+        ],
+    } %}
+
+    {% include baseTemplates ~ 'reports/card.twig' with {
+        title : 'Количество сделок в работе',
+        rows  : [
+            {
+                title : '',
+                cells : [
+                {
+                    type : 'numeric',
+                    data : {
+                    title    : '',
+                    subtitle : 'Факт (шт)',
+                    number   : leads.fact_number,
+                },
+                },
+            ],
+            },
+        ],
+    } %}
+</div>

@@ -1,0 +1,9 @@
+<div class="bar {{ small | default(false) ? 'small' : '' }}">
+    <div class="title">{{ title | default('') }}</div>
+    <div class="subtitle">{{ subtitle  | default('') | raw }}</div>
+    <div class="fill-wrapper">
+        <div class="fill" style="width: {{ percents }}%;">
+            <span>{{ percents }}%</span>
+        </div>
+    </div>
+</div>

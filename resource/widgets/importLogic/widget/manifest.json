@@ -1,0 +1,28 @@
+{
+  "widget": {
+    "name": "widget.name",
+    "description": "widget.description",
+    "short_description": "widget.short_description",
+    "code": "import_logic_mmcoexpo",
+    "secret_key": "6e92b72ec5f7172f565f1e91c9a281f66e8de963aadd066ffbdde78b9980c374",
+    "version": "0.0.1",
+    "interface_version": 2,
+    "init_once": true,
+    "locale": [
+      "ru"
+    ],
+    "installation": true
+  },
+  "locations": [
+    "lcard-0",
+    "settings"
+  ],
+  "settings": {
+    "fake": {
+      "name": "settings.fake",
+      "type": "text",
+      "required": false,
+      "id": "fake"
+    }
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "widget": {
+    "name": "widget.name",
+    "description": "widget.description",
+    "short_description": "widget.short_description",
+    "code": "products_mmcoexpo",
+    "secret_key": "01cd2d0b82ddd0b3404484e0f6bc3247662b98b4b840dc324638ff42cbbfb01c",
+    "version": "0.0.1",
+    "init_once": true,
+    "locale": [
+      "ru"
+    ],
+    "installation": true,
+    "interface_version": 2
+  },
+  "locations": [
+    "settings",
+    "lcard-0"
+  ],
+  "settings": {
+    "ruads_api_key": {
+      "name": "settings.fake",
+      "type": "text",
+      "required": false,
+      "id": "fake"
+    }
+  }
+}

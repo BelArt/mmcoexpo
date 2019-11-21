@@ -1,0 +1,32 @@
+{
+  "widget": {
+    "name": "widget.name",
+    "description": "widget.description",
+    "short_description": "widget.short_description",
+    "code": "dashboard_mmcoexpo",
+    "secret_key": "6e29ae9e1fb116a69b1365c3f4130eb389eaa21ea164e8fe71a56489c9c1760f",
+    "version": "0.0.1",
+    "init_once": false,
+    "locale": [
+      "ru"
+    ],
+    "installation": true,
+    "interface_version": 2
+  },
+  "locations": [
+    "settings",
+    "advanced_settings",
+    "everywhere"
+  ],
+  "settings": {
+    "fake": {
+      "name": "settings.fake",
+      "type": "text",
+      "required": false,
+      "id": "fake"
+    }
+  },
+  "advanced": {
+    "title": "advanced.title"
+  }
+}

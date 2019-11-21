@@ -1,0 +1,57 @@
+<div class="table-wrapper">
+    <table class="graph-table-with-result">
+        <thead>
+        <tr>
+            {% for label in labels %}
+                <th>{{ label }}</th>
+            {% endfor %}
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            {% for cluster_name, value in plan_values %}
+                <td>{{ cluster_name }}</td>
+            {% endfor %}
+            <td>ВСЕГО</td>
+        </tr>
+        <tr>
+            {% set total_plan_values = 0 %}
+            {% for cluster_name, value in plan_values %}
+                {% set total_plan_values = total_plan_values + value %}
+                <td>{{ value }}</td>
+            {% endfor %}
+            <td>{{ total_plan_values }}</td>
+        </tr>
+        <tr>
+            {% set total_in_work_number = 0 %}
+            {% for cluster_name, value in in_work_number %}
+                {% set total_in_work_number = total_in_work_number + value %}
+                <td>{{ value }}</td>
+            {% endfor %}
+            <td>{{ total_in_work_number }}</td>
+        </tr>
+        <tr>
+            {% set total_in_work_percent = total_in_work_number * 100 / total_plan_values %}
+            {% for cluster_name, value in in_work_percent %}
+                <td>{{ value }}</td>
+            {% endfor %}
+            <td>{{ total_in_work_percent|round(2, 'floor') }}</td>
+        </tr>
+        <tr>
+            {% set total_not_in_work_number = 0 %}
+            {% for cluster_name, value in not_in_work_number %}
+                {% set total_not_in_work_number = total_not_in_work_number + value %}
+                <td>{{ value }}</td>
+            {% endfor %}
+            <td>{{ total_not_in_work_number }}</td>
+        </tr>
+        <tr>
+            {% set total_not_in_work_percent = 100 - total_in_work_percent %}
+            {% for cluster_name, value in not_in_work_percent %}
+                <td>{{ value }}</td>
+            {% endfor %}
+            <td>{{ total_not_in_work_percent|round(2, 'floor') }}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>

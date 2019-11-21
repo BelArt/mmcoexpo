@@ -1,0 +1,4 @@
+0 20 * * 0 /usr/bin/php /var/www/mmco-expo.ru/mmcoexpo/public/cli/index.php user:mmcoexpo:report:update
+*/1 * * * * /usr/bin/php /var/www/mmco-expo.ru/mmcoexpo/public/cli/index.php user:mmcoexpo:catalog:recalculate:daemon
+*/1 * * * * /usr/bin/php /var/www/mmco-expo.ru/mmcoexpo/public/cli/index.php user:mmcoexpo:google_table:run:daemon
+*/1 * * * * /usr/bin/php /var/www/mmco-expo.ru/mmcoexpo/public/cli/index.php user:mmcoexpo:google_table:report:daemon
