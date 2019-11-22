@@ -5,7 +5,7 @@
     "short_description": "widget.short_description",
     "code": "dashboard_mmcoexpo",
     "secret_key": "6e29ae9e1fb116a69b1365c3f4130eb389eaa21ea164e8fe71a56489c9c1760f",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "init_once": false,
     "locale": [
       "ru"
