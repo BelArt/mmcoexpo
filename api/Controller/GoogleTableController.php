@@ -33,7 +33,7 @@ class GoogleTableController extends Controller
     {
         $code = $this->request->get('code');
         if ($code) {
-            $this->googleTable->authenticate($code);
+            $this->googleTable->fetchAccessTokenWithAuthCode($code);
 
             print_r($this->googleTable->getAccessToken());
         } else {

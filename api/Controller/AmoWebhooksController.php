@@ -29,9 +29,9 @@ class AmoWebhooksController extends Controller
      * @var array
      */
     const REPORT_STATUSES = [
-        Constants::STATUS_UMSO_SALES_DOCUMENTS_SIGNED,
-        Constants::STATUS_UMSO_SALES_BILLED,
-        Constants::STATUS_UMSO_SALES_PAYMENT_RECEIVED,
+        Constants::STATUS_SALES_DOCUMENTS_SIGNED,
+        Constants::STATUS_SALES_BILLED,
+        Constants::STATUS_SALES_PAYMENT_RECEIVED,
         Constants::STATUS_SUCCESS,
     ];
 
@@ -39,7 +39,6 @@ class AmoWebhooksController extends Controller
      * Обрабатывает вебхуки от amoCRM по смене статуса Сделок.
      *
      * @link https://core.mmco-expo.ru/mmcoexpo/amo_webhooks/lead_status/tmldm0zrdkvsu0f4whhhehzozdlqzz09
-     * @link http://core.dev-mmco-expo.ru/mmcoexpo/amo_webhooks/lead_status/tmldm0zrdkvsu0f4whhhehzozdlqzz09
      *
      * @return bool
      */
@@ -76,7 +75,7 @@ class AmoWebhooksController extends Controller
                 $this->addLeadToReport($leadId);
             }
 
-            if ($leadPipeline === Constants::PIPELINE_UMSO_SALES && $leadStatus === Constants::STATUS_FAIL) {
+            if ($leadPipeline === Constants::PIPELINE_SALES && $leadStatus === Constants::STATUS_FAIL) {
                 $this->deleteLeadFromReport($leadId);
             }
 

@@ -33,8 +33,8 @@ use React\EventLoop\Factory as Loop;
  */
 class GoogleTableTask extends Task
 {
-    const SHEET_REQUEST_TEMPLATE_TITLE          = 'Заявка УМСО';
-    const SHEET_REQUEST_TEMPLATE_TITLE_4_METERS = 'Заявка УМСО 4 кв.м.';
+    const SHEET_REQUEST_TEMPLATE_TITLE          = 'Заявка ММСО';
+    const SHEET_REQUEST_TEMPLATE_TITLE_4_METERS = 'Заявка ММСО 4 кв.м.';
 
     /**
      * Демон, который чекает тьюбу из виджета importLogic.

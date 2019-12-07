@@ -90,9 +90,9 @@ class ReportHelper extends Component
      * @var array
      */
     const TOP_LEVEL_REPORT_METER_STATUSES_TOTAL = [
-        Constants::STATUS_UMSO_SALES_DOCUMENTS_SIGNED,
-        Constants::STATUS_UMSO_SALES_BILLED,
-        Constants::STATUS_UMSO_SALES_PAYMENT_RECEIVED,
+        Constants::STATUS_SALES_DOCUMENTS_SIGNED,
+        Constants::STATUS_SALES_BILLED,
+        Constants::STATUS_SALES_PAYMENT_RECEIVED,
         Constants::STATUS_SUCCESS,
     ];
 
@@ -102,8 +102,8 @@ class ReportHelper extends Component
      * @var array
      */
     const TOP_LEVEL_REPORT_METER_STATUSES_IN_NEGOTIATIONS = [
-        Constants::STATUS_UMSO_SALES_KP_AGREED,
-        Constants::STATUS_UMSO_SALES_DOCUMENTS_SENT,
+        Constants::STATUS_SALES_KP_AGREED,
+        Constants::STATUS_SALES_DOCUMENTS_SENT,
     ];
 
     /**
@@ -112,8 +112,8 @@ class ReportHelper extends Component
      * @var array
      */
     const TOP_LEVEL_REPORT_METER_STATUSES_NO_STAND = [
-        Constants::STATUS_UMSO_SALES_NEW_REQUEST,
-        Constants::STATUS_UMSO_SALES_QUALIFICATION_PASSED,
+        Constants::STATUS_SALES_NEW_REQUEST,
+        Constants::STATUS_SALES_QUALIFICATION_PASSED,
     ];
 
     /**
@@ -122,7 +122,7 @@ class ReportHelper extends Component
      * @var array
      */
     const TOP_LEVEL_REPORT_REVENUE_STATUSES_FACT = [
-        Constants::STATUS_UMSO_SALES_PAYMENT_RECEIVED,
+        Constants::STATUS_SALES_PAYMENT_RECEIVED,
         Constants::STATUS_SUCCESS,
     ];
 
@@ -132,13 +132,13 @@ class ReportHelper extends Component
      * @var array
      */
     const TOP_LEVEL_REPORT_RETENTION_STATUSES = [
-        Constants::STATUS_UMSO_SALES_NEW_REQUEST,
-        Constants::STATUS_UMSO_SALES_QUALIFICATION_PASSED,
-        Constants::STATUS_UMSO_SALES_DOCUMENTS_SENT,
-        Constants::STATUS_UMSO_SALES_KP_AGREED,
-        Constants::STATUS_UMSO_SALES_DOCUMENTS_SIGNED,
-        Constants::STATUS_UMSO_SALES_BILLED,
-        Constants::STATUS_UMSO_SALES_PAYMENT_RECEIVED,
+        Constants::STATUS_SALES_NEW_REQUEST,
+        Constants::STATUS_SALES_QUALIFICATION_PASSED,
+        Constants::STATUS_SALES_DOCUMENTS_SENT,
+        Constants::STATUS_SALES_KP_AGREED,
+        Constants::STATUS_SALES_DOCUMENTS_SIGNED,
+        Constants::STATUS_SALES_BILLED,
+        Constants::STATUS_SALES_PAYMENT_RECEIVED,
         Constants::STATUS_SUCCESS,
     ];
 
@@ -148,9 +148,11 @@ class ReportHelper extends Component
      * @var int
      */
     const METER_REPORT_CLUSTER = [
-        "Павильон 1" => 507,
-        "Павильон 2" => 180,
-        "Павильон 3" => 168,
+        "Государственная политика"         => 1946,
+        "Дошкольное образование"           => 149,
+        "Новые образовательные технологии" => 2615,
+        "Профессиональное образование"     => 952,
+        "Дополнительное образование"       => 616,
     ];
 
     /**
@@ -159,11 +161,11 @@ class ReportHelper extends Component
      * @var array
      */
     const METER_REPORT_CLUSTER_STATUSES = [
-        Constants::STATUS_UMSO_SALES_DOCUMENTS_SENT,
-        Constants::STATUS_UMSO_SALES_KP_AGREED,
-        Constants::STATUS_UMSO_SALES_DOCUMENTS_SIGNED,
-        Constants::STATUS_UMSO_SALES_BILLED,
-        Constants::STATUS_UMSO_SALES_PAYMENT_RECEIVED,
+        Constants::STATUS_SALES_DOCUMENTS_SENT,
+        Constants::STATUS_SALES_KP_AGREED,
+        Constants::STATUS_SALES_DOCUMENTS_SIGNED,
+        Constants::STATUS_SALES_BILLED,
+        Constants::STATUS_SALES_PAYMENT_RECEIVED,
         Constants::STATUS_SUCCESS,
     ];
 
@@ -291,12 +293,12 @@ class ReportHelper extends Component
      */
     public function getTopLevelReportData()
     {
-        $activeLeadsPipelineBMSOSales = $this->getLeadsByStatuses(
-            Constants::PIPELINE_UMSO_SALES,
-            array_merge($this->amo->getStatusesActive(Constants::PIPELINE_UMSO_SALES), [142])
+        $activeLeadsPipelineSales = $this->getLeadsByStatuses(
+            Constants::PIPELINE_SALES,
+            array_merge($this->amo->getStatusesActive(Constants::PIPELINE_SALES), [142])
         );
 
-        return $this->getTopLevelData($activeLeadsPipelineBMSOSales);
+        return $this->getTopLevelData($activeLeadsPipelineSales);
     }
 
     /**
@@ -309,12 +311,12 @@ class ReportHelper extends Component
      */
     public function getMeterReportData()
     {
-        $activeLeadsPipelineBMSOSales = $this->getLeadsByStatuses(
-            Constants::PIPELINE_UMSO_SALES,
-            array_merge($this->amo->getStatusesActive(Constants::PIPELINE_UMSO_SALES), [142])
+        $activeLeadsPipelineSales = $this->getLeadsByStatuses(
+            Constants::PIPELINE_SALES,
+            array_merge($this->amo->getStatusesActive(Constants::PIPELINE_SALES), [142])
         );
 
-        return $this->getMeterData($activeLeadsPipelineBMSOSales);
+        return $this->getMeterData($activeLeadsPipelineSales);
     }
 
     /**
@@ -327,12 +329,12 @@ class ReportHelper extends Component
      */
     public function getBudgetReportData()
     {
-        $activeLeadsPipelineBMSOSales = $this->getLeadsByStatuses(
-            Constants::PIPELINE_UMSO_SALES,
-            array_merge($this->amo->getStatusesActive(Constants::PIPELINE_UMSO_SALES), [142])
+        $activeLeadsPipelineSales = $this->getLeadsByStatuses(
+            Constants::PIPELINE_SALES,
+            array_merge($this->amo->getStatusesActive(Constants::PIPELINE_SALES), [142])
         );
 
-        return $this->getBudgetData($activeLeadsPipelineBMSOSales);
+        return $this->getBudgetData($activeLeadsPipelineSales);
     }
 
     /**
@@ -345,24 +347,24 @@ class ReportHelper extends Component
      */
     public function getCompaniesReportData()
     {
-        $activeLeadsPipelineBMSOSales = $this->getLeadsByStatuses(
-            Constants::PIPELINE_UMSO_SALES,
-            array_merge($this->amo->getStatusesActive(Constants::PIPELINE_UMSO_SALES), [142])
+        $activeLeadsPipelineSales = $this->getLeadsByStatuses(
+            Constants::PIPELINE_SALES,
+            array_merge($this->amo->getStatusesActive(Constants::PIPELINE_SALES), [142])
         );
 
-        return $this->getCompaniesData($activeLeadsPipelineBMSOSales);
+        return $this->getCompaniesData($activeLeadsPipelineSales);
     }
 
     /**
      * Собирает данные для отчета Компании
      *
-     * @param array $activeLeadsPipelineBMSOSales Массив активных Сделок amoCRM
+     * @param array $activeLeadsPipelineSales Массив активных Сделок amoCRM
      *
      * @throws \Exception
      *
      * @return array
      */
-    private function getCompaniesData($activeLeadsPipelineBMSOSales)
+    private function getCompaniesData($activeLeadsPipelineSales)
     {
         $warmCompanies       = 0;
         $deadCompanies       = 0;
@@ -373,8 +375,8 @@ class ReportHelper extends Component
         $warmCompaniesMeters = 0;
         $deadCompaniesMeters = 0;
         $newCompaniesMeters  = 0;
-        foreach ($activeLeadsPipelineBMSOSales as $lead) {
-            $leadStatusId = $lead['status_id'];
+        foreach ($activeLeadsPipelineSales as $lead) {
+            $leadStatusId = (int)$lead['status_id'];
             if (in_array($leadStatusId, self::TOP_LEVEL_REPORT_METER_STATUSES_TOTAL)
                 && isset($lead['linked_company_id'])
                 && $lead['linked_company_id']
@@ -443,19 +445,19 @@ class ReportHelper extends Component
     /**
      * Собирает данные для отчета Бюджет
      *
-     * @param array $activeLeadsPipelineBMSOSales Массив активных Сделок amoCRM
+     * @param array $activeLeadsPipelineSales Массив активных Сделок amoCRM
      *
      * @throws \Exception
      *
      * @return array
      */
-    private function getBudgetData($activeLeadsPipelineBMSOSales)
+    private function getBudgetData($activeLeadsPipelineSales)
     {
         $totalBudget         = 0;
         $totalStandBudget    = 0;
         $totalServicesBudget = 0;
-        foreach ($activeLeadsPipelineBMSOSales as $lead) {
-            $leadStatusId = $lead['status_id'];
+        foreach ($activeLeadsPipelineSales as $lead) {
+            $leadStatusId = (int)$lead['status_id'];
             if (in_array($leadStatusId, self::TOP_LEVEL_REPORT_METER_STATUSES_TOTAL)) {
                 $leadPrice = $lead['price'] ?? 0;
                 if ($leadPrice) {
@@ -477,7 +479,7 @@ class ReportHelper extends Component
             }
         }
 
-        $mmsoData        = $this->user->data['dashboard'][Constants::PIPELINE_UMSO_SALES] ?? [];
+        $mmsoData        = $this->user->data['dashboard'][Constants::PIPELINE_SALES] ?? [];
         $thisSunday      = (new \DateTime('sunday this week', new \DateTimeZone(Constants::TIMEZONE)))->format('d-m-Y');
         $labels          = [];
         $budgetFact      = [];
@@ -566,23 +568,25 @@ class ReportHelper extends Component
     /**
      * Собирает данные для отчета Метраж
      *
-     * @param array $activeLeadsPipelineBMSOSales Массив активных Сделок amoCRM
+     * @param array $activeLeadsPipelineSales Массив активных Сделок amoCRM
      *
      * @throws \Exception
      * @return array
      */
-    private function getMeterData($activeLeadsPipelineBMSOSales)
+    private function getMeterData($activeLeadsPipelineSales)
     {
         $metersIndividualTotal = 0;
         $metersTotal           = 0;
         $leadCluster           = [
-            "Павильон 1" => 0,
-            "Павильон 2" => 0,
-            "Павильон 3" => 0,
+            "Государственная политика"         => 0,
+            "Дошкольное образование"           => 0,
+            "Новые образовательные технологии" => 0,
+            "Профессиональное образование"     => 0,
+            "Дополнительное образование"       => 0,
         ];
 
-        foreach ($activeLeadsPipelineBMSOSales as $lead) {
-            $leadStatusId = $lead['status_id'];
+        foreach ($activeLeadsPipelineSales as $lead) {
+            $leadStatusId = (int)$lead['status_id'];
             if (in_array($leadStatusId, self::TOP_LEVEL_REPORT_METER_STATUSES_TOTAL)) {
                 $leadMetersTotal = (int)$this->amo->getCustomFieldValue($lead, Constants::CF_LEAD_TOTAL_FOOTAGE);
                 if ($leadMetersTotal) {
@@ -604,7 +608,7 @@ class ReportHelper extends Component
             }
         }
 
-        $mmsoData        = $this->user->data['dashboard'][Constants::PIPELINE_UMSO_SALES] ?? [];
+        $mmsoData        = $this->user->data['dashboard'][Constants::PIPELINE_SALES] ?? [];
         $thisSunday      = (new \DateTime('sunday this week', new \DateTimeZone(Constants::TIMEZONE)))->format('d-m-Y');
         $labels          = [];
         $meterFact       = [];
@@ -704,13 +708,13 @@ class ReportHelper extends Component
     /**
      * Собирает данные для отчета Верхнего уровня.
      *
-     * @param array $activeLeadsPipelineBMSOSales Массив активных Сделок воронки Продажи amoCRM
+     * @param array $activeLeadsPipelineSales Массив активных Сделок воронки Продажи amoCRM
      *
      * @throws \Exception
      *
      * @return array
      */
-    private function getTopLevelData(array $activeLeadsPipelineBMSOSales)
+    private function getTopLevelData(array $activeLeadsPipelineSales)
     {
         $metersTotal                  = 0;
         $metersIndividualTotal        = 0;
@@ -743,7 +747,7 @@ class ReportHelper extends Component
             $thisWeekDaysTimestamp[] = $day->getTimestamp();
         }
 
-        foreach ($activeLeadsPipelineBMSOSales as $lead) {
+        foreach ($activeLeadsPipelineSales as $lead) {
             $leadStatusId = $lead['status_id'];
             if (in_array($leadStatusId, self::TOP_LEVEL_REPORT_METER_STATUSES_TOTAL)) {
                 $leadMetersTotal = (int)$this->amo->getCustomFieldValue($lead, Constants::CF_LEAD_TOTAL_FOOTAGE);
@@ -775,7 +779,7 @@ class ReportHelper extends Component
 
             $leadsNumber++;
 
-            if ($leadStatusId == Constants::STATUS_UMSO_SALES_DOCUMENTS_SIGNED) {
+            if ($leadStatusId == Constants::STATUS_SALES_DOCUMENTS_SIGNED) {
                 $expectedRevenueLead = (int)$this->amo->getCustomFieldValue(
                     $lead,
                     Constants::CF_LEAD_EXPECTED_REVENUE_PRE
@@ -869,11 +873,11 @@ class ReportHelper extends Component
 
         $companiesInWork             = $newCompanies + $warmCompanies + $deadCompanies;
         $retentionRateNow            = $this->getNumberCompaniesInWork();
-        $previousYearLeadsWithTagNum = 17; // $this->getLeadsByTagAndPipeline(
-        //     Constants::TAG_UMSO_2018,
-        //     Constants::PIPELINE_MMSO_SALES,
-        //     [142]
-        // );
+        $previousYearLeadsWithTagNum = $this->getLeadsByTagAndPipeline(
+            Constants::TAG_PREVIOUS_YEAR_LEADS,
+            Constants::PIPELINE_SALES,
+            [142]
+        );
 
         $retentionCoefficient = $this->getFactPercent(
             $activeLeadsWithWarmCompanies,
@@ -1054,12 +1058,12 @@ class ReportHelper extends Component
     private function getNumberCompaniesInWork()
     {
         try {
-            $statuses = array_merge($this->amo->getStatusesActive(Constants::PIPELINE_UMSO_SALES), [142]);
+            $statuses = array_merge($this->amo->getStatusesActive(Constants::PIPELINE_SALES), [142]);
 
             return $this->getDataFromAjaxFromAmo(
                 null,
                 null,
-                Constants::PIPELINE_UMSO_SALES,
+                Constants::PIPELINE_SALES,
                 $statuses
             );
         } catch (\Exception $e) {

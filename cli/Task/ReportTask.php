@@ -35,27 +35,27 @@ class ReportTask extends Task
      */
     public function updateAction()
     {
-        $activeLeadsPipelineBMSOSales = $this->report->getLeadsByStatuses(
-            Constants::PIPELINE_UMSO_SALES,
-            array_merge($this->amo->getStatusesActive(Constants::PIPELINE_UMSO_SALES), [142])
+        $activeLeadsPipelineSales = $this->report->getLeadsByStatuses(
+            Constants::PIPELINE_SALES,
+            array_merge($this->amo->getStatusesActive(Constants::PIPELINE_SALES), [142])
         );
 
-        $this->updateMeterReportDataAction($activeLeadsPipelineBMSOSales);
-        $this->updateBudgetReportDataAction($activeLeadsPipelineBMSOSales);
+        $this->updateMeterReportDataAction($activeLeadsPipelineSales);
+        $this->updateBudgetReportDataAction($activeLeadsPipelineSales);
     }
 
     /**
      * Получает данные о метраже и заносит их в БД.
      *
-     * @param array $activeLeadsPipelineBMSOSales
+     * @param array $activeLeadsPipelineSales
      *
      * @throws MongoCollectionException
      * @throws \Exception
      */
-    private function updateMeterReportDataAction(array $activeLeadsPipelineBMSOSales)
+    private function updateMeterReportDataAction(array $activeLeadsPipelineSales)
     {
         $metersTotal = 0;
-        foreach ($activeLeadsPipelineBMSOSales as $lead) {
+        foreach ($activeLeadsPipelineSales as $lead) {
             $leadStatusId = $lead['status_id'];
             if (in_array($leadStatusId, (array)$this->report::TOP_LEVEL_REPORT_METER_STATUSES_TOTAL)) {
                 $leadMetersTotal = (int)$this->amo->getCustomFieldValue($lead, Constants::CF_LEAD_TOTAL_FOOTAGE);
@@ -68,12 +68,12 @@ class ReportTask extends Task
         $metersPercent = $this->report->getFactPercent($metersTotal, $this->report::TOP_LEVEL_REPORT_METER_NUMBER);
         $todayDate     = (new \DateTimeImmutable('today', new \DateTimeZone(Constants::TIMEZONE)))->format('d-m-Y');
 
-        $this->user->data['dashboard'][Constants::PIPELINE_UMSO_SALES]['meters_report']['current'][$todayDate] = [
+        $this->user->data['dashboard'][Constants::PIPELINE_SALES]['meters_report']['current'][$todayDate] = [
             'fact_number'  => $metersTotal,
             'fact_percent' => $metersPercent,
         ];
 
-        $mmsoData            = $this->user->data['dashboard'][Constants::PIPELINE_UMSO_SALES] ?? [];
+        $mmsoData            = $this->user->data['dashboard'][Constants::PIPELINE_SALES] ?? [];
         $currentFactData     = $mmsoData['meters_report']['current'] ?? [];
         $previousFactData    = $mmsoData['meters_report']['previous'] ?? [];
         $metersWithPrevWeeks = 0;
@@ -86,7 +86,7 @@ class ReportTask extends Task
             $planNum     = ($this->report::TOP_LEVEL_REPORT_METER_NUMBER - $metersWithPrevWeeks) / $leftWeeks;
             $planPercent = $this->report->getFactPercent($planNum, $this->report::TOP_LEVEL_REPORT_METER_NUMBER);
 
-            $this->user->data['dashboard'][Constants::PIPELINE_UMSO_SALES]['meters_report']['plan'][] = [
+            $this->user->data['dashboard'][Constants::PIPELINE_SALES]['meters_report']['plan'][] = [
                 'fact_number'  => $planNum,
                 'fact_percent' => $planPercent,
             ];
@@ -107,15 +107,15 @@ class ReportTask extends Task
     /**
      * Получает данные о бюджете и заносит их в БД.
      *
-     * @param array $activeLeadsPipelineBMSOSales
+     * @param array $activeLeadsPipelineSales
      *
      * @throws MongoCollectionException
      * @throws \Exception
      */
-    private function updateBudgetReportDataAction(array $activeLeadsPipelineBMSOSales)
+    private function updateBudgetReportDataAction(array $activeLeadsPipelineSales)
     {
         $totalBudget = 0;
-        foreach ($activeLeadsPipelineBMSOSales as $lead) {
+        foreach ($activeLeadsPipelineSales as $lead) {
             $leadStatusId = $lead['status_id'];
             if (in_array($leadStatusId, (array)$this->report::TOP_LEVEL_REPORT_METER_STATUSES_TOTAL)) {
                 $leadPrice = $lead['price'] ?? 0;
@@ -128,12 +128,12 @@ class ReportTask extends Task
         $budgetPercent = $this->report->getFactPercent($totalBudget, $this->report::BUDGET_REPORT_TOTAL_PLAN);
         $todayDate     = (new \DateTimeImmutable('today', new \DateTimeZone(Constants::TIMEZONE)))->format('d-m-Y');
 
-        $this->user->data['dashboard'][Constants::PIPELINE_UMSO_SALES]['budget_report']['current'][$todayDate] = [
+        $this->user->data['dashboard'][Constants::PIPELINE_SALES]['budget_report']['current'][$todayDate] = [
             'fact_number'  => $totalBudget,
             'fact_percent' => $budgetPercent,
         ];
 
-        $mmsoData            = $this->user->data['dashboard'][Constants::PIPELINE_UMSO_SALES] ?? [];
+        $mmsoData            = $this->user->data['dashboard'][Constants::PIPELINE_SALES] ?? [];
         $currentFactData     = $mmsoData['budget_report']['current'] ?? [];
         $previousFactData    = $mmsoData['budget_report']['previous'] ?? [];
         $budgetWithPrevWeeks = 0;
@@ -146,7 +146,7 @@ class ReportTask extends Task
             $planNum     = ($this->report::BUDGET_REPORT_TOTAL_PLAN - $budgetWithPrevWeeks) / $leftWeeks;
             $planPercent = $this->report->getFactPercent($planNum, $this->report::BUDGET_REPORT_TOTAL_PLAN);
 
-            $this->user->data['dashboard'][Constants::PIPELINE_UMSO_SALES]['budget_report']['plan'][] = [
+            $this->user->data['dashboard'][Constants::PIPELINE_SALES]['budget_report']['plan'][] = [
                 'fact_number'  => $planNum,
                 'fact_percent' => $planPercent,
             ];

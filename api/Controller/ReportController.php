@@ -27,7 +27,6 @@ class ReportController extends Controller
      * Собирает данные для отчета верхнего уровня
      *
      * @link https://core.mmco-expo.ru/mmcoexpo/report/get_top_level_report_data/tmldm0zrdkvsu0f4whhhehzozdlqzz09
-     * @link http://core.dev-mmco-expo.ru/mmcoexpo/report/get_top_level_report_data/tmldm0zrdkvsu0f4whhhehzozdlqzz09
      *
      * @return Response
      */
@@ -63,7 +62,6 @@ class ReportController extends Controller
      * Собирает данные для отчета Метраж
      *
      * @link https://core.mmco-expo.ru/mmcoexpo/report/get_meter_report_data/tmldm0zrdkvsu0f4whhhehzozdlqzz09
-     * @link http://core.dev-mmco-expo.ru/mmcoexpo/report/get_meter_report_data/tmldm0zrdkvsu0f4whhhehzozdlqzz09
      *
      * @return Response
      */
@@ -99,7 +97,6 @@ class ReportController extends Controller
      * Собирает данные для отчета Бюджет
      *
      * @link https://core.mmco-expo.ru/mmcoexpo/report/get_budget_report_data/tmldm0zrdkvsu0f4whhhehzozdlqzz09
-     * @link http://core.dev-mmco-expo.ru/mmcoexpo/report/get_budget_report_data/tmldm0zrdkvsu0f4whhhehzozdlqzz09
      *
      * @return Response
      */
@@ -135,7 +132,6 @@ class ReportController extends Controller
      * Собирает данные для отчета Бюджет
      *
      * @link https://core.mmco-expo.ru/mmcoexpo/report/get_companies_report_data/tmldm0zrdkvsu0f4whhhehzozdlqzz09
-     * @link http://core.dev-mmco-expo.ru/mmcoexpo/report/get_companies_report_data/tmldm0zrdkvsu0f4whhhehzozdlqzz09
      *
      * @return Response
      */
