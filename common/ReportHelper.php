@@ -26,7 +26,7 @@ class ReportHelper extends Component
      *
      * @var int
      */
-    const TOP_LEVEL_REPORT_METER_NUMBER = 335;
+    const TOP_LEVEL_REPORT_METER_NUMBER = 6383;
 
     /**
      * План по количеству лидов
