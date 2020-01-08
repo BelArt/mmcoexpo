@@ -29,13 +29,6 @@ class ReportHelper extends Component
     const TOP_LEVEL_REPORT_METER_NUMBER = 6383;
 
     /**
-     * План по количеству лидов
-     *
-     * @var int
-     */
-    const TOP_LEVEL_REPORT_LEADS_NUMBER = 30;
-
-    /**
      * План по фактической выручке
      *
      * @var int
@@ -735,6 +728,7 @@ class ReportHelper extends Component
         $revenueIsleVisibility        = 0;
         $activeLeadsWithWarmCompanies = 0;
         $thisYearLeadsPrice           = 0;
+        $buildingPriceFact            = 0;
 
         /** @var \DateTime[] $period */
         $period                = new \DatePeriod(
@@ -758,6 +752,15 @@ class ReportHelper extends Component
                 $buildingType = $this->amo->getCustomFieldValue($lead, Constants::CF_LEAD_BUILDING_TYPE);
                 if ($buildingType == 'Индивидуальная') {
                     $metersIndividualTotal += $leadMetersTotal;
+                }
+
+                if ($leadMetersTotal && $buildingType == 'Стандартная') {
+                    $buildingPrice = $this->amo->getCustomFieldValue(
+                        $lead,
+                        Constants::CF_LEAD_BUILDING_PRICE_METER
+                    );
+
+                    $buildingPriceFact += $buildingPrice * $leadMetersTotal;
                 }
             }
 
@@ -996,11 +999,6 @@ class ReportHelper extends Component
                     'fact_number' => $delegatePrice,
                 ],
             ],
-            'leads'          => [
-                'plan'         => self::TOP_LEVEL_REPORT_LEADS_NUMBER,
-                'fact_number'  => $leadsNumber,
-                'fact_percent' => $this->getFactPercent($leadsNumber, self::TOP_LEVEL_REPORT_LEADS_NUMBER),
-            ],
             'stands'         => [
                 'individual' => [
                     'plan'         => self::TOP_LEVEL_REPORT_METERS_INDIVIDUAL_PLAN,
@@ -1028,6 +1026,7 @@ class ReportHelper extends Component
                     self::PREVIOUS_YEAR_LEADS_PRICE
                 ),
             ],
+            'building_type'  => $buildingPriceFact,
         ];
     }
 
