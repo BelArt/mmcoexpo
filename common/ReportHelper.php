@@ -251,14 +251,14 @@ class ReportHelper extends Component
      *
      * @var int
      */
-    const TOP_LEVEL_REPORT_METERS_INDIVIDUAL_PLAN = 63;
+    const TOP_LEVEL_REPORT_METERS_INDIVIDUAL_PLAN = 4149;
 
     /**
      * Стандартный план по метрам
      *
      * @var int
      */
-    const TOP_LEVEL_REPORT_METERS_STANDART_PLAN = 737;
+    const TOP_LEVEL_REPORT_METERS_STANDART_PLAN = 2234;
 
     /**
      * Выручка теплых компаний в прошлом году
@@ -789,18 +789,19 @@ class ReportHelper extends Component
                 }
             }
 
-            if ($lead['status_id'] != Constants::STATUS_SUCCESS
-                && $lead['status_id'] != Constants::STATUS_FAIL
+            if ($lead['status_id'] != Constants::STATUS_FAIL
                 && isset($lead['linked_company_id'])
                 && $lead['linked_company_id']
             ) {
                 $companyProfile = $this->amo->getCustomFieldValue($lead, Constants::CF_LEAD_COMPANY_PROFILE);
-                if ($companyProfile === 'Новая') {
-                    $newCompanies++;
-                } elseif ($companyProfile === 'Теплая') {
-                    $warmCompanies++;
-                } elseif ($companyProfile === 'Мертвая') {
-                    $deadCompanies++;
+                if ($lead['status_id'] != Constants::STATUS_SUCCESS) {
+                    if ($companyProfile === 'Новая') {
+                        $newCompanies++;
+                    } elseif ($companyProfile === 'Теплая') {
+                        $warmCompanies++;
+                    } elseif ($companyProfile === 'Мертвая') {
+                        $deadCompanies++;
+                    }
                 }
 
                 if ($companyProfile === 'Теплая'
@@ -873,11 +874,7 @@ class ReportHelper extends Component
 
         $companiesInWork             = $newCompanies + $warmCompanies + $deadCompanies;
         $retentionRateNow            = $this->getNumberCompaniesInWork();
-        $previousYearLeadsWithTagNum = $this->getLeadsByTagAndPipeline(
-            Constants::TAG_PREVIOUS_YEAR_LEADS,
-            Constants::PIPELINE_SALES,
-            [142]
-        );
+        $previousYearLeadsWithTagNum = 260;
 
         $retentionCoefficient = $this->getFactPercent(
             $activeLeadsWithWarmCompanies,
