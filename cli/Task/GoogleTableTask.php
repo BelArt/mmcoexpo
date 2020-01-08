@@ -233,8 +233,10 @@ class GoogleTableTask extends Task
                 if ($dataToInsert['exposition_location'] != $locationName) {
                     $rowsToDelete[] = $locationRow;
                 } else {
-                    $rowData[$locationRow][4] = $rowData[12][4] * $saleByLocation[$locationName] / 100;
-                    $rowData[$locationRow][2] = $saleByLocation[$locationName] - $dataToInsert['discount'] . '%';
+                    $discount = $saleByLocation[$locationName] - $dataToInsert['discount'];
+
+                    $rowData[$locationRow][4] = $rowData[12][4] * $discount / 100;
+                    $rowData[$locationRow][2] = $discount . '%';
                 }
             }
         }
