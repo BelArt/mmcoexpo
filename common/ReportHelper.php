@@ -33,49 +33,7 @@ class ReportHelper extends Component
      *
      * @var int
      */
-    const TOP_LEVEL_REPORT_REVENUE_FACT = 3923250;
-
-    /**
-     * План по ожидаемым поступлениям выручки
-     *
-     * @var int
-     */
-    const TOP_LEVEL_REPORT_REVENUE_INCOME = 100;
-
-    /**
-     * План по объему проданных услуг по аренде
-     *
-     * @var int
-     */
-    const TOP_LEVEL_REPORT_SERVICES_RENT = 100;
-
-    /**
-     * План по объему проданных услуг по доп.услугам
-     *
-     * @var int
-     */
-    const TOP_LEVEL_REPORT_SERVICES_SERVICES = 100;
-
-    /**
-     * План по объему проданных услуг по угловой обзорности
-     *
-     * @var int
-     */
-    const TOP_LEVEL_REPORT_SERVICES_CORNER_VISIBILITY = 100;
-
-    /**
-     * План по объему проданных услуг по полуостровной обзорности
-     *
-     * @var int
-     */
-    const TOP_LEVEL_REPORT_SERVICES_PEN_VISIBILITY = 100;
-
-    /**
-     * План по объему проданных услуг по островной обзорности
-     *
-     * @var int
-     */
-    const TOP_LEVEL_REPORT_SERVICES_ISLE_VISIBILITY = 100;
+    const TOP_LEVEL_REPORT_REVENUE_FACT = 119979720;
 
     /**
      * Массив статусов для получения общего количества метров.
@@ -258,7 +216,7 @@ class ReportHelper extends Component
      *
      * @var int
      */
-    const PREVIOUS_YEAR_LEADS_PRICE = 137438;
+    const PREVIOUS_YEAR_LEADS_PRICE = 101420331;
 
     /**
      * @var array
@@ -729,6 +687,8 @@ class ReportHelper extends Component
         $activeLeadsWithWarmCompanies = 0;
         $thisYearLeadsPrice           = 0;
         $buildingPriceFact            = 0;
+        $visibilityFact               = 0;
+        $registrationFeeFact          = 0;
 
         /** @var \DateTime[] $period */
         $period                = new \DatePeriod(
@@ -828,15 +788,34 @@ class ReportHelper extends Component
                     $revenueServices += $totalServicesBudgetLead;
                 }
 
+                $leadPricePerMeter = (int)$this->amo->getCustomFieldValue($lead, Constants::CF_LEAD_PRICE_METER);
+                $leadDiscountPrice = (int)$this->amo->getCustomFieldValue($lead, Constants::CF_LEAD_DISCOUNT);
+
                 $expositionLocation = $this->amo->getCustomFieldValue($lead, Constants::CF_LEAD_EXPOSITION_LOCATION);
                 if ($expositionLocation == 'Угловая') {
                     $revenueCornerVisibility++;
-                } elseif ($expositionLocation == 'Полуостров'
-                ) {
+
+                    if (isset($leadMetersTotal) && $leadMetersTotal && $leadPricePerMeter) {
+                        $visibilityFact += floor(
+                            $leadMetersTotal * $leadPricePerMeter * (10 - $leadDiscountPrice) / 100
+                        );
+                    }
+                } elseif ($expositionLocation == 'Полуостров') {
                     $revenuePenVisibility++;
-                } elseif ($expositionLocation == 'Остров'
-                ) {
+
+                    if (isset($leadMetersTotal) && $leadMetersTotal && $leadPricePerMeter) {
+                        $visibilityFact += floor(
+                            $leadMetersTotal * $leadPricePerMeter * (15 - $leadDiscountPrice) / 100
+                        );
+                    }
+                } elseif ($expositionLocation == 'Остров') {
                     $revenueIsleVisibility++;
+
+                    if (isset($leadMetersTotal) && $leadMetersTotal && $leadPricePerMeter) {
+                        $visibilityFact += floor(
+                            $leadMetersTotal * $leadPricePerMeter * (20 - $leadDiscountPrice) / 100
+                        );
+                    }
                 }
 
                 $nextPrePaymentDate = $this->amo->getCustomFieldValue($lead, Constants::CF_LEAD_NEXT_PRE_PAYMENT_DATE);
@@ -871,6 +850,11 @@ class ReportHelper extends Component
                     $thisYearLeadsPrice += $lead['price'] ?? 0;
                 }
 
+                $registrationFee = $this->amo->getCustomFieldValue($lead, Constants::CF_LEAD_REGISTRATION_FEE);
+                if ($registrationFee) {
+                    $registrationFeeFact += $registrationFee;
+                }
+
                 $factRevenue += $lead['price'] ?? 0;
             }
         }
@@ -884,35 +868,8 @@ class ReportHelper extends Component
             $previousYearLeadsWithTagNum
         );
 
-        $metersStandTotal          = $metersTotal - $metersIndividualTotal;
-        $thisYearLeadsPriceAverage = $warmCompanies ? floor($thisYearLeadsPrice / $warmCompanies) : $thisYearLeadsPrice;
-        $leadsPriceAverageDiff     = $thisYearLeadsPriceAverage - self::PREVIOUS_YEAR_LEADS_PRICE;
-
-        $partnerPrice  = 0;
-        $delegatePrice = 0;
-        $goods         = $this->amo->getCatalogElements(Constants::CATALOG_GOODS_ID) ? : [];
-        foreach ($goods as $good) {
-            $goodId = (int)$good['id'] ?? null;
-            if (in_array($goodId, self::PARTNERS_GOODS)) {
-                $catalogPrice = $this->amo->getCustomFieldValue($good, Constants::CF_CATALOG_TOTAL_PRICE);
-                if ($catalogPrice) {
-                    $partnerPrice += $catalogPrice;
-
-                    continue;
-                }
-            }
-
-            if (in_array($goodId, self::DELEGATES_GOODS)) {
-                $catalogPrice = $this->amo->getCustomFieldValue($good, Constants::CF_CATALOG_TOTAL_PRICE);
-                if ($catalogPrice) {
-                    $delegatePrice += $catalogPrice;
-
-                    continue;
-                }
-            }
-        }
-
-        $revenueServices = $revenueServices - $partnerPrice - $delegatePrice;
+        $metersStandTotal      = $metersTotal - $metersIndividualTotal;
+        $leadsPriceAverageDiff = $thisYearLeadsPrice - self::PREVIOUS_YEAR_LEADS_PRICE;
 
         return [
             'meter'          => [
@@ -949,54 +906,31 @@ class ReportHelper extends Component
                     'fact_percent' => $this->getFactPercent($factRevenue, self::TOP_LEVEL_REPORT_REVENUE_FACT),
                 ],
                 'income'            => [
-                    'plan'        => self::TOP_LEVEL_REPORT_REVENUE_INCOME,
                     'fact_number' => $revenueIncome,
                 ],
                 'in_negotiations'   => [
                     'fact_number' => $inNegotiationsPrice,
                 ],
                 'rent'              => [
-                    'plan'         => self::TOP_LEVEL_REPORT_SERVICES_RENT,
-                    'fact_number'  => $revenueRent,
-                    'fact_percent' => $this->getFactPercent($revenueRent, self::TOP_LEVEL_REPORT_SERVICES_RENT),
+                    'fact_number' => $revenueRent,
                 ],
                 'services'          => [
-                    'plan'         => self::TOP_LEVEL_REPORT_SERVICES_SERVICES,
-                    'fact_number'  => $revenueServices,
-                    'fact_percent' => $this->getFactPercent(
-                        $revenueServices,
-                        self::TOP_LEVEL_REPORT_SERVICES_SERVICES
-                    ),
+                    'fact_number' => $revenueServices,
                 ],
                 'corner_visibility' => [
-                    'plan'         => self::TOP_LEVEL_REPORT_SERVICES_CORNER_VISIBILITY,
-                    'fact_number'  => $revenueCornerVisibility,
-                    'fact_percent' => $this->getFactPercent(
-                        $revenueCornerVisibility,
-                        self::TOP_LEVEL_REPORT_SERVICES_CORNER_VISIBILITY
-                    ),
+                    'fact_number' => $revenueCornerVisibility,
                 ],
                 'pen_visibility'    => [
-                    'plan'         => self::TOP_LEVEL_REPORT_SERVICES_PEN_VISIBILITY,
-                    'fact_number'  => $revenuePenVisibility,
-                    'fact_percent' => $this->getFactPercent(
-                        $revenuePenVisibility,
-                        self::TOP_LEVEL_REPORT_SERVICES_PEN_VISIBILITY
-                    ),
+                    'fact_number' => $revenuePenVisibility,
                 ],
                 'isle_visibility'   => [
-                    'plan'         => self::TOP_LEVEL_REPORT_SERVICES_ISLE_VISIBILITY,
-                    'fact_number'  => $revenueIsleVisibility,
-                    'fact_percent' => $this->getFactPercent(
-                        $revenueIsleVisibility,
-                        self::TOP_LEVEL_REPORT_SERVICES_ISLE_VISIBILITY
-                    ),
+                    'fact_number' => $revenueIsleVisibility,
                 ],
-                'partner'           => [
-                    'fact_number' => $partnerPrice,
+                'registration_fee'  => [
+                    'fact_number' => $registrationFeeFact,
                 ],
-                'delegate'          => [
-                    'fact_number' => $delegatePrice,
+                'visibility'        => [
+                    'fact_number' => $visibilityFact,
                 ],
             ],
             'stands'         => [
@@ -1019,7 +953,7 @@ class ReportHelper extends Component
             ],
             'warm_companies' => [
                 'revenue_last_year'          => self::PREVIOUS_YEAR_LEADS_PRICE,
-                'revenue_this_year'          => $thisYearLeadsPriceAverage,
+                'revenue_this_year'          => $thisYearLeadsPrice,
                 'revenue_difference_number'  => $leadsPriceAverageDiff,
                 'revenue_difference_percent' => $this->getFactPercent(
                     $leadsPriceAverageDiff,
