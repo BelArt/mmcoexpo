@@ -171,7 +171,7 @@ class ReportHelper extends Component
     const COMPANIES_REPORT_NEW_BUDGET = 1216800;
 
     /**
-     * План по бюджету новых компаний
+     * План по бюджету мертвых компаний
      *
      * @var int
      */

@@ -224,16 +224,17 @@ class GoogleTableTask extends Task
 
             $saleByLocation = [
                 'Линейная'   => 0,
-                'Угловая'    => 0.1,
-                'Полуостров' => 0.15,
-                'Остров'     => 0.2,
+                'Угловая'    => 10,
+                'Полуостров' => 15,
+                'Остров'     => 20,
             ];
 
             foreach ($rowByLocation as $locationName => $locationRow) {
                 if ($dataToInsert['exposition_location'] != $locationName) {
                     $rowsToDelete[] = $locationRow;
                 } else {
-                    $rowData[$locationRow][4] = $rowData[12][4] * $saleByLocation[$locationName];
+                    $rowData[$locationRow][4] = $rowData[12][4] * $saleByLocation[$locationName] / 100;
+                    $rowData[$locationRow][2] = $saleByLocation[$locationName] - $dataToInsert['discount'] . '%';
                 }
             }
         }
@@ -331,6 +332,7 @@ class GoogleTableTask extends Task
             'building_price_meter' => $this->amo->getCustomFieldValue($lead, Constants::CF_LEAD_BUILDING_PRICE_METER)
                 ? : 0,
             'registration_fee'     => $this->amo->getCustomFieldValue($lead, Constants::CF_LEAD_REGISTRATION_FEE) ? : 0,
+            'discount'             => $this->amo->getCustomFieldValue($lead, Constants::CF_LEAD_DISCOUNT) ? : 0,
             'exposition_location'  => $this->amo->getCustomFieldValue($lead, Constants::CF_LEAD_EXPOSITION_LOCATION)
                 ? : 0,
             'spreadsheet_id'       => ($totalFootage == 4)
