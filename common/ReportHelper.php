@@ -154,49 +154,49 @@ class ReportHelper extends Component
      *
      * @var int
      */
-    const BUDGET_REPORT_TOTAL_SERVICES_PLAN = 417000;
+    const BUDGET_REPORT_TOTAL_SERVICES_PLAN = 8926174;
 
     /**
      * План по бюджету теплых компаний
      *
      * @var int
      */
-    const COMPANIES_REPORT_WARM_BUDGET = 4867200;
+    const COMPANIES_REPORT_WARM_BUDGET = 73855012;
 
     /**
      * План по бюджету новых компаний
      *
      * @var int
      */
-    const COMPANIES_REPORT_NEW_BUDGET = 1216800;
+    const COMPANIES_REPORT_NEW_BUDGET = 32975565;
 
     /**
      * План по бюджету мертвых компаний
      *
      * @var int
      */
-    const COMPANIES_REPORT_DEAD_BUDGET = 0;
+    const COMPANIES_REPORT_DEAD_BUDGET = 9085650;
 
     /**
      * План по количеству метров теплых компаний
      *
      * @var int
      */
-    const COMPANIES_REPORT_WARM_METERS = 566;
+    const COMPANIES_REPORT_WARM_METERS = 4021;
 
     /**
      * План по количеству метров новых компаний
      *
      * @var int
      */
-    const COMPANIES_REPORT_NEW_METERS = 243;
+    const COMPANIES_REPORT_NEW_METERS = 1851;
 
     /**
      * План по количеству метров мертвых компаний
      *
      * @var int
      */
-    const COMPANIES_REPORT_DEAD_METERS = 0;
+    const COMPANIES_REPORT_DEAD_METERS = 510;
 
     /**
      * Индивидуальный план по метрам
