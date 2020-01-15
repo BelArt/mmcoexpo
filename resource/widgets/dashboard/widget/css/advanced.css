@@ -214,6 +214,11 @@
     grid-row: 1/3;
 }
 
+#work_area_dashboard .top_level_report .dashboard-card:nth-child(7) {
+    grid-column-start: 2;
+    grid-column-end: 4;
+}
+
 /** /Top level report **/
 
 /** pie **/
