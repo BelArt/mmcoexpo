@@ -173,6 +173,29 @@
                 }
                 }
             ]
+            },
+            {
+                title: '',
+                cells: [
+                {
+                    type: 'numeric',
+                    data: {
+                    title: 'Выручка по застройке',
+                    subtitle: 'Факт (₽)',
+                    number: revenue.building_type,
+                    currency: '₽'
+                }
+                },
+                {
+                    type: 'numeric',
+                    data: {
+                    title: 'Выступления',
+                    subtitle: 'Факт (₽)',
+                    number: revenue.performances_type,
+                    currency: '₽'
+                }
+                }
+            ]
             }
         ]
     } %}
@@ -322,14 +345,6 @@
                 {
                     type : 'numeric',
                     data : {
-                    title    : 'Прошлый год',
-                    subtitle : '',
-                    number   : warm_companies.revenue_last_year,
-                },
-                },
-                {
-                    type : 'numeric',
-                    data : {
                     title    : 'Текущий год',
                     subtitle : '',
                     number   : warm_companies.revenue_this_year,
@@ -341,6 +356,14 @@
                     title    : 'Изменение чека',
                     subtitle : '',
                     number   : warm_companies.revenue_difference_number,
+                },
+                },
+                {
+                    type : 'numeric',
+                    data : {
+                    title    : 'Среднее изменение',
+                    subtitle : '',
+                    number   : warm_companies.revenue_average_difference_number,
                 },
                 },
             ],
@@ -358,26 +381,6 @@
                 },
             ]
             }
-        ],
-    } %}
-
-    {% include baseTemplates ~ 'reports/card.twig' with {
-        title : 'Стоимость застройки',
-        rows  : [
-            {
-                title : '',
-                cells : [
-                {
-                    type : 'numeric',
-                    data : {
-                    title    : '',
-                    subtitle : 'Факт (₽)',
-                    number   : building_type,
-                    currency: '₽'
-                },
-                },
-            ],
-            },
         ],
     } %}
 </div>

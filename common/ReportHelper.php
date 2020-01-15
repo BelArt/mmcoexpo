@@ -231,8 +231,9 @@ class ReportHelper extends Component
      * @var array
      */
     const DELEGATES_GOODS = [
-        Constants::CATALOG_UMSO_PACKAGE_DELEGATE_1,
-        Constants::CATALOG_UMSO_PACKAGE_DELEGATE_2,
+        Constants::CATALOG_MMSO_PERFORMANCE_15,
+        Constants::CATALOG_MMSO_PERFORMANCE_30,
+        Constants::CATALOG_MMSO_PERFORMANCE_60,
     ];
 
     /**
@@ -870,8 +871,25 @@ class ReportHelper extends Component
             $previousYearLeadsWithTagNum
         );
 
-        $metersStandTotal      = $metersTotal - $metersIndividualTotal;
-        $leadsPriceAverageDiff = $thisYearLeadsPrice - self::PREVIOUS_YEAR_LEADS_PRICE;
+        $performancesPrice = 0;
+        $goods             = $this->amo->getCatalogElements(Constants::CATALOG_GOODS_ID) ? : [];
+        foreach ($goods as $good) {
+            $goodId = (int)$good['id'] ?? null;
+
+            if (in_array($goodId, self::DELEGATES_GOODS)) {
+                $catalogPrice = $this->amo->getCustomFieldValue($good, Constants::CF_CATALOG_TOTAL_PRICE);
+                if ($catalogPrice) {
+                    $performancesPrice += $catalogPrice;
+
+                    continue;
+                }
+            }
+        }
+
+        $revenueServices   = $revenueServices - $performancesPrice;
+        $metersStandTotal  = $metersTotal - $metersIndividualTotal;
+        $leadsPriceDiff    = $thisYearLeadsPrice - self::PREVIOUS_YEAR_LEADS_PRICE;
+        $leadsAveragePrice = $warmCompanies ? floor($thisYearLeadsPrice / $warmCompanies) : $thisYearLeadsPrice;;
 
         return [
             'meter'          => [
@@ -934,6 +952,8 @@ class ReportHelper extends Component
                 'visibility'        => [
                     'fact_number' => $visibilityFact,
                 ],
+                'building_type'     => $buildingPriceFact,
+                'performances_type' => $performancesPrice,
             ],
             'stands'         => [
                 'individual' => [
@@ -954,15 +974,15 @@ class ReportHelper extends Component
                 ],
             ],
             'warm_companies' => [
-                'revenue_last_year'          => self::PREVIOUS_YEAR_LEADS_PRICE,
-                'revenue_this_year'          => $thisYearLeadsPrice,
-                'revenue_difference_number'  => $leadsPriceAverageDiff,
-                'revenue_difference_percent' => $this->getFactPercent(
-                    $leadsPriceAverageDiff,
+                'revenue_last_year'                 => self::PREVIOUS_YEAR_LEADS_PRICE,
+                'revenue_this_year'                 => $thisYearLeadsPrice,
+                'revenue_difference_number'         => $leadsPriceDiff,
+                'revenue_average_difference_number' => $leadsAveragePrice,
+                'revenue_difference_percent'        => $this->getFactPercent(
+                    $leadsAveragePrice,
                     self::PREVIOUS_YEAR_LEADS_PRICE
                 ),
             ],
-            'building_type'  => $buildingPriceFact,
         ];
     }
 
