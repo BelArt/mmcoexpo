@@ -222,14 +222,6 @@ class ReportHelper extends Component
     /**
      * @var array
      */
-    const PARTNERS_GOODS = [
-        Constants::CATALOG_UMSO_PACKAGE_PARTNER_1,
-        Constants::CATALOG_UMSO_PACKAGE_PARTNER_2,
-    ];
-
-    /**
-     * @var array
-     */
     const DELEGATES_GOODS = [
         Constants::CATALOG_MMSO_PERFORMANCE_15,
         Constants::CATALOG_MMSO_PERFORMANCE_30,

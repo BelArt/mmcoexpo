@@ -461,11 +461,10 @@ class GoogleTableTask extends Task
 
         $leadPrice = $lead['price'] ?? 0;
 
-        $todayDate = (new \DateTime('now', new \DateTimeZone(Constants::TIMEZONE)))->format('d.m.Y');
-        $standNum  = $this->amo->getCustomFieldValue($lead, Constants::CF_LEAD_STAND_NUMBER) ? : '';
-        $executor  = $this->amo->getCustomFieldValue($lead, Constants::CF_LEAD_OUR_YUR_FACE) ? : '';
-        $cluster   = $this->amo->getCustomFieldValue($lead, Constants::CF_LEAD_CLUSTER) ? : '';
-
+        $todayDate     = (new \DateTime('now', new \DateTimeZone(Constants::TIMEZONE)))->format('d.m.Y');
+        $standNum      = $this->amo->getCustomFieldValue($lead, Constants::CF_LEAD_STAND_NUMBER) ? : '';
+        $executor      = $this->amo->getCustomFieldValue($lead, Constants::CF_LEAD_OUR_YUR_FACE) ? : '';
+        $cluster       = $this->amo->getCustomFieldValue($lead, Constants::CF_LEAD_CLUSTER) ? : '';
         $contractNum   = $this->amo->getCustomFieldValue($lead, Constants::CF_LEAD_CONTRACT_NUMBER) ? : '';
         $regFee        = $this->amo->getCustomFieldValue($lead, Constants::CF_LEAD_REGISTRATION_FEE) ? : '';
         $regFeeNum     = $this->amo->getCustomFieldValue($lead, Constants::CF_LEAD_REGISTRATION_FEE_NUMBER) ? : '';
@@ -491,43 +490,96 @@ class GoogleTableTask extends Task
             $catalogQuantity[$catalogElementsLink['to_id']] = (int)$catalogElementsLink['quantity'] ?? 0;
         }
 
-        $extraBadgesNum                 = $catalogQuantity[Constants::CATALOG_GOODS_ELEMENT_EXTRA_BADGES] ?? '';
-        $performance60Num               = $catalogQuantity[Constants::CATALOG_GOODS_PERFORMANCE_IN_HALL_60] ?? '';
-        $performance30Num               = $catalogQuantity[Constants::CATALOG_GOODS_PERFORMANCE_IN_HALL_30] ?? '';
-        $performance15Num               = $catalogQuantity[Constants::CATALOG_GOODS_PERFORMANCE_IN_HALL_15] ?? '';
-        $catalogBmsoFloorOnWheels       = $catalogQuantity[Constants::CATALOG_BMSO_FLOOR_ON_WHEELS] ?? '';
-        $catalogBmsoIlluminatedNarrow   = $catalogQuantity[Constants::CATALOG_BMSO_ILLUMINATED_CABINET_NARROW] ?? '';
-        $catalogBmsoIlluminatedCabinet  = $catalogQuantity[Constants::CATALOG_BMSO_ILLUMINATED_CABINET] ?? '';
-        $catalogBmsoIlluminatedLock1    = $catalogQuantity[Constants::CATALOG_BMSO_ILLUMINATED_CABINET_LOCK_1] ?? '';
-        $catalogBmsoIlluminatedLight1   = $catalogQuantity[Constants::CATALOG_BMSO_ILLUMINATED_CABINET_LIGHT_1] ?? '';
-        $catalogBmsoIlluminatedLock05   = $catalogQuantity[Constants::CATALOG_BMSO_ILLUMINATED_CABINET_LOCK_0_5] ?? '';
-        $catalogBmsoIlluminatedLight05  = $catalogQuantity[Constants::CATALOG_BMSO_ILLUMINATED_CABINET_LIGHT_0_5] ?? '';
-        $catalogBmsoReceptionDesk       = $catalogQuantity[Constants::CATALOG_BMSO_RECEPTION_DESK] ?? '';
-        $catalogBmsoReceptionDeskSmall  = $catalogQuantity[Constants::CATALOG_BMSO_RECEPTION_DESK_SMALL] ?? '';
-        $catalogBmsoMetalHook           = $catalogQuantity[Constants::CATALOG_BMSO_METAL_HOOK] ?? '';
-        $catalogBmsoPodium              = $catalogQuantity[Constants::CATALOG_BMSO_PODIUM] ?? '';
-        $catalogBmsoMeshWithBaskets     = $catalogQuantity[Constants::CATALOG_BMSO_MESH_WITH_BASKETS] ?? '';
-        $catalogBmsoAdvertisingStand    = $catalogQuantity[Constants::CATALOG_BMSO_ADVERTISING_STAND] ?? '';
-        $catalogBmsoCoffeeTable         = $catalogQuantity[Constants::CATALOG_BMSO_COFFEE_TABLE] ?? '';
-        $catalogBmsoRoundTableGlass     = $catalogQuantity[Constants::CATALOG_BMSO_ROUND_TABLE_GLASS] ?? '';
-        $catalogBmsoRoundTablePlastic   = $catalogQuantity[Constants::CATALOG_BMSO_ROUND_TABLE_PLASTIC] ?? '';
-        $catalogBmsoColumnFenceTape     = $catalogQuantity[Constants::CATALOG_BMSO_COLUMN_FENCE_TAPE] ?? '';
-        $catalogBmsoColumnFenceEye      = $catalogQuantity[Constants::CATALOG_BMSO_COLUMN_FENCE_EYE] ?? '';
-        $catalogBmsoBarChair            = $catalogQuantity[Constants::CATALOG_BMSO_BAR_CHAIR] ?? '';
-        $catalogBmsoBarChairPlastic     = $catalogQuantity[Constants::CATALOG_BMSO_BAR_CHAIR_PLASTIC] ?? '';
-        $catalogBmsoBarChairFoldingGrey = $catalogQuantity[Constants::CATALOG_BMSO_BAR_CHAIR_FOLDING_GREY] ?? '';
-        $catalogBmsoBannerProduction    = $catalogQuantity[Constants::CATALOG_BMSO_BANNER_PRODUCTION] ?? '';
-        $catalogBmsoPastingOrakal       = $catalogQuantity[Constants::CATALOG_BMSO_PASTING_ORAKAL] ?? '';
-        $catalogBmsoPastingPrintOnGlue  = $catalogQuantity[Constants::CATALOG_BMSO_PASTING_PRINT_ON_GLUE] ?? '';
-        $catalogBmsoAdditionalPanel     = $catalogQuantity[Constants::CATALOG_BMSO_ADDITIONAL_SIGNS_FASCIA_PANEL] ?? '';
-        $catalogBmsoPlasmaPanel42       = $catalogQuantity[Constants::CATALOG_BMSO_PLASMA_PANEL_42] ?? '';
-        $catalogBmsoStandPlasmaPanel    = $catalogQuantity[Constants::CATALOG_BMSO_STAND_PLASMA_PANEL] ?? '';
-        $catalogBmsoDelegate45000       = $catalogQuantity[Constants::CATALOG_BMSO_DELEGATE_45000] ?? '';
-        $catalogBmsoDelegate55000       = $catalogQuantity[Constants::CATALOG_BMSO_DELEGATE_55000] ?? '';
-        $catalogBmsoOptionalBadge       = $catalogQuantity[Constants::CATALOG_BMSO_OPTIONAL_BADGE] ?? '';
-        $catalogBmsoPackagePartner1     = $catalogQuantity[Constants::CATALOG_BMSO_PACKAGE_PARTNER_1] ?? '';
-        $catalogBmsoPackagePartner2     = $catalogQuantity[Constants::CATALOG_BMSO_PACKAGE_PARTNER_2] ?? '';
-        $catalogBmsoPackagePartner3     = $catalogQuantity[Constants::CATALOG_BMSO_PACKAGE_PARTNER_3] ?? '';
+        $extraBadgesNum                    = $catalogQuantity[Constants::CATALOG_GOODS_ELEMENT_EXTRA_BADGES] ?? '';
+        $performance60Num                  = $catalogQuantity[Constants::CATALOG_MMSO_PERFORMANCE_60] ?? '';
+        $performance30Num                  = $catalogQuantity[Constants::CATALOG_MMSO_PERFORMANCE_30] ?? '';
+        $performance15Num                  = $catalogQuantity[Constants::CATALOG_MMSO_PERFORMANCE_15] ?? '';
+        $catalogMmsoCleaningFurniture      = $catalogQuantity[Constants::CATALOG_MMSO_CLEANING_FURNITURE] ?? '';
+        $catalogMmsoCleaningFloor          = $catalogQuantity[Constants::CATALOG_MMSO_CLEANING_FLOOR] ?? '';
+        $catalogMmsoCleaningCarpet         = $catalogQuantity[Constants::CATALOG_MMSO_CLEANING_CARPET] ?? '';
+        $catalogMmsoElectro32              = $catalogQuantity[Constants::CATALOG_MMSO_ELECTRO_32] ?? '';
+        $catalogMmsoSocket220              = $catalogQuantity[Constants::CATALOG_MMSO_SOCKET_220] ?? '';
+        $catalogMmsoSocketAlone            = $catalogQuantity[Constants::CATALOG_MMSO_SOCKET_ALONE] ?? '';
+        $catalogMmsoSwitchBoard50          = $catalogQuantity[Constants::CATALOG_MMSO_SWITCHBOARD_50] ?? '';
+        $catalogMmsoProjector150W          = $catalogQuantity[Constants::CATALOG_MMSO_PROJECTOR_150W] ?? '';
+        $catalogMmsoProjector300W          = $catalogQuantity[Constants::CATALOG_MMSO_PROJECTOR_300W] ?? '';
+        $catalogMmsoSpotBra100W            = $catalogQuantity[Constants::CATALOG_MMSO_SPOT_BRA_100W] ?? '';
+        $catalogMmsoLamp40W                = $catalogQuantity[Constants::CATALOG_MMSO_LAMP_40W] ?? '';
+        $catalogMmsoWallElement05          = $catalogQuantity[Constants::CATALOG_MMSO_WALL_ELEMENT_05] ?? '';
+        $catalogMmsoWallElement075         = $catalogQuantity[Constants::CATALOG_MMSO_WALL_ELEMENT_075] ?? '';
+        $catalogMmsoWallElement1           = $catalogQuantity[Constants::CATALOG_MMSO_WALL_ELEMENT_1] ?? '';
+        $catalogMmsoWallElement15          = $catalogQuantity[Constants::CATALOG_MMSO_WALL_ELEMENT_15] ?? '';
+        $catalogMmsoWallElementWithGlass05 = $catalogQuantity[Constants::CATALOG_MMSO_WALL_ELEMENT_WITH_GLASS_05] ?? '';
+        $catalogMmsoWallElementWithGlass1  = $catalogQuantity[Constants::CATALOG_MMSO_WALL_ELEMENT_WITH_GLASS_1] ?? '';
+        $catalogMmsoWallElementWithCurtain = $catalogQuantity[Constants::CATALOG_MMSO_WALL_ELEMENT_WITH_CURTAIN] ?? '';
+
+        $catalogMmsoDoorBlockWithDoor = $catalogQuantity[Constants::CATALOG_MMSO_DOOR_BLOCK_WITH_STANDART_DOOR] ?? '';
+        $catalogMmsoDoorSlidingDoor   = $catalogQuantity[Constants::CATALOG_MMSO_DOOR_BLOCK_WITH_SLIDING_DOOR] ?? '';
+
+        $catalogMmsoStand               = $catalogQuantity[Constants::CATALOG_MMSO_STAND] ?? '';
+        $catalogMmsoBoardLdsp03         = $catalogQuantity[Constants::CATALOG_MMSO_BOARD_LDSP_03] ?? '';
+        $catalogMmsoShelfLdsp1          = $catalogQuantity[Constants::CATALOG_MMSO_SHELF_LDSP_1] ?? '';
+        $catalogMmsoFloorLift           = $catalogQuantity[Constants::CATALOG_MMSO_FLOOR_LIFT] ?? '';
+        $catalogMmsoAdditionalCarpeting = $catalogQuantity[Constants::CATALOG_MMSO_ADDITIONAL_CARPETING] ?? '';
+        $catalogMmsoInformationDeskR1   = $catalogQuantity[Constants::CATALOG_MMSO_INFORMATION_DESK_R1] ?? '';
+        $catalogMmsoInformStandShelf    = $catalogQuantity[Constants::CATALOG_MMSO_INFORMATION_STAND_WITH_SHELF] ?? '';
+        $catalogMmsoPodiumTable1M       = $catalogQuantity[Constants::CATALOG_MMSO_PODIUM_TABLE_1M] ?? '';
+        $catalogMmsoPodiumTable05M      = $catalogQuantity[Constants::CATALOG_MMSO_PODIUM_TABLE_05M] ?? '';
+        $catalogMmsoDoorsPodiumTable    = $catalogQuantity[Constants::CATALOG_MMSO_DOORS_PODIUM_TABLE] ?? '';
+        $catalogMmsoLowShowcase         = $catalogQuantity[Constants::CATALOG_MMSO_LOW_SHOWCASE] ?? '';
+        $catalogMmsoHighShowcase        = $catalogQuantity[Constants::CATALOG_MMSO_HIGH_SHOWCASE] ?? '';
+        $catalogMmsoSoftChair           = $catalogQuantity[Constants::CATALOG_MMSO_SOFT_CHAIR] ?? '';
+        $catalogMmsoBarChair            = $catalogQuantity[Constants::CATALOG_MMSO_BAR_CHAIR] ?? '';
+        $catalogMmsoRoundTable          = $catalogQuantity[Constants::CATALOG_MMSO_ROUND_TABLE] ?? '';
+        $catalogMmsoSquareTable67CM     = $catalogQuantity[Constants::CATALOG_MMSO_SQUARE_TABLE_67CM] ?? '';
+
+        $catalogMmsoRectangularTable100CM = $catalogQuantity[Constants::CATALOG_MMSO_RECTANGULAR_TABLE_100CM] ?? '';
+        $catalogMmsoRoundGlassTable       = $catalogQuantity[Constants::CATALOG_MMSO_ROUND_GLASS_TABLE] ?? '';
+        $catalogMmsoBarTableLdsp          = $catalogQuantity[Constants::CATALOG_MMSO_BAR_TABLE_LDSP] ?? '';
+        $catalogMmsoMetalStand3Shelf      = $catalogQuantity[Constants::CATALOG_MMSO_METAL_STAND_3_SHELF] ?? '';
+        $catalogMmsoPlasticStand5Shelf    = $catalogQuantity[Constants::CATALOG_MMSO_PLASTIC_STAND_5_SHELF] ?? '';
+        $catalogMmsoCoffeeMachine         = $catalogQuantity[Constants::CATALOG_MMSO_COFFEE_MACHINE] ?? '';
+        $catalogMmsoLeatherSofaWhite      = $catalogQuantity[Constants::CATALOG_MMSO_LEATHER_SOFA_WHITE] ?? '';
+        $catalogMmsoLeatherChairWhite     = $catalogQuantity[Constants::CATALOG_MMSO_LEATHER_CHAIR_WHITE] ?? '';
+        $catalogMmsoArchiveCupboard       = $catalogQuantity[Constants::CATALOG_MMSO_ARCHIVE_CUPBOARD] ?? '';
+        $catalogMmsoListHolderStandard    = $catalogQuantity[Constants::CATALOG_MMSO_LIST_HOLDER_STANDARD] ?? '';
+        $catalogMmsoListHolderRotating    = $catalogQuantity[Constants::CATALOG_MMSO_LIST_HOLDER_ROTATING] ?? '';
+        $catalogMmsoWallHanger            = $catalogQuantity[Constants::CATALOG_MMSO_WALL_HANGER] ?? '';
+        $catalogMmsoFloorHanger           = $catalogQuantity[Constants::CATALOG_MMSO_FLOOR_HANGER] ?? '';
+        $catalogMmsoPaperBasket           = $catalogQuantity[Constants::CATALOG_MMSO_PAPER_BASKET] ?? '';
+        $catalogMmsoWaterCooler19L        = $catalogQuantity[Constants::CATALOG_MMSO_WATER_COOLER_19L] ?? '';
+        $catalogMmsoExtraBottleWater      = $catalogQuantity[Constants::CATALOG_MMSO_EXTRA_BOTTLE_WATER] ?? '';
+        $catalogMmsoTv42                  = $catalogQuantity[Constants::CATALOG_MMSO_TV_42] ?? '';
+        $catalogMmsoTv50                  = $catalogQuantity[Constants::CATALOG_MMSO_TV_50] ?? '';
+        $catalogMmsoTv60                  = $catalogQuantity[Constants::CATALOG_MMSO_TV_60] ?? '';
+        $catalogMmsoFloorStandTv          = $catalogQuantity[Constants::CATALOG_MMSO_FLOOR_STAND_TV] ?? '';
+        $catalogMmsoGlassCoffeeTable      = $catalogQuantity[Constants::CATALOG_MMSO_GLASS_COFFEE_TABLE] ?? '';
+        $catalogMmsoColoredPastingStamp   = $catalogQuantity[Constants::CATALOG_MMSO_COLORED_PASTING_STAMP] ?? '';
+
+        $catalogMmsoColoredPastingStampInformationDesk  = $catalogQuantity[Constants::CATALOG_MMSO_COLORED_PASTING_STAMP_INFORMATION_DESK] ?? '';
+        $catalogMmsoColoredPastingOracalWallPanel       = $catalogQuantity[Constants::CATALOG_MMSO_COLORED_PASTING_ORACAL_WALL_PANEL] ?? '';
+        $catalogMmsoColoredPastingOracalInformationDesk = $catalogQuantity[Constants::CATALOG_MMSO_COLORED_PASTING_ORACAL_INFORMATION_DESK] ?? '';
+
+        $catalogMmsoPastingOwnMaterial   = $catalogQuantity[Constants::CATALOG_MMSO_PASTING_OWN_MATERIAL] ?? '';
+        $catalogMmsoCleaningPanelFromMat = $catalogQuantity[Constants::CATALOG_MMSO_CLEANING_PANEL_FROM_MATERIAL] ?? '';
+        $catalogMmsoInscriptionFrieze1   = $catalogQuantity[Constants::CATALOG_MMSO_INSCRIPTION_FRIEZE_1_LETTER] ?? '';
+        $catalogMmsoBannerTill3M         = $catalogQuantity[Constants::CATALOG_MMSO_BANNER_TILL_3M] ?? '';
+        $catalogMmsoBannerFrom3M         = $catalogQuantity[Constants::CATALOG_MMSO_BANNER_FROM_3M] ?? '';
+        $catalogMmsoBannerInstallation   = $catalogQuantity[Constants::CATALOG_MMSO_BANNER_INSTALLATION] ?? '';
+
+        $catalogMmsoSingleColorLogoInformationDesk      = $catalogQuantity[Constants::CATALOG_MMSO_SINGLE_COLOR_LOGO_INFORMATION_DESK] ?? '';
+        $catalogMmsoSingleColorLogoWallPanel            = $catalogQuantity[Constants::CATALOG_MMSO_SINGLE_COLOR_LOGO_WALL_PANEL] ?? '';
+        $catalogMmsoMultiColorLogoInformationDesk       = $catalogQuantity[Constants::CATALOG_MMSO_MULTICOLOR_COLOR_LOGO_INFORMATION_DESK] ?? '';
+        $catalogMmsoMultiColorLogoWallPanel             = $catalogQuantity[Constants::CATALOG_MMSO_MULTICOLOR_LOGO_WALL_PANEL] ?? '';
+        $catalogMmsoOneTimeWindowCleaning               = $catalogQuantity[Constants::CATALOG_MMSO_ONE_TIME_WINDOW_CLEANING] ?? '';
+        $catalogMmsoProducingEvents                     = $catalogQuantity[Constants::CATALOG_MMSO_PRODUCING_EVENTS] ?? '';
+        $catalogMmsoOnlineWelcomePack                   = $catalogQuantity[Constants::CATALOG_MMSO_ONLINE_WELCOME_PACK] ?? '';
+        $catalogMmsoSpecialProjectSchoolKindergarten    = $catalogQuantity[Constants::CATALOG_MMSO_SPECIAL_PROJECT_SCHOOL_KINDERGARTEN] ?? '';
+        $catalogMmsoAdvertisingHalfCatalog              = $catalogQuantity[Constants::CATALOG_MMSO_ADVERTISING_HALF_CATALOG] ?? '';
+        $catalogMmsoFullAdvertisingCatalog              = $catalogQuantity[Constants::CATALOG_MMSO_FULL_ADVERTISING_CATALOG] ?? '';
+        $catalogMmsoBadgeScanner                        = $catalogQuantity[Constants::CATALOG_MMSO_BADGE_SCANNER] ?? '';
+        $catalogMmsoRentSecondFloorForEducation         = $catalogQuantity[Constants::CATALOG_MMSO_RENT_SECOND_FLOOR_FOR_EDUCATION] ?? '';
+        $catalogMmsoRentSecondFloor                     = $catalogQuantity[Constants::CATALOG_MMSO_RENT_SECOND_FLOOR_FOR_ORGANIZING_COMMITTEE] ?? '';
 
         if ($catalogElementsLinks) {
             $goods = CatalogHelper::getCatalogElementsWithLeads(
@@ -555,245 +607,576 @@ class GoogleTableTask extends Task
                 }
 
                 switch ($goodId) {
-                    case Constants::CATALOG_GOODS_PERFORMANCE_IN_HALL_15:
+                    case Constants::CATALOG_MMSO_PERFORMANCE_15:
                         $performance15Price = $this->amo->getCustomFieldValue($good, Constants::CF_CATALOG_PRICE);
 
                         break;
-                    case Constants::CATALOG_GOODS_PERFORMANCE_IN_HALL_30:
+                    case Constants::CATALOG_MMSO_PERFORMANCE_30:
                         $performance30Price = $this->amo->getCustomFieldValue($good, Constants::CF_CATALOG_PRICE);
 
                         break;
-                    case Constants::CATALOG_GOODS_PERFORMANCE_IN_HALL_60:
+                    case Constants::CATALOG_MMSO_PERFORMANCE_60:
                         $performance60Price = $this->amo->getCustomFieldValue($good, Constants::CF_CATALOG_PRICE);
 
                         break;
-                    case Constants::CATALOG_BMSO_FLOOR_ON_WHEELS:
-                        $catalogBmsoFloorOnWheelsPrice = $this->amo->getCustomFieldValue(
+                    case Constants::CATALOG_MMSO_CLEANING_FURNITURE:
+                        $catalogMmsoCleaningFurniturePrice = $this->amo->getCustomFieldValue(
                             $good,
                             Constants::CF_CATALOG_PRICE
                         );
 
                         break;
-                    case Constants::CATALOG_BMSO_ILLUMINATED_CABINET_NARROW:
-                        $catalogBmsoIlluminatedNarrowPrice = $this->amo->getCustomFieldValue(
+                    case Constants::CATALOG_MMSO_CLEANING_FLOOR:
+                        $catalogMmsoCleaningFloorPrice = $this->amo->getCustomFieldValue(
                             $good,
                             Constants::CF_CATALOG_PRICE
                         );
 
                         break;
-                    case Constants::CATALOG_BMSO_ILLUMINATED_CABINET:
-                        $catalogBmsoIlluminatedPrice = $this->amo->getCustomFieldValue(
+                    case Constants::CATALOG_MMSO_CLEANING_CARPET:
+                        $catalogMmsoCleaningCarpetPrice = $this->amo->getCustomFieldValue(
                             $good,
                             Constants::CF_CATALOG_PRICE
                         );
 
                         break;
-                    case Constants::CATALOG_BMSO_ILLUMINATED_CABINET_LOCK_1:
-                        $catalogBmsoIlluminatedLock1Price = $this->amo->getCustomFieldValue(
+                    case Constants::CATALOG_MMSO_ELECTRO_32:
+                        $catalogMmsoElectro32Price = $this->amo->getCustomFieldValue(
                             $good,
                             Constants::CF_CATALOG_PRICE
                         );
 
                         break;
-                    case Constants::CATALOG_BMSO_ILLUMINATED_CABINET_LIGHT_1:
-                        $catalogBmsoIlluminatedLight1Price = $this->amo->getCustomFieldValue(
+                    case Constants::CATALOG_MMSO_SOCKET_220:
+                        $catalogMmsoSocket220Price = $this->amo->getCustomFieldValue(
                             $good,
                             Constants::CF_CATALOG_PRICE
                         );
 
                         break;
-                    case Constants::CATALOG_BMSO_ILLUMINATED_CABINET_LOCK_0_5:
-                        $catalogBmsoIlluminatedLock05Price = $this->amo->getCustomFieldValue(
+                    case Constants::CATALOG_MMSO_SOCKET_ALONE:
+                        $catalogMmsoSocketAlonePrice = $this->amo->getCustomFieldValue(
                             $good,
                             Constants::CF_CATALOG_PRICE
                         );
 
                         break;
-                    case Constants::CATALOG_BMSO_ILLUMINATED_CABINET_LIGHT_0_5:
-                        $catalogBmsoIlluminatedLight05Price = $this->amo->getCustomFieldValue(
+                    case Constants::CATALOG_MMSO_SWITCHBOARD_50:
+                        $catalogMmsoSwitchBoard50Price = $this->amo->getCustomFieldValue(
                             $good,
                             Constants::CF_CATALOG_PRICE
                         );
 
                         break;
-                    case Constants::CATALOG_BMSO_RECEPTION_DESK:
-                        $catalogBmsoReceptionDeskPrice = $this->amo->getCustomFieldValue(
+                    case Constants::CATALOG_MMSO_PROJECTOR_150W:
+                        $catalogMmsoProjector150WPrice = $this->amo->getCustomFieldValue(
                             $good,
                             Constants::CF_CATALOG_PRICE
                         );
 
                         break;
-                    case Constants::CATALOG_BMSO_RECEPTION_DESK_SMALL:
-                        $catalogBmsoReceptionDeskSmallPrice = $this->amo->getCustomFieldValue(
+                    case Constants::CATALOG_MMSO_PROJECTOR_300W:
+                        $catalogMmsoProjector300WPrice = $this->amo->getCustomFieldValue(
                             $good,
                             Constants::CF_CATALOG_PRICE
                         );
 
                         break;
-                    case Constants::CATALOG_BMSO_METAL_HOOK:
-                        $catalogBmsoMetalHookPrice = $this->amo->getCustomFieldValue(
+                    case Constants::CATALOG_MMSO_SPOT_BRA_100W:
+                        $catalogMmsoSpotBra100WPrice = $this->amo->getCustomFieldValue(
                             $good,
                             Constants::CF_CATALOG_PRICE
                         );
 
                         break;
-                    case Constants::CATALOG_BMSO_PODIUM:
-                        $catalogBmsoPodiumPrice = $this->amo->getCustomFieldValue(
+                    case Constants::CATALOG_MMSO_LAMP_40W:
+                        $catalogMmsoLamp40WPrice = $this->amo->getCustomFieldValue(
                             $good,
                             Constants::CF_CATALOG_PRICE
                         );
 
                         break;
-                    case Constants::CATALOG_BMSO_MESH_WITH_BASKETS:
-                        $catalogBmsoMeshWithBasketsPrice = $this->amo->getCustomFieldValue(
+                    case Constants::CATALOG_MMSO_WALL_ELEMENT_05:
+                        $catalogMmsoWallElement05Price = $this->amo->getCustomFieldValue(
                             $good,
                             Constants::CF_CATALOG_PRICE
                         );
-
                         break;
-                    case Constants::CATALOG_BMSO_ADVERTISING_STAND:
-                        $catalogBmsoAdvertisingStandPrice = $this->amo->getCustomFieldValue(
+
+                    case Constants::CATALOG_MMSO_WALL_ELEMENT_075:
+                        $catalogMmsoWallElement075Price = $this->amo->getCustomFieldValue(
                             $good,
                             Constants::CF_CATALOG_PRICE
                         );
-
                         break;
-                    case Constants::CATALOG_BMSO_COFFEE_TABLE:
-                        $catalogBmsoCoffeeTablePrice = $this->amo->getCustomFieldValue(
+
+                    case Constants::CATALOG_MMSO_WALL_ELEMENT_1:
+                        $catalogMmsoWallElement1Price = $this->amo->getCustomFieldValue(
                             $good,
                             Constants::CF_CATALOG_PRICE
                         );
-
                         break;
-                    case Constants::CATALOG_BMSO_ROUND_TABLE_GLASS:
-                        $catalogBmsoRoundTableGlassPrice = $this->amo->getCustomFieldValue(
+
+                    case Constants::CATALOG_MMSO_WALL_ELEMENT_15:
+                        $catalogMmsoWallElement15Price = $this->amo->getCustomFieldValue(
                             $good,
                             Constants::CF_CATALOG_PRICE
                         );
-
                         break;
-                    case Constants::CATALOG_BMSO_ROUND_TABLE_PLASTIC:
-                        $catalogBmsoRoundTablePlasticPrice = $this->amo->getCustomFieldValue(
+
+                    case Constants::CATALOG_MMSO_WALL_ELEMENT_WITH_GLASS_05:
+                        $catalogMmsoWallElementWithGlass05Price = $this->amo->getCustomFieldValue(
                             $good,
                             Constants::CF_CATALOG_PRICE
                         );
-
                         break;
-                    case Constants::CATALOG_BMSO_COLUMN_FENCE_TAPE:
-                        $catalogBmsoColumnFenceTapePrice = $this->amo->getCustomFieldValue(
+
+                    case Constants::CATALOG_MMSO_WALL_ELEMENT_WITH_GLASS_1:
+                        $catalogMmsoWallElementWithGlass1Price = $this->amo->getCustomFieldValue(
                             $good,
                             Constants::CF_CATALOG_PRICE
                         );
-
                         break;
-                    case Constants::CATALOG_BMSO_COLUMN_FENCE_EYE:
-                        $catalogBmsoColumnFenceEyePrice = $this->amo->getCustomFieldValue(
+
+                    case Constants::CATALOG_MMSO_WALL_ELEMENT_WITH_CURTAIN:
+                        $catalogMmsoWallElementWithCurtainPrice = $this->amo->getCustomFieldValue(
                             $good,
                             Constants::CF_CATALOG_PRICE
                         );
-
                         break;
-                    case Constants::CATALOG_BMSO_BAR_CHAIR:
-                        $catalogBmsoBarChairPrice = $this->amo->getCustomFieldValue($good, Constants::CF_CATALOG_PRICE);
 
-                        break;
-                    case Constants::CATALOG_BMSO_BAR_CHAIR_PLASTIC:
-                        $catalogBmsoBarChairPlasticPrice = $this->amo->getCustomFieldValue(
+                    case Constants::CATALOG_MMSO_DOOR_BLOCK_WITH_STANDART_DOOR:
+                        $catalogMmsoDoorBlockWithStandartDoorPrice = $this->amo->getCustomFieldValue(
                             $good,
                             Constants::CF_CATALOG_PRICE
                         );
-
                         break;
-                    case Constants::CATALOG_BMSO_BAR_CHAIR_FOLDING_GREY:
-                        $catalogBmsoBarChairFoldingPrice = $this->amo->getCustomFieldValue(
+
+                    case Constants::CATALOG_MMSO_DOOR_BLOCK_WITH_SLIDING_DOOR:
+                        $catalogMmsoDoorBlockWithSlidingDoorPrice = $this->amo->getCustomFieldValue(
                             $good,
                             Constants::CF_CATALOG_PRICE
                         );
-
                         break;
-                    case Constants::CATALOG_BMSO_BANNER_PRODUCTION:
-                        $catalogBmsoBannerProductionPrice = $this->amo->getCustomFieldValue(
+
+                    case Constants::CATALOG_MMSO_STAND:
+                        $catalogMmsoStandPrice = $this->amo->getCustomFieldValue(
                             $good,
                             Constants::CF_CATALOG_PRICE
                         );
-
                         break;
-                    case Constants::CATALOG_BMSO_PASTING_ORAKAL:
-                        $catalogBmsoPastingOrakalPrice = $this->amo->getCustomFieldValue(
+
+                    case Constants::CATALOG_MMSO_BOARD_LDSP_03:
+                        $catalogMmsoBoardLdsp03Price = $this->amo->getCustomFieldValue(
                             $good,
                             Constants::CF_CATALOG_PRICE
                         );
-
                         break;
-                    case Constants::CATALOG_BMSO_PASTING_PRINT_ON_GLUE:
-                        $catalogBmsoPastingPrintPrice = $this->amo->getCustomFieldValue(
+
+                    case Constants::CATALOG_MMSO_SHELF_LDSP_1:
+                        $catalogMmsoShelfLdsp1Price = $this->amo->getCustomFieldValue(
                             $good,
                             Constants::CF_CATALOG_PRICE
                         );
-
                         break;
-                    case Constants::CATALOG_BMSO_ADDITIONAL_SIGNS_FASCIA_PANEL:
-                        $catalogBmsoAdditionalPanelPrice = $this->amo->getCustomFieldValue(
+
+                    case Constants::CATALOG_MMSO_FLOOR_LIFT:
+                        $catalogMmsoFloorLiftPrice = $this->amo->getCustomFieldValue(
                             $good,
                             Constants::CF_CATALOG_PRICE
                         );
-
                         break;
-                    case Constants::CATALOG_BMSO_PLASMA_PANEL_42:
-                        $catalogBmsoPlasmaPanel42Price = $this->amo->getCustomFieldValue(
+
+                    case Constants::CATALOG_MMSO_ADDITIONAL_CARPETING:
+                        $catalogMmsoAdditionalCarpetingPrice = $this->amo->getCustomFieldValue(
                             $good,
                             Constants::CF_CATALOG_PRICE
                         );
-
                         break;
-                    case Constants::CATALOG_BMSO_STAND_PLASMA_PANEL:
-                        $catalogBmsoStandPlasmaPanelPrice = $this->amo->getCustomFieldValue(
+
+                    case Constants::CATALOG_MMSO_INFORMATION_DESK_R1:
+                        $catalogMmsoInformationDeskR1Price = $this->amo->getCustomFieldValue(
                             $good,
                             Constants::CF_CATALOG_PRICE
                         );
-
                         break;
-                    case Constants::CATALOG_BMSO_DELEGATE_45000:
-                        $catalogBmsoDelegate45000Price = $this->amo->getCustomFieldValue(
+
+                    case Constants::CATALOG_MMSO_INFORMATION_STAND_WITH_SHELF:
+                        $catalogMmsoInformationStandWithShelfPrice = $this->amo->getCustomFieldValue(
                             $good,
                             Constants::CF_CATALOG_PRICE
                         );
-
                         break;
-                    case Constants::CATALOG_BMSO_DELEGATE_55000:
-                        $catalogBmsoDelegate55000Price = $this->amo->getCustomFieldValue(
+
+                    case Constants::CATALOG_MMSO_PODIUM_TABLE_1M:
+                        $catalogMmsoPodiumTable1MPrice = $this->amo->getCustomFieldValue(
                             $good,
                             Constants::CF_CATALOG_PRICE
                         );
-
                         break;
-                    case Constants::CATALOG_BMSO_OPTIONAL_BADGE:
-                        $catalogBmsoOptionalBadgePrice = $this->amo->getCustomFieldValue(
+
+                    case Constants::CATALOG_MMSO_PODIUM_TABLE_05M:
+                        $catalogMmsoPodiumTable05MPrice = $this->amo->getCustomFieldValue(
                             $good,
                             Constants::CF_CATALOG_PRICE
                         );
-
                         break;
-                    case Constants::CATALOG_BMSO_PACKAGE_PARTNER_1:
-                        $catalogBmsoPackagePartner1Price = $this->amo->getCustomFieldValue(
+
+                    case Constants::CATALOG_MMSO_DOORS_PODIUM_TABLE:
+                        $catalogMmsoDoorsPodiumTablePrice = $this->amo->getCustomFieldValue(
                             $good,
                             Constants::CF_CATALOG_PRICE
                         );
-
                         break;
-                    case Constants::CATALOG_BMSO_PACKAGE_PARTNER_2:
-                        $catalogBmsoPackagePartner2Price = $this->amo->getCustomFieldValue(
+
+                    case Constants::CATALOG_MMSO_LOW_SHOWCASE:
+                        $catalogMmsoLowShowcasePrice = $this->amo->getCustomFieldValue(
                             $good,
                             Constants::CF_CATALOG_PRICE
                         );
-
                         break;
-                    case Constants::CATALOG_BMSO_PACKAGE_PARTNER_3:
-                        $catalogBmsoPackagePartner3Price = $this->amo->getCustomFieldValue(
+
+                    case Constants::CATALOG_MMSO_HIGH_SHOWCASE:
+                        $catalogMmsoHighShowcasePrice = $this->amo->getCustomFieldValue(
                             $good,
                             Constants::CF_CATALOG_PRICE
                         );
+                        break;
 
+                    case Constants::CATALOG_MMSO_SOFT_CHAIR:
+                        $catalogMmsoSoftChairPrice = $this->amo->getCustomFieldValue(
+                            $good,
+                            Constants::CF_CATALOG_PRICE
+                        );
+                        break;
+
+                    case Constants::CATALOG_MMSO_BAR_CHAIR:
+                        $catalogMmsoBarChairPrice = $this->amo->getCustomFieldValue(
+                            $good,
+                            Constants::CF_CATALOG_PRICE
+                        );
+                        break;
+
+                    case Constants::CATALOG_MMSO_ROUND_TABLE:
+                        $catalogMmsoRoundTablePrice = $this->amo->getCustomFieldValue(
+                            $good,
+                            Constants::CF_CATALOG_PRICE
+                        );
+                        break;
+
+                    case Constants::CATALOG_MMSO_SQUARE_TABLE_67CM:
+                        $catalogMmsoSquareTable67CMPrice = $this->amo->getCustomFieldValue(
+                            $good,
+                            Constants::CF_CATALOG_PRICE
+                        );
+                        break;
+
+                    case Constants::CATALOG_MMSO_RECTANGULAR_TABLE_100CM:
+                        $catalogMmsoRectangularTable100CMPrice = $this->amo->getCustomFieldValue(
+                            $good,
+                            Constants::CF_CATALOG_PRICE
+                        );
+                        break;
+
+                    case Constants::CATALOG_MMSO_ROUND_GLASS_TABLE:
+                        $catalogMmsoRoundGlassTablePrice = $this->amo->getCustomFieldValue(
+                            $good,
+                            Constants::CF_CATALOG_PRICE
+                        );
+                        break;
+
+                    case Constants::CATALOG_MMSO_BAR_TABLE_LDSP:
+                        $catalogMmsoBarTableLdspPrice = $this->amo->getCustomFieldValue(
+                            $good,
+                            Constants::CF_CATALOG_PRICE
+                        );
+                        break;
+
+                    case Constants::CATALOG_MMSO_METAL_STAND_3_SHELF:
+                        $catalogMmsoMetalStand3ShelfPrice = $this->amo->getCustomFieldValue(
+                            $good,
+                            Constants::CF_CATALOG_PRICE
+                        );
+                        break;
+
+                    case Constants::CATALOG_MMSO_PLASTIC_STAND_5_SHELF:
+                        $catalogMmsoPlasticStand5ShelfPrice = $this->amo->getCustomFieldValue(
+                            $good,
+                            Constants::CF_CATALOG_PRICE
+                        );
+                        break;
+
+                    case Constants::CATALOG_MMSO_COFFEE_MACHINE:
+                        $catalogMmsoCoffeeMachinePrice = $this->amo->getCustomFieldValue(
+                            $good,
+                            Constants::CF_CATALOG_PRICE
+                        );
+                        break;
+
+                    case Constants::CATALOG_MMSO_LEATHER_SOFA_WHITE:
+                        $catalogMmsoLeatherSofaWhitePrice = $this->amo->getCustomFieldValue(
+                            $good,
+                            Constants::CF_CATALOG_PRICE
+                        );
+                        break;
+
+                    case Constants::CATALOG_MMSO_LEATHER_CHAIR_WHITE:
+                        $catalogMmsoLeatherChairWhitePrice = $this->amo->getCustomFieldValue(
+                            $good,
+                            Constants::CF_CATALOG_PRICE
+                        );
+                        break;
+
+                    case Constants::CATALOG_MMSO_ARCHIVE_CUPBOARD:
+                        $catalogMmsoArchiveCupboardPrice = $this->amo->getCustomFieldValue(
+                            $good,
+                            Constants::CF_CATALOG_PRICE
+                        );
+                        break;
+
+                    case Constants::CATALOG_MMSO_LIST_HOLDER_STANDARD:
+                        $catalogMmsoListHolderStandardPrice = $this->amo->getCustomFieldValue(
+                            $good,
+                            Constants::CF_CATALOG_PRICE
+                        );
+                        break;
+
+                    case Constants::CATALOG_MMSO_LIST_HOLDER_ROTATING:
+                        $catalogMmsoListHolderRotatingPrice = $this->amo->getCustomFieldValue(
+                            $good,
+                            Constants::CF_CATALOG_PRICE
+                        );
+                        break;
+
+                    case Constants::CATALOG_MMSO_WALL_HANGER:
+                        $catalogMmsoWallHangerPrice = $this->amo->getCustomFieldValue(
+                            $good,
+                            Constants::CF_CATALOG_PRICE
+                        );
+                        break;
+
+                    case Constants::CATALOG_MMSO_FLOOR_HANGER:
+                        $catalogMmsoFloorHangerPrice = $this->amo->getCustomFieldValue(
+                            $good,
+                            Constants::CF_CATALOG_PRICE
+                        );
+                        break;
+
+                    case Constants::CATALOG_MMSO_PAPER_BASKET:
+                        $catalogMmsoPaperBasketPrice = $this->amo->getCustomFieldValue(
+                            $good,
+                            Constants::CF_CATALOG_PRICE
+                        );
+                        break;
+
+                    case Constants::CATALOG_MMSO_WATER_COOLER_19L:
+                        $catalogMmsoWaterCooler19LPrice = $this->amo->getCustomFieldValue(
+                            $good,
+                            Constants::CF_CATALOG_PRICE
+                        );
+                        break;
+
+                    case Constants::CATALOG_MMSO_EXTRA_BOTTLE_WATER:
+                        $catalogMmsoExtraBottleWaterPrice = $this->amo->getCustomFieldValue(
+                            $good,
+                            Constants::CF_CATALOG_PRICE
+                        );
+                        break;
+
+                    case Constants::CATALOG_MMSO_TV_42:
+                        $catalogMmsoTv42Price = $this->amo->getCustomFieldValue(
+                            $good,
+                            Constants::CF_CATALOG_PRICE
+                        );
+                        break;
+
+                    case Constants::CATALOG_MMSO_TV_50:
+                        $catalogMmsoTv50Price = $this->amo->getCustomFieldValue(
+                            $good,
+                            Constants::CF_CATALOG_PRICE
+                        );
+                        break;
+
+                    case Constants::CATALOG_MMSO_TV_60:
+                        $catalogMmsoTv60Price = $this->amo->getCustomFieldValue(
+                            $good,
+                            Constants::CF_CATALOG_PRICE
+                        );
+                        break;
+
+                    case Constants::CATALOG_MMSO_FLOOR_STAND_TV:
+                        $catalogMmsoFloorStandTvPrice = $this->amo->getCustomFieldValue(
+                            $good,
+                            Constants::CF_CATALOG_PRICE
+                        );
+                        break;
+
+                    case Constants::CATALOG_MMSO_GLASS_COFFEE_TABLE:
+                        $catalogMmsoGlassCoffeeTablePrice = $this->amo->getCustomFieldValue(
+                            $good,
+                            Constants::CF_CATALOG_PRICE
+                        );
+                        break;
+
+                    case Constants::CATALOG_MMSO_COLORED_PASTING_STAMP:
+                        $catalogMmsoColoredPastingStampPrice = $this->amo->getCustomFieldValue(
+                            $good,
+                            Constants::CF_CATALOG_PRICE
+                        );
+                        break;
+
+                    case Constants::CATALOG_MMSO_COLORED_PASTING_STAMP_INFORMATION_DESK:
+                        $catalogMmsoColoredPastingStampInformationDeskPrice = $this->amo->getCustomFieldValue(
+                            $good,
+                            Constants::CF_CATALOG_PRICE
+                        );
+                        break;
+
+                    case Constants::CATALOG_MMSO_COLORED_PASTING_ORACAL_WALL_PANEL:
+                        $catalogMmsoColoredPastingOracalWallPanelPrice = $this->amo->getCustomFieldValue(
+                            $good,
+                            Constants::CF_CATALOG_PRICE
+                        );
+                        break;
+
+                    case Constants::CATALOG_MMSO_COLORED_PASTING_ORACAL_INFORMATION_DESK:
+                        $catalogMmsoColoredPastingOracalInformationDeskPrice = $this->amo->getCustomFieldValue(
+                            $good,
+                            Constants::CF_CATALOG_PRICE
+                        );
+                        break;
+
+                    case Constants::CATALOG_MMSO_PASTING_OWN_MATERIAL:
+                        $catalogMmsoPastingOwnMaterialPrice = $this->amo->getCustomFieldValue(
+                            $good,
+                            Constants::CF_CATALOG_PRICE
+                        );
+                        break;
+
+                    case Constants::CATALOG_MMSO_CLEANING_PANEL_FROM_MATERIAL:
+                        $catalogMmsoCleaningPanelFromMaterialPrice = $this->amo->getCustomFieldValue(
+                            $good,
+                            Constants::CF_CATALOG_PRICE
+                        );
+                        break;
+
+                    case Constants::CATALOG_MMSO_INSCRIPTION_FRIEZE_1_LETTER:
+                        $catalogMmsoInscriptionFrieze1LetterPrice = $this->amo->getCustomFieldValue(
+                            $good,
+                            Constants::CF_CATALOG_PRICE
+                        );
+                        break;
+
+                    case Constants::CATALOG_MMSO_BANNER_TILL_3M:
+                        $catalogMmsoBannerTill3MPrice = $this->amo->getCustomFieldValue(
+                            $good,
+                            Constants::CF_CATALOG_PRICE
+                        );
+                        break;
+
+                    case Constants::CATALOG_MMSO_BANNER_FROM_3M:
+                        $catalogMmsoBannerFrom3MPrice = $this->amo->getCustomFieldValue(
+                            $good,
+                            Constants::CF_CATALOG_PRICE
+                        );
+                        break;
+
+                    case Constants::CATALOG_MMSO_BANNER_INSTALLATION:
+                        $catalogMmsoBannerInstallationPrice = $this->amo->getCustomFieldValue(
+                            $good,
+                            Constants::CF_CATALOG_PRICE
+                        );
+                        break;
+
+                    case Constants::CATALOG_MMSO_SINGLE_COLOR_LOGO_INFORMATION_DESK:
+                        $catalogMmsoSingleColorLogoInformationDeskPrice = $this->amo->getCustomFieldValue(
+                            $good,
+                            Constants::CF_CATALOG_PRICE
+                        );
+                        break;
+
+                    case Constants::CATALOG_MMSO_SINGLE_COLOR_LOGO_WALL_PANEL:
+                        $catalogMmsoSingleColorLogoWallPanelPrice = $this->amo->getCustomFieldValue(
+                            $good,
+                            Constants::CF_CATALOG_PRICE
+                        );
+                        break;
+
+                    case Constants::CATALOG_MMSO_MULTICOLOR_COLOR_LOGO_INFORMATION_DESK:
+                        $catalogMmsoMultiColorLogoInformationDeskPrice = $this->amo->getCustomFieldValue(
+                            $good,
+                            Constants::CF_CATALOG_PRICE
+                        );
+                        break;
+
+                    case Constants::CATALOG_MMSO_MULTICOLOR_LOGO_WALL_PANEL:
+                        $catalogMmsoMultiColorLogoWallPanelPrice = $this->amo->getCustomFieldValue(
+                            $good,
+                            Constants::CF_CATALOG_PRICE
+                        );
+                        break;
+
+                    case Constants::CATALOG_MMSO_ONE_TIME_WINDOW_CLEANING:
+                        $catalogMmsoOneTimeWindowCleaningPrice = $this->amo->getCustomFieldValue(
+                            $good,
+                            Constants::CF_CATALOG_PRICE
+                        );
+                        break;
+
+                    case Constants::CATALOG_MMSO_PRODUCING_EVENTS:
+                        $catalogMmsoProducingEventsPrice = $this->amo->getCustomFieldValue(
+                            $good,
+                            Constants::CF_CATALOG_PRICE
+                        );
+                        break;
+
+                    case Constants::CATALOG_MMSO_ONLINE_WELCOME_PACK:
+                        $catalogMmsoOnlineWelcomePackPrice = $this->amo->getCustomFieldValue(
+                            $good,
+                            Constants::CF_CATALOG_PRICE
+                        );
+                        break;
+
+                    case Constants::CATALOG_MMSO_SPECIAL_PROJECT_SCHOOL_KINDERGARTEN:
+                        $catalogMmsoSpecialProjectSchoolKindergartenPrice = $this->amo->getCustomFieldValue(
+                            $good,
+                            Constants::CF_CATALOG_PRICE
+                        );
+                        break;
+
+                    case Constants::CATALOG_MMSO_ADVERTISING_HALF_CATALOG:
+                        $catalogMmsoAdvertisingHalfCatalogPrice = $this->amo->getCustomFieldValue(
+                            $good,
+                            Constants::CF_CATALOG_PRICE
+                        );
+                        break;
+
+                    case Constants::CATALOG_MMSO_FULL_ADVERTISING_CATALOG:
+                        $catalogMmsoFullAdvertisingCatalogPrice = $this->amo->getCustomFieldValue(
+                            $good,
+                            Constants::CF_CATALOG_PRICE
+                        );
+                        break;
+
+                    case Constants::CATALOG_MMSO_BADGE_SCANNER:
+                        $catalogMmsoBadgeScannerPrice = $this->amo->getCustomFieldValue(
+                            $good,
+                            Constants::CF_CATALOG_PRICE
+                        );
+                        break;
+
+                    case Constants::CATALOG_MMSO_RENT_SECOND_FLOOR_FOR_EDUCATION:
+                        $catalogMmsoRentSecondFloorForEducationPrice = $this->amo->getCustomFieldValue(
+                            $good,
+                            Constants::CF_CATALOG_PRICE
+                        );
+                        break;
+
+                    case Constants::CATALOG_MMSO_RENT_SECOND_FLOOR_FOR_ORGANIZING_COMMITTEE:
+                        $catalogMmsoRentSecondFloorPrice = $this->amo->getCustomFieldValue(
+                            $good,
+                            Constants::CF_CATALOG_PRICE
+                        );
                         break;
                 }
             }
@@ -844,88 +1227,265 @@ class GoogleTableTask extends Task
             $actSum,                                            // T (Акт на сумму, руб (сверка с первичной док))
             $rowData[$notEmptyRow][20] ?? '',                   // U
             $leadPrice,                                         // V
-            $buildingPrice,                                     // W (Цена застройки, за метр)
-            $rowData[$notEmptyRow][23] ?? '',                   // X
+            $rowData[$notEmptyRow][22] ?? '',                   // W
+            $buildingPrice,                                     // X (Цена застройки, за метр)
             $rowData[$notEmptyRow][24] ?? '',                   // Y
-            $companyType,                                       // Z (Тип аренды)
-            $rentBudget,                                        // AA (Аренда)
-            $kwName ?? '',                                      // AB (Электричество, кВт)
-            $kwNum ?? '',                                       // AC (множитель)
-            $kwPrice ?? '',                                     // AD (Электричество, руб)
-            $ethernetName ?? '',                                // AE (Интернет Мбит/сек)
-            $ethernetNum ?? '',                                 // AF (множитель)
-            $ethernetPrice ?? '',                               // AG (Интернет, руб)
-            $performance15Num,                                  // AH (Выступление 15 минут (кол-во))
-            $performance30Num,                                  // AI (Выступление 30 минут (кол-во))
-            $performance60Num,                                  // AJ (Выступление 60 минут (кол-во))
-            $performancePrice ? : '',                           // AK (ВЫСТУПЛЕНИЯ, всего на сумму в руб)
-            $responsibleUserName,                               // AL (Отв. менеджер)
-            $catalogBmsoFloorOnWheels,                          // AM (УМСО) Вешало напольное на колесах
-            $catalogBmsoFloorOnWheelsPrice ?? '',               // AN (УМСО) Вешало напольное на колесах
-            $catalogBmsoIlluminatedNarrow,                      // AO (УМСО) Витрина-шкафс подсветкой (узкаяс)
-            $catalogBmsoIlluminatedNarrowPrice ?? '',    // AP (УМСО) Витрина-шкафс подсветкой (узкаяс)
-            $catalogBmsoIlluminatedCabinet,                     // AQ (УМСО) Витрина-шкаф с подсветкой (2017х1000х500мм)
-            $catalogBmsoIlluminatedPrice ?? '',          // AR (УМСО) Витрина-шкаф с подсветкой (2017х1000х500мм)
-            $catalogBmsoIlluminatedLock1,                       // AS (УМСО) Витрина-шкаф h 2,5-1*0,5 с замком
-            $catalogBmsoIlluminatedLock1Price ?? '',     // AT (УМСО) Витрина-шкаф h 2,5-1*0,5 с замком
-            $catalogBmsoIlluminatedLight1,                      // AU (УМСО) Витрина-шкаф h 2,5-1*0,5 с подсветкой
-            $catalogBmsoIlluminatedLight1Price ?? '',    // AV (УМСО) Витрина-шкаф h 2,5-1*0,5 с подсветкой
-            $catalogBmsoIlluminatedLock05,                      // AW (УМСО) Витрина-шкаф h 2,5-0,5*0,5 с замком
-            $catalogBmsoIlluminatedLock05Price ?? '',   // AX (УМСО) Витрина-шкаф h 2,5-0,5*0,5 с замком
-            $catalogBmsoIlluminatedLight05,                     // AY (УМСО) Витрина-шкаф h 2,5-0,5*0,5 с подстветкой
-            $catalogBmsoIlluminatedLight05Price ?? '',  // AZ (УМСО) Витрина-шкаф h 2,5-0,5*0,5 с подстветкой
-            $catalogBmsoReceptionDesk,                          // BA (УМСО) Стойка ресепшн,(серая, h1060 мм,1620 внеш)
-            $catalogBmsoReceptionDeskPrice ?? '',               // BB (УМСО) Стойка ресепшн,(серая, h1060 мм,1620 внеш)
-            $catalogBmsoReceptionDeskSmall,                     // BC (УМСО) Стойка ресепшн,(серая, h1050 мм,1150 внеш)
-            $catalogBmsoReceptionDeskSmallPrice ?? '',          // BD (УМСО) Стойка ресепшн,(серая, h1050 мм,1150 внеш)
-            $catalogBmsoMetalHook,                              // BE (УМСО) Крючок металлический для подвеса
-            $catalogBmsoMetalHookPrice ?? '',                   // BF (УМСО) Крючок металлический для подвеса
-            $catalogBmsoPodium,                                 // BG (УМСО) Подиум 1х1х0,5 м
-            $catalogBmsoPodiumPrice ?? '',                      // BH (УМСО) Подиум 1х1х0,5 м
-            $catalogBmsoMeshWithBaskets,                        // BI (УМСО) Сетка с навесными корзинами
-            $catalogBmsoMeshWithBasketsPrice ?? '',             // BJ (УМСО) Сетка с навесными корзинами
-            $catalogBmsoAdvertisingStand,                       // BK (УМСО) Стойка для рекламы
-            $catalogBmsoAdvertisingStandPrice ?? '',            // BL (УМСО) Стойка для рекламы
-            $catalogBmsoCoffeeTable,                            // BM (УМСО) Стол журнальный (1200х700х450мм)
-            $catalogBmsoCoffeeTablePrice ?? '',                 // BN (УМСО) Стол журнальный (1200х700х450мм)
-            $catalogBmsoRoundTableGlass,                        // BO (УМСО) Стол круглый со стеклянной столешницей
-            $catalogBmsoRoundTableGlassPrice ?? '',             // BP (УМСО) Стол круглый со стеклянной столешницей
-            $catalogBmsoRoundTablePlastic,                      // BQ (УМСО) Стол пластиковый белый (800х800 мм)
-            $catalogBmsoRoundTablePlasticPrice ?? '',           // BR (УМСО) Стол пластиковый белый (800х800 мм)
-            $catalogBmsoColumnFenceTape,                        // BS (УМСО) Столбик ограждения (стоп-стойка с лентой)
-            $catalogBmsoColumnFenceTapePrice ?? '',             // BT (УМСО) Столбик ограждения (стоп-стойка с лентой)
-            $catalogBmsoColumnFenceEye,                         // BU (УМСО) Столбик ограждения (с проушиной)
-            $catalogBmsoColumnFenceEyePrice ?? '',              // BV (УМСО) Столбик ограждения (с проушиной)
-            $catalogBmsoBarChair,                               // BW (УМСО) Стул барный
-            $catalogBmsoBarChairPrice ?? '',                    // BX (УМСО) Стул барный
-            $catalogBmsoBarChairPlastic,                        // BY (УМСО) Стул пластиковый белый
-            $catalogBmsoBarChairPlasticPrice ?? '',             // BZ (УМСО) Стул пластиковый белый
-            $catalogBmsoBarChairFoldingGrey,                    // СA (УМСО) Стул раскладной (серый)
-            $catalogBmsoBarChairFoldingPrice ?? '',         // СB (УМСО) Стул раскладной (серый)
-            $catalogBmsoBannerProduction,                       // СC (УМСО) Изготовление баннера 1000*2400 мм
-            $catalogBmsoBannerProductionPrice ?? '',            // СD (УМСО) Изготовление баннера 1000*2400 мм
-            $catalogBmsoPastingOrakal,                          // СE (УМСО) Оклейка пленкой "Оракал" 1м2
-            $catalogBmsoPastingOrakalPrice ?? '',               // СF (УМСО) Оклейка пленкой "Оракал" 1м2
-            $catalogBmsoPastingPrintOnGlue,                     // СG (УМСО) Оклейка пленкой "Print on Glue"
-            $catalogBmsoPastingPrintPrice ?? '',          // СH (УМСО) Оклейка пленкой "Print on Glue"
-            $catalogBmsoAdditionalPanel,                        // СI (УМСО) Дополнительные знаки на фризовую панель
-            $catalogBmsoAdditionalPanelPrice ?? '',  // СJ (УМСО) Дополнительные знаки на фризовую панель
-            $catalogBmsoPlasmaPanel42,                          // СK (УМСО) Плазменная панель42 дюйма(1 день)
-            $catalogBmsoPlasmaPanel42Price ?? '',               // СL (УМСО) Плазменная панель42 дюйма(1 день)
-            $catalogBmsoStandPlasmaPanel,                       // СM (УМСО) Стойка для плазменной панели (1 день)
-            $catalogBmsoStandPlasmaPanelPrice ?? '',            // СN (УМСО) Стойка для плазменной панели (1 день)
-            $catalogBmsoDelegate45000,                          // СO (УМСО) Делегат 45000
-            $catalogBmsoDelegate45000Price ?? '',               // СP (УМСО) Делегат 45000
-            $catalogBmsoDelegate55000,                          // СQ (УМСО) Делегат 55000
-            $catalogBmsoDelegate55000Price ?? '',               // СR (УМСО) Делегат 55000
-            $catalogBmsoOptionalBadge,                          // СS (УМСО) Дополнительный бейдж
-            $catalogBmsoOptionalBadgePrice ?? '',               // СT (УМСО) Дополнительный бейдж
-            $catalogBmsoPackagePartner1,                        // СU (УМСО) Пакет Партнер №1
-            $catalogBmsoPackagePartner1Price ?? '',             // CV (УМСО) Пакет Партнер №1
-            $catalogBmsoPackagePartner2,                        // СW (УМСО) Пакет Партнер №2
-            $catalogBmsoPackagePartner2Price ?? '',             // CX (УМСО) Пакет Партнер №2
-            $catalogBmsoPackagePartner3,                        // СY (УМСО) Пакет Партнер №3
-            $catalogBmsoPackagePartner3Price ?? '',             // CZ (УМСО) Пакет Партнер №3
+            $rowData[$notEmptyRow][25] ?? '',                   // Z
+            $companyType,                                       // AA (Тип Аренды)
+            $rentBudget,                                        // AB (Аренда руб)
+            $kwName ?? '',                                      // AC (Электричество, кВт)
+            $kwNum ?? '',                                       // AD (множитель)
+            $kwPrice ?? '',                                     // AE (Электричество, руб)
+            $ethernetName ?? '',                                // AF (Интернет Мбит/сек)
+            $ethernetNum ?? '',                                 // AG (множитель)
+            $ethernetPrice ?? '',                               // AH (Интернет, руб)
+            $performance15Num,                                  // AI (Выступление 15 минут (кол-во))
+            $performance30Num,                                  // AJ (Выступление 30 минут (кол-во))
+            $performance60Num,                                  // AK (Выступление 60 минут (кол-во))
+            $performancePrice ? : '',                           // AL (ВЫСТУПЛЕНИЯ, всего на сумму в руб)
+            $responsibleUserName,                               // AM (Отв. менеджер)
+            $catalogMmsoCleaningFurniture,                      // AN (ММСО) Влажная уборка мебели
+            $catalogMmsoCleaningFurniturePrice ?? '',           // AO (ММСО) Влажная уборка мебели руб
+            $rowData[$notEmptyRow][41] ?? '',                   // AP
+            $catalogMmsoCleaningFloor ?? '',                    // AQ (ММСО) Влажная уборка пола
+            $catalogMmsoCleaningFloorPrice ?? '',               // AR (ММСО) Влажная уборка пола руб
+            $rowData[$notEmptyRow][44] ?? '',                   // AS
+            $catalogMmsoCleaningCarpet,                         // AT (ММСО) Уборка коврового покрытия
+            $catalogMmsoCleaningCarpetPrice ?? '',              // AU (ММСО) Уборка коврового покрытия руб
+            $rowData[$notEmptyRow][47] ?? '',                   // AV
+            $rowData[$notEmptyRow][48] ?? '',                   // AW (ММСО) Витрина-шкаф с подсветкой (2017х1000х500мм)
+            $rowData[$notEmptyRow][49] ?? '',                   // AX (ММСО) Витрина-шкаф h 2,5-1*0,5 с замком
+            $catalogMmsoElectro32,                              // AY (ММСО) Электро32
+            $catalogMmsoElectro32Price ?? '',                   // AZ (ММСО) Электро32 руб
+            $rowData[$notEmptyRow][52] ?? '',                   // BA
+            $catalogMmsoSocket220,                              // BB (ММСО) Розетки 220В
+            $catalogMmsoSocket220Price ?? '',                   // BC (ММСО) Розетки 220В руб
+            $rowData[$notEmptyRow][55] ?? '',                   // BD
+            $catalogMmsoSocketAlone,                            // BE (ММСО) Розетка 220 B одинарная круглосуточная
+            $catalogMmsoSocketAlonePrice ?? '',                 // BF (ММСО) Розетка 220 B одинарная круглосуточная руб
+            $rowData[$notEmptyRow][58] ?? '',                   // BG (ММСО)
+            $catalogMmsoSwitchBoard50,                          // BH (ММСО) Распределительный электрощит
+            $catalogMmsoSwitchBoard50Price ?? '',               // BI (ММСО) Распределительный электрощит руб
+            $rowData[$notEmptyRow][61] ?? '',                   // BJ
+            $catalogMmsoProjector150W,                          // BK (ММСО) Прожектор МГ 150 W
+            $catalogMmsoProjector150WPrice ?? '',              // BL (ММСО) Прожектор МГ 150 W руб
+            $rowData[$notEmptyRow][64] ?? '',                   // BM
+            $catalogMmsoProjector300W,                          // BN (ММСО) Прожектор МГ 150 W
+            $catalogMmsoProjector300WPrice ?? '',              // BO (ММСО) Прожектор МГ 150 W руб
+            $rowData[$notEmptyRow][67] ?? '',                   // BP
+            $catalogMmsoSpotBra100W,                            // BQ (ММСО) Спот-бра 100W
+            $catalogMmsoSpotBra100WPrice ?? '',                 // BR (ММСО) Спот-бра 100W руб
+            $rowData[$notEmptyRow][70] ?? '',                   // BS
+            $catalogMmsoLamp40W,                                // BT (ММСО) Светильник с люминесцентной лампой 40 W
+            $catalogMmsoLamp40WPrice ?? '',                     // BU (ММСО) Светильник с люминесцентной лампой 40 W руб
+            $rowData[$notEmptyRow][73] ?? '',                   // BV
+            $catalogMmsoWallElement05, // BW (ММСО) Элемент стены 2,5х0,5 м
+            $catalogMmsoWallElement05Price ?? '', // BX (ММСО) Элемент стены 2,5х0,5 м
+            $rowData[$notEmptyRow][76] ?? '', // BY
+            $catalogMmsoWallElement075, // BZ (ММСО) Элемент стены 2,5х0,75 м
+            $catalogMmsoWallElement075Price ?? '', // CA (ММСО) Элемент стены 2,5х0,5 м
+            $rowData[$notEmptyRow][79] ?? '', // CB
+            $catalogMmsoWallElement1, // CC (ММСО) Элемент стены 2,5х1,0 м
+            $catalogMmsoWallElement1Price ?? '', // CD (ММСО) Элемент стены 2,5х1,0 v
+            $rowData[$notEmptyRow][82] ?? '', // CE
+            $catalogMmsoWallElement15, // CF (ММСО) Элемент стены 2,5х1,5 м
+            $catalogMmsoWallElement15Price ?? '', // CG (ММСО) Элемент стены 2,5х1,5 м
+            $rowData[$notEmptyRow][85] ?? '', // CH
+            $catalogMmsoWallElementWithGlass05, // CI (ММСО) Элемент стены со стеклом 2,5х0,5 м
+            $catalogMmsoWallElementWithGlass05Price ?? '', // CJ (ММСО) Элемент стены со стеклом 2,5х0,5 м
+            $rowData[$notEmptyRow][88] ?? '', // CK
+            $catalogMmsoWallElementWithGlass1, // CL (ММСО) Элемент стены со стеклом 2,5х1,0 м
+            $catalogMmsoWallElementWithGlass1Price ?? '', // CM (ММСО) Элемент стены со стеклом 2,5х1,0 м
+            $rowData[$notEmptyRow][91] ?? '', // CN
+            $catalogMmsoWallElementWithCurtain, // CO (ММСО) Элемент стены с занавеской
+            $catalogMmsoWallElementWithCurtainPrice ?? '', // CP (ММСО) Элемент стены с занавеской
+            $rowData[$notEmptyRow][94] ?? '', // CQ
+            $catalogMmsoDoorBlockWithDoor, // CR (ММСО) Дверной блок (дверь распашная)
+            $catalogMmsoDoorBlockWithStandartDoorPrice ?? '', // CS (ММСО) Дверной блок (дверь распашная)
+            $rowData[$notEmptyRow][97] ?? '', // CT
+            $catalogMmsoDoorSlidingDoor, // CU (ММСО) Дверной блок с раздвижной дверью
+            $catalogMmsoDoorBlockWithSlidingDoorPrice ?? '', // CV (ММСО) Дверной блок с раздвижной дверью
+            $rowData[$notEmptyRow][100] ?? '', // CW
+            $catalogMmsoStand, // CX (ММСО) Стойка
+            $catalogMmsoStandPrice ?? '', // CY (ММСО) Стойка
+            $rowData[$notEmptyRow][103] ?? '', // CZ
+            $catalogMmsoBoardLdsp03, // DA (ММСО) Фризовая панель ЛДСП (навесная), h=0,3 м
+            $catalogMmsoBoardLdsp03Price ?? '', // DB (ММСО) Фризовая панель ЛДСП (навесная), h=0,3 м
+            $rowData[$notEmptyRow][106] ?? '', // DC
+            $catalogMmsoShelfLdsp1, // DD (ММСО) Полка ЛДСП 1 х 0,3 м (настенная)
+            $catalogMmsoShelfLdsp1Price ?? '', // DE (ММСО) Полка ЛДСП 1 х 0,3 м (настенная)
+            $rowData[$notEmptyRow][109] ?? '', // DF
+            $catalogMmsoFloorLift, // DG (ММСО) Подъем пола на h=0,2-0,5 м (с ковровым покрытием)
+            $catalogMmsoFloorLiftPrice ?? '', // DH (ММСО) Подъем пола на h=0,2-0,5 м (с ковровым покрытием)
+            $rowData[$notEmptyRow][112] ?? '', // DI
+            $catalogMmsoAdditionalCarpeting, // DJ (ММСО) Дополнительное ковровое покрытие под стенд
+            $catalogMmsoAdditionalCarpetingPrice ?? '', // DK (ММСО) Дополнительное ковровое покрытие под стенд
+            $rowData[$notEmptyRow][115] ?? '', // DL
+            $catalogMmsoInformationDeskR1, // DM (ММСО) Стойка информационная закругленная R-1 м, h=1 м
+            $catalogMmsoInformationDeskR1Price ?? '', // DN (ММСО) Стойка информационная закругленная R-1 м, h=1 м
+            $rowData[$notEmptyRow][118] ?? '', // DO
+            $catalogMmsoInformStandShelf, // DP(ММСО) Стойка информационная с внутренней полкой
+            $catalogMmsoInformationStandWithShelfPrice ?? '', // DQ(ММСО) Стойка информационная с внутренней полкой
+            $rowData[$notEmptyRow][121] ?? '', // DR
+            $catalogMmsoPodiumTable1M, // DS(ММСО) Стол-подиум 1х1 м, h=0,75 м
+            $catalogMmsoPodiumTable1MPrice ?? '', // DT (ММСО) Стол-подиум 1х1 м, h=0,75 м
+            $rowData[$notEmptyRow][124] ?? '', // DU
+            $catalogMmsoPodiumTable05M, // DV(ММСО) Стол-подиум 1х0,5 м, h=0,75 м
+            $catalogMmsoPodiumTable05MPrice ?? '', // DW (ММСО) Стол-подиум 1х0,5 м, h=0,75 м
+            $rowData[$notEmptyRow][127] ?? '', // DX
+            $catalogMmsoDoorsPodiumTable, // DY (ММСО) Раздвижные дверцы к столу-подиуму, h=0,75 м
+            $catalogMmsoDoorsPodiumTablePrice ?? '', // DZ (ММСО) Раздвижные дверцы к столу-подиуму, h=0,75 м
+            $rowData[$notEmptyRow][130] ?? '', // EA
+            $catalogMmsoLowShowcase, // EB (ММСО) Витрина низкая 1х0,5; h=1м
+            $catalogMmsoLowShowcasePrice ?? '', // EC (ММСО) Витрина низкая 1х0,5; h=1м
+            $rowData[$notEmptyRow][133] ?? '', // ED
+            $catalogMmsoHighShowcase, // EE (ММСО) Витрина высокая (2 стеклянные полки)
+            $catalogMmsoHighShowcasePrice ?? '', // EF (ММСО) Витрина высокая (2 стеклянные полки)
+            $rowData[$notEmptyRow][136] ?? '', // EG
+            $catalogMmsoSoftChair, // EH (ММСО) Стул п/мягкий
+            $catalogMmsoSoftChairPrice ?? '', // EI ((ММСО) Стул п/мягкий
+            $rowData[$notEmptyRow][139] ?? '', // EJ
+            $catalogMmsoBarChair, // EK (ММСО) Стул барный
+            $catalogMmsoBarChairPrice ?? '', // EL (ММСО) Стул барный
+            $rowData[$notEmptyRow][142] ?? '', // EM
+            $catalogMmsoRoundTable, // EN (ММСО) Стол круглый D=0,7 м
+            $catalogMmsoRoundTablePrice ?? '', // EO (ММСО) Стол круглый D=0,7 м
+            $rowData[$notEmptyRow][145] ?? '', // EP
+            $catalogMmsoSquareTable67CM, // EQ(ММСО) Стол квадратный 67 см х 67 см
+            $catalogMmsoSquareTable67CMPrice ?? '', // ER (ММСО) Стол квадратный 67 см х 67 см
+            $rowData[$notEmptyRow][148] ?? '', // ES
+            $catalogMmsoRectangularTable100CM, // ET (ММСО) Стол прямоугольный 100 см х70 см
+            $catalogMmsoRectangularTable100CMPrice ?? '', // EU (ММСО) Стол прямоугольный 100 см х70 см
+            $rowData[$notEmptyRow][151] ?? '', // EV
+            $catalogMmsoRoundGlassTable, // EW (ММСО) Стол круглый стеклянный
+            $catalogMmsoRoundGlassTablePrice ?? '', // EX (ММСО) Стол круглый стеклянный
+            $rowData[$notEmptyRow][154] ?? '', // EY
+            $catalogMmsoBarTableLdsp, // EZ (ММСО) Стол барный ЛДСП
+            $catalogMmsoBarTableLdspPrice ?? '', // FA(ММСО) Стол барный ЛДСП
+            $rowData[$notEmptyRow][157] ?? '', // FB
+            $catalogMmsoMetalStand3Shelf, // FC (ММСО) Стеллаж металлический 1х0,5 м h=2,5 м (3 полки)
+            $catalogMmsoMetalStand3ShelfPrice ?? '', // FD (ММСО) Стеллаж металлический 1х0,5 м h=2,5 м (3 полки)
+            $rowData[$notEmptyRow][160] ?? '', // FE
+            $catalogMmsoPlasticStand5Shelf, // FF (ММСО) Стеллаж пластмассовый (5 полок)
+            $catalogMmsoPlasticStand5ShelfPrice ?? '', // FG (ММСО) Стеллаж пластмассовый (5 полок)
+            $rowData[$notEmptyRow][163] ?? '', // FH
+            $catalogMmsoCoffeeMachine, // FI (ММСО) Кофеварка
+            $catalogMmsoCoffeeMachinePrice ?? '', // FJ (ММСО) Кофеварка
+            $rowData[$notEmptyRow][166] ?? '', // FK
+            $catalogMmsoLeatherSofaWhite, // FL (ММСО) Диван кожаный белый
+            $catalogMmsoLeatherSofaWhitePrice ?? '', // FM (ММСО) Диван кожаный белый
+            $rowData[$notEmptyRow][169] ?? '', // FN
+            $catalogMmsoLeatherChairWhite, // FO (ММСО) Кресло кожаное белое
+            $catalogMmsoLeatherChairWhitePrice ?? '', // FP (ММСО) Кресло кожаное белое
+            $rowData[$notEmptyRow][172] ?? '', // FQ
+            $catalogMmsoArchiveCupboard, // FR (ММСО) Шкаф архивный 1х0,5; h=1 м
+            $catalogMmsoArchiveCupboardPrice ?? '', // FS (ММСО) Шкаф архивный 1х0,5; h=1 м
+            $rowData[$notEmptyRow][175] ?? '', // FT
+            $catalogMmsoListHolderStandard, // FU (ММСО) Листовкодержатель простой
+            $catalogMmsoListHolderStandardPrice ?? '', // FV (ММСО) Листовкодержатель простой
+            $rowData[$notEmptyRow][178] ?? '', // FW
+            $catalogMmsoListHolderRotating, // FX (ММСО) Листовкодержатель вращающийся
+            $catalogMmsoListHolderRotatingPrice ?? '', // FY (ММСО) Листовкодержатель вращающийся
+            $rowData[$notEmptyRow][181] ?? '', // FZ
+            $catalogMmsoWallHanger, // GA (ММСО) Вешалка настенная
+            $catalogMmsoWallHangerPrice ?? '', // GB (ММСО) Вешалка настенная
+            $rowData[$notEmptyRow][184] ?? '', // GC
+            $catalogMmsoFloorHanger, // GG (ММСО) Вешалка напольная
+            $catalogMmsoFloorHangerPrice ?? '', // GE (ММСО) Вешалка напольная
+            $rowData[$notEmptyRow][187] ?? '', // GF
+            $catalogMmsoPaperBasket, // GG (ММСО) Корзина для бумаг
+            $catalogMmsoPaperBasketPrice ?? '', // GH (ММСО) Корзина для бумаг
+            $rowData[$notEmptyRow][190] ?? '', // GI
+            $catalogMmsoWaterCooler19L, // GJ (ММСО) Кулер + 1 бутылка воды (19 литров)
+            $catalogMmsoWaterCooler19LPrice ?? '', // GK (ММСО) Кулер + 1 бутылка воды (19 литров)
+            $rowData[$notEmptyRow][193] ?? '', // GL
+            $catalogMmsoExtraBottleWater, // GM (ММСО) 1 дополнительная бутылка воды для кулера
+            $catalogMmsoExtraBottleWaterPrice ?? '', // GN (ММСО) 1 дополнительная бутылка воды для кулера
+            $rowData[$notEmptyRow][196] ?? '', // GO
+            $catalogMmsoTv42, // GP (ММСО) Плазменная панель 42’’
+            $catalogMmsoTv42Price ?? '', // GQ (ММСО) Плазменная панель 42’’
+            $rowData[$notEmptyRow][199] ?? '', // GR
+            $catalogMmsoTv50, // GS (ММСО) Плазменная панель 50’’
+            $catalogMmsoTv50Price ?? '', // GT (ММСО) Плазменная панель 50’’
+            $rowData[$notEmptyRow][202] ?? '', // GU
+            $catalogMmsoTv60, // GV (ММСО) Плазменная панель 60’’
+            $catalogMmsoTv60Price ?? '', // GW (ММСО) Плазменная панель 60’’
+            $rowData[$notEmptyRow][205] ?? '', // GX
+            $catalogMmsoFloorStandTv, // GY (ММСО) Напольная стойка для крепления плазменной панели
+            $catalogMmsoFloorStandTvPrice ?? '', // GZ (ММСО) Напольная стойка для крепления плазменной панели
+            $rowData[$notEmptyRow][208] ?? '', // HA
+            $catalogMmsoGlassCoffeeTable, // HB (ММСО) Журнальный стол стеклянный
+            $catalogMmsoGlassCoffeeTablePrice ?? '', // HC (ММСО) Журнальный стол стеклянный
+            $rowData[$notEmptyRow][211] ?? '', // HD
+            $catalogMmsoColoredPastingStamp, // HE (ММСО) Цветная оклейка с печатью 1 стеновой панели
+            $catalogMmsoColoredPastingStampPrice ?? '', // HF (ММСО) Цветная оклейка с печатью 1 стеновой панели
+            $rowData[$notEmptyRow][214] ?? '', // HG
+            $catalogMmsoColoredPastingStampInformationDesk, // HH (ММСО) Цветная оклейка с печатью инфостойки 1 кв.м.
+            $catalogMmsoColoredPastingStampInformationDeskPrice ?? '', // HI (ММСО) Цветная оклейка с печатью
+            $rowData[$notEmptyRow][217] ?? '', // HJ
+            $catalogMmsoColoredPastingOracalWallPanel, // HK (ММСО) Оклейка ORACAL (641 М) 1 стеновой панели
+            $catalogMmsoColoredPastingOracalWallPanelPrice ?? '', // HL (ММСО) Оклейка ORACAL (641 М) 1 стеновой панели
+            $rowData[$notEmptyRow][220] ?? '', // HM
+            $catalogMmsoColoredPastingOracalInformationDesk, // HN (ММСО) Оклейка ORACAL (641 М) инфостойки
+            $catalogMmsoColoredPastingOracalInformationDeskPrice ?? '', // HO (ММСО) Оклейка ORACAL (641 М) инфостойки
+            $rowData[$notEmptyRow][223] ?? '', // HP
+            $catalogMmsoPastingOwnMaterial, // HQ (ММСО) Оклейка материалами заказчика
+            $catalogMmsoPastingOwnMaterialPrice ?? '', // HR (ММСО) Оклейка материалами заказчика
+            $rowData[$notEmptyRow][226] ?? '', // HS
+            $catalogMmsoCleaningPanelFromMat, // HT (ММСО) Очистка панелей от оклееных материалов заказчика
+            $catalogMmsoCleaningPanelFromMaterialPrice ?? '', // HU (ММСО) Очистка панелей от оклееных материалов
+            $rowData[$notEmptyRow][229] ?? '', // HV
+            $catalogMmsoInscriptionFrieze1, // HW (ММСО) Надпись на фризе h= 10 см (1 буква)
+            $catalogMmsoInscriptionFrieze1LetterPrice ?? '', // HX (ММСО) Надпись на фризе h= 10 см (1 буква)
+            $rowData[$notEmptyRow][232] ?? '', // HY
+            $catalogMmsoBannerTill3M, // HZ (ММСО) Баннер/сетка с печатью до 3 кв.м. (люверсы/закладные) печать и монтаж
+            $catalogMmsoBannerTill3MPrice ?? '', // IA (ММСО) Баннер/сетка с печатью до 3 кв.м. (люверсы/закладные)
+            $rowData[$notEmptyRow][235] ?? '', // IB
+            $catalogMmsoBannerFrom3M, // IC (ММСО) Баннер/сетка с печатью от 3 кв.м. (люверсы/закладные) печать и монтаж
+            $catalogMmsoBannerFrom3MPrice ?? '', // ID (ММСО) Баннер/сетка с печатью от 3 кв.м. (люверсы/закладные)
+            $rowData[$notEmptyRow][238] ?? '', // IE
+            $catalogMmsoBannerInstallation, // IF (ММСО) Монтаж баннера/сетки заказчика
+            $catalogMmsoBannerInstallationPrice ?? '', // IG (ММСО) Монтаж баннера/сетки заказчика
+            $rowData[$notEmptyRow][241] ?? '', // IH
+            $catalogMmsoSingleColorLogoInformationDesk, // II (ММСО) Логотип одноцветный (до 1 кв.м) на инфостойке
+            $catalogMmsoSingleColorLogoInformationDeskPrice ?? '', // IJ (ММСО) Логотип одноцветный (до 1 кв.м)
+            $rowData[$notEmptyRow][244] ?? '', // IK
+            $catalogMmsoSingleColorLogoWallPanel, // IL (ММСО) Логотип одноцветный (до 1 кв.м) на стеновой панели
+            $catalogMmsoSingleColorLogoWallPanelPrice ?? '', // IM (ММСО) Логотип одноцветный (до 1 кв.м)
+            $rowData[$notEmptyRow][247] ?? '', // IN
+            $catalogMmsoMultiColorLogoInformationDesk, // IO (ММСО) Логотип многоцветный (до 1 кв.м) на инфостойке
+            $catalogMmsoMultiColorLogoInformationDeskPrice ?? '', // IP (ММСО) Логотип многоцветный (до 1 кв.м)
+            $rowData[$notEmptyRow][250] ?? '', // IQ
+            $catalogMmsoMultiColorLogoWallPanel, // IR (ММСО) Логотип многоцветный (до 1 кв.м) на стеновой панеле
+            $catalogMmsoMultiColorLogoWallPanelPrice ?? '', // IS (ММСО) Логотип многоцветный (до 1 кв.м)
+            $rowData[$notEmptyRow][253] ?? '', // IT
+            $catalogMmsoOneTimeWindowCleaning, // IU (ММСО) Одноразовая чистка стекол в витринах (за кв.м. поверхности)
+            $catalogMmsoOneTimeWindowCleaningPrice ?? '', // IV (ММСО) Одноразовая чистка стекол в витринах
+            $rowData[$notEmptyRow][256] ?? '', // IW
+            $catalogMmsoProducingEvents, // IX (ММСО) ПРОДЮСИРОВАНИЕ МЕРОПРИЯТИЙ ДЕЛОВОЙ ПРОГРАММЫ
+            $catalogMmsoProducingEventsPrice ?? '', // IY (ММСО) ПРОДЮСИРОВАНИЕ МЕРОПРИЯТИЙ ДЕЛОВОЙ ПРОГРАММЫ
+            $rowData[$notEmptyRow][259] ?? '', // IZ
+            $catalogMmsoOnlineWelcomePack, // JA (ММСО) ONLINE WELCOME PACK ДЛЯ ПОСЕТИТЕЛЕЙ
+            $catalogMmsoOnlineWelcomePackPrice ?? '', // JB (ММСО) ONLINE WELCOME PACK ДЛЯ ПОСЕТИТЕЛЕЙ
+            $rowData[$notEmptyRow][262] ?? '', // JC
+            $catalogMmsoSpecialProjectSchoolKindergarten, // JD (ММСО) СПЕЦПРОЕКТ ШКОЛА/ДЕТСКИЙ САД
+            $catalogMmsoSpecialProjectSchoolKindergartenPrice ?? '', // JE (ММСО) СПЕЦПРОЕКТ ШКОЛА/ДЕТСКИЙ САД
+            $rowData[$notEmptyRow][265] ?? '', // JF
+            $catalogMmsoAdvertisingHalfCatalog, // JG (ММСО) 1/2 рекламной полосы в каталоге
+            $catalogMmsoAdvertisingHalfCatalogPrice ?? '', // JH (ММСО) 1/2 рекламной полосы в каталоге
+            $rowData[$notEmptyRow][268] ?? '', // JI
+            $catalogMmsoFullAdvertisingCatalog, // JJ (ММСО) 1 рекламная полоса в каталоге
+            $catalogMmsoFullAdvertisingCatalogPrice ?? '', // JK (ММСО) 1 рекламная полоса в каталоге
+            $rowData[$notEmptyRow][271] ?? '', // JL
+            $catalogMmsoBadgeScanner, // JM (ММСО) Сканер бейджей
+            $catalogMmsoBadgeScannerPrice ?? '', // JN (ММСО) Сканер бейджей
+            $rowData[$notEmptyRow][274] ?? '', // JO
+            $catalogMmsoRentSecondFloorForEducation, // JP (ММСО) Аренда площади на 2 этаже для образования
+            $catalogMmsoRentSecondFloorForEducationPrice ?? '', // JQ  (ММСО) Аренда площади на 2 этаже для образования
+            $rowData[$notEmptyRow][277] ?? '', // JR
+            $catalogMmsoRentSecondFloor, // JS (ММСО) Аренда площади на 2 этаже для оргкомитета
+            $catalogMmsoRentSecondFloorPrice ?? '', // JT  (ММСО) Аренда площади на 2 этаже
+            $rowData[$notEmptyRow][280] ?? '', // JU
         ];
         $insertRow   = $notEmptyRow + 1;
 
