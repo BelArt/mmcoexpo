@@ -1190,7 +1190,7 @@ class GoogleTableTask extends Task
 
         $service = new GoogleServiceSheets($this->googleTable);
 
-        $range   = 'A1:DC';
+        $range   = 'A1:JU';
         $table   = $service->spreadsheets_values->get(
             $this->config['google']['documents_signed_report'],
             $range,
@@ -1494,7 +1494,7 @@ class GoogleTableTask extends Task
         try {
             $result = $service->spreadsheets_values->update(
                 $this->config['google']['documents_signed_report'],
-                "A$insertRow:DC",
+                "A$insertRow:JU",
                 new \Google_Service_Sheets_ValueRange(['values' => [$insertData]]),
                 ['valueInputOption' => 'USER_ENTERED', 'responseValueRenderOption' => 'FORMULA']
             );
@@ -1525,7 +1525,7 @@ class GoogleTableTask extends Task
         $service       = new GoogleServiceSheets($this->googleTable);
         $response      = $service->spreadsheets->get($spreadSheetId);
         $sheetId       = $response->getSheets()[0]->getProperties()->getSheetId();
-        $range         = 'A1:DC';
+        $range         = 'A1:JU';
         $table         = $service->spreadsheets_values->get(
             $spreadSheetId,
             $range,
