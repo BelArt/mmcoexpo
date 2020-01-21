@@ -494,8 +494,6 @@ class ReportHelper extends Component
                 'fact_data'      => $budgetFact,
                 'plan_name'      => 'Актуальный план',
                 'plan_data'      => $budgetPlan,
-                'prev_fact_name' => 'Прошлогодний факт',
-                'prev_fact_data' => $budgetFactPrev,
             ],
             'graph_budget_percents' => [
                 'labels'         => $labels,
@@ -503,8 +501,6 @@ class ReportHelper extends Component
                 'fact_data'      => $percentFact,
                 'plan_name'      => 'Актуальный план',
                 'plan_data'      => $percentPlan,
-                'prev_fact_name' => 'Прошлогодний факт',
-                'prev_fact_data' => $percentFactPrev,
             ],
 
         ];
