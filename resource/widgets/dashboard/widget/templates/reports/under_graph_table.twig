@@ -23,6 +23,7 @@
                 <td>{{ value }}</td>
             {% endfor %}
         </tr>
+        {% if prev_values %}
         <tr>
             <td>{{ prev_name }}</td>
 
@@ -30,6 +31,7 @@
                 <td>{{ value }}</td>
             {% endfor %}
         </tr>
+        {% endif %}
         </tbody>
     </table>
 </div>
