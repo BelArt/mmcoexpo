@@ -147,14 +147,14 @@ class ReportHelper extends Component
      *
      * @var int
      */
-    const BUDGET_REPORT_TOTAL_STAND_PLAN = 110571115;
+    const BUDGET_REPORT_TOTAL_STAND_PLAN = 93362158;
 
     /**
      * План по бюджету по дополнительным услугам
      *
      * @var int
      */
-    const BUDGET_REPORT_TOTAL_SERVICES_PLAN = 8926174;
+    const BUDGET_REPORT_TOTAL_SERVICES_PLAN = 14547657;
 
     /**
      * План по бюджету теплых компаний
