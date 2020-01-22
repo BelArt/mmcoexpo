@@ -489,18 +489,18 @@ class ReportHelper extends Component
                 ),
             ],
             'graph_budget_rubles'   => [
-                'labels'         => $labels,
-                'fact_name'      => 'Актуальный факт',
-                'fact_data'      => $budgetFact,
-                'plan_name'      => 'Актуальный план',
-                'plan_data'      => $budgetPlan,
+                'labels'    => $labels,
+                'fact_name' => 'Актуальный факт',
+                'fact_data' => $budgetFact,
+                'plan_name' => 'Актуальный план',
+                'plan_data' => $budgetPlan,
             ],
             'graph_budget_percents' => [
-                'labels'         => $labels,
-                'fact_name'      => 'Актуальный факт',
-                'fact_data'      => $percentFact,
-                'plan_name'      => 'Актуальный план',
-                'plan_data'      => $percentPlan,
+                'labels'    => $labels,
+                'fact_name' => 'Актуальный факт',
+                'fact_data' => $percentFact,
+                'plan_name' => 'Актуальный план',
+                'plan_data' => $percentPlan,
             ],
 
         ];
@@ -665,6 +665,7 @@ class ReportHelper extends Component
         $inNegotiationsPrice          = 0;
         $newCompanies                 = 0;
         $warmCompanies                = 0;
+        $warmCompaniesSigned          = 0;
         $deadCompanies                = 0;
         $leadsNumber                  = 0;
         $expectedRevenue              = 0;
@@ -839,6 +840,7 @@ class ReportHelper extends Component
                     && isset($lead['linked_company_id'])
                     && $lead['linked_company_id']) {
                     $thisYearLeadsPrice += $lead['price'] ?? 0;
+                    $warmCompaniesSigned++;
                 }
 
                 $registrationFee = $this->amo->getCustomFieldValue($lead, Constants::CF_LEAD_REGISTRATION_FEE);
@@ -877,7 +879,9 @@ class ReportHelper extends Component
         $revenueServices   = $revenueServices - $performancesPrice;
         $metersStandTotal  = $metersTotal - $metersIndividualTotal;
         $leadsPriceDiff    = $thisYearLeadsPrice - self::PREVIOUS_YEAR_LEADS_PRICE;
-        $leadsAveragePrice = $warmCompanies ? floor($thisYearLeadsPrice / $warmCompanies) : $thisYearLeadsPrice;;
+        $leadsAveragePrice = $warmCompaniesSigned
+            ? floor($thisYearLeadsPrice / $warmCompaniesSigned)
+            : $thisYearLeadsPrice;
 
         return [
             'meter'          => [
