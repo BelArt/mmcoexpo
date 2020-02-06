@@ -220,6 +220,13 @@ class ReportHelper extends Component
     const PREVIOUS_YEAR_LEADS_PRICE = 101420331;
 
     /**
+     * Средняя выручка теплых компаний в прошлом году
+     *
+     * @var int
+     */
+    const PREVIOUS_YEAR_LEADS_AVERAGE_PRICE = 588086;
+
+    /**
      * @var array
      */
     const DELEGATES_GOODS = [
@@ -972,7 +979,7 @@ class ReportHelper extends Component
                 'revenue_average_difference_number' => $leadsAveragePrice,
                 'revenue_difference_percent'        => $this->getFactPercent(
                     $leadsAveragePrice,
-                    self::PREVIOUS_YEAR_LEADS_PRICE
+                    self::PREVIOUS_YEAR_LEADS_AVERAGE_PRICE
                 ),
             ],
         ];
