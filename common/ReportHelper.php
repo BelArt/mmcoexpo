@@ -688,6 +688,7 @@ class ReportHelper extends Component
         $buildingPriceFact            = 0;
         $visibilityFact               = 0;
         $registrationFeeFact          = 0;
+        $performancesPrice            = 0;
 
         /** @var \DateTime[] $period */
         $period                = new \DatePeriod(
@@ -700,6 +701,16 @@ class ReportHelper extends Component
             $thisWeekDaysTimestamp[] = $day->getTimestamp();
         }
 
+        $catalogPrice = [];
+        $goods        = $this->amo->getCatalogElements(Constants::CATALOG_GOODS_ID) ? : [];
+        foreach ($goods as $good) {
+            $goodId = (int)($good['id'] ?? null);
+            if (in_array($goodId, self::DELEGATES_GOODS)) {
+                $catalogPrice[$goodId] = $this->amo->getCustomFieldValue($good, Constants::CF_CATALOG_PRICE);
+            }
+        }
+
+        $links = [];
         foreach ($activeLeadsPipelineSales as $lead) {
             $leadStatusId = $lead['status_id'];
             if (in_array($leadStatusId, self::TOP_LEVEL_REPORT_METER_STATUSES_TOTAL)) {
@@ -791,7 +802,7 @@ class ReportHelper extends Component
                 $leadDiscountPrice = (int)$this->amo->getCustomFieldValue($lead, Constants::CF_LEAD_DISCOUNT);
 
                 $expositionLocation = $this->amo->getCustomFieldValue($lead, Constants::CF_LEAD_EXPOSITION_LOCATION);
-                if ($expositionLocation == 'Угловая') {
+                if ($expositionLocation === 'Угловая') {
                     $revenueCornerVisibility++;
 
                     if (isset($leadMetersTotal) && $leadMetersTotal && $leadPricePerMeter) {
@@ -799,7 +810,7 @@ class ReportHelper extends Component
                             $leadMetersTotal * $leadPricePerMeter * (10 - $leadDiscountPrice) / 100
                         );
                     }
-                } elseif ($expositionLocation == 'Полуостров') {
+                } elseif ($expositionLocation === 'Полуостров') {
                     $revenuePenVisibility++;
 
                     if (isset($leadMetersTotal) && $leadMetersTotal && $leadPricePerMeter) {
@@ -856,6 +867,32 @@ class ReportHelper extends Component
                 }
 
                 $factRevenue += $lead['price'] ?? 0;
+
+                $links[] = [
+                    'from'          => 'leads',
+                    'from_id'       => $lead['id'],
+                    'to'            => 'catalog_elements',
+                    'to_catalog_id' => Constants::CATALOG_GOODS_ID,
+                ];
+            }
+        }
+
+        if ($links) {
+            foreach (array_chunk($links, 300) as $chunkedLinks) {
+                $catalogElementsLinks = $this->amo->getCatalogElementsLinksListBatch($chunkedLinks)['links'] ?? [];
+                foreach ($catalogElementsLinks as $catalogElementsLink) {
+                    $catalogId       = $catalogElementsLink['to_id'];
+                    $catalogQuantity = $catalogElementsLink['quantity'];
+
+                    if (in_array($catalogId, self::DELEGATES_GOODS)) {
+                        $performancesPrice += ($catalogPrice[$catalogId] ?? 0) * $catalogQuantity;
+
+                        $this->log->notice(
+                            'У Сделки ' . $catalogElementsLink['from_id'] . ' товара ' . $catalogId . ' = '
+                            . $catalogQuantity . ' по цене ' . ($catalogPrice[$catalogId] ?? 0)
+                        );
+                    }
+                }
             }
         }
 
@@ -867,23 +904,9 @@ class ReportHelper extends Component
             $activeLeadsWithWarmCompanies,
             $previousYearLeadsWithTagNum
         );
-
-        $performancesPrice = 0;
-        $goods             = $this->amo->getCatalogElements(Constants::CATALOG_GOODS_ID) ? : [];
-        foreach ($goods as $good) {
-            $goodId = (int)$good['id'] ?? null;
-
-            if (in_array($goodId, self::DELEGATES_GOODS)) {
-                $catalogPrice = $this->amo->getCustomFieldValue($good, Constants::CF_CATALOG_TOTAL_PRICE);
-                if ($catalogPrice) {
-                    $performancesPrice += $catalogPrice;
-
-                    continue;
-                }
-            }
-        }
-
-        $revenueServices   = $revenueServices - $performancesPrice;
+        
+        $revenueServices   -= $performancesPrice;
+        $revenueRent       = $revenueRent - $visibilityFact - $buildingPriceFact;
         $metersStandTotal  = $metersTotal - $metersIndividualTotal;
         $leadsPriceDiff    = $thisYearLeadsPrice - self::PREVIOUS_YEAR_LEADS_PRICE;
         $leadsAveragePrice = $warmCompaniesSigned
