@@ -167,7 +167,7 @@ class ReportController extends Controller
     }
 
     /**
-     * Собирает данные для отчета Бюджет
+     * Обработывает запрос от виджета для обновления сделки в отчете экспонентов
      *
      * @link https://core.mmco-expo.ru/mmcoexpo/report/exponents_report_update/tmldm0zrdkvsu0f4whhhehzozdlqzz09
      *

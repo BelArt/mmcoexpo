@@ -28,7 +28,7 @@ define(function (require) {
     const BASE_URL = 'https://core.mmco-expo.ru';
 
     const POST_LEAD_ID_IMPOR = `${BASE_URL}/mmcoexpo/google_table/import_logic/tmldm0zrdkvsu0f4whhhehzozdlqzz09`;
-    const POST_LEAD_ID_UPDATE_REPORT = `${BASE_URL}/mmcoexpo/google_table/import_logic/tmldm0zrdkvsu0f4whhhehzozdlqzz09`;
+    const POST_LEAD_ID_UPDATE_REPORT = `${BASE_URL}/mmcoexpo/report/exponents_report_update/tmldm0zrdkvsu0f4whhhehzozdlqzz09`;
 
     const AREA_LEAD_CARD = 'leads.card';
 
