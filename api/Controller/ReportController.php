@@ -5,11 +5,13 @@ namespace App\User\Api\Controller;
 use App\Common\Library\Amo\Amo;
 use App\Common\Library\Amo\AmoRestApi;
 use App\Common\Model\User;
+use App\User\Common\Constants;
 use App\User\Common\ReportHelper;
 use Phalcon\Http\Response;
 use Phalcon\Cache\Backend\Redis;
 use Phalcon\Logger\Adapter;
 use Phalcon\Mvc\Controller;
+use Phalcon\Queue\Beanstalk;
 
 /**
  * Класс для работы с отчетами.
@@ -20,6 +22,7 @@ use Phalcon\Mvc\Controller;
  * @property Amo|AmoRestApi amo
  * @property array          config
  * @property ReportHelper   report
+ * @property Beanstalk      queue
  */
 class ReportController extends Controller
 {
@@ -161,5 +164,43 @@ class ReportController extends Controller
                 ]
             );
         }
+    }
+
+    /**
+     * Собирает данные для отчета Бюджет
+     *
+     * @link https://core.mmco-expo.ru/mmcoexpo/report/exponents_report_update/tmldm0zrdkvsu0f4whhhehzozdlqzz09
+     *
+     * @return Response
+     */
+    public function exponentsReportUpdateAction(): bool
+    {
+        $this->log->notice('Получили данные из виджета: ' . print_r($this->request->get(), true));
+
+        $leadId = (int)$this->request->get('lead_id');
+        if (!$leadId) {
+            $this->log->warning('В запросе отсутствует id Сделки. Выходим.');
+
+            return false;
+        }
+
+        $hash = md5(json_encode($this->request->get()));
+        if ($this->cache->exists($hash)) {
+            $this->log->warning('Получили повторный запрос. Выходим.');
+
+            return false;
+        }
+        $this->cache->save($hash, true, 10);
+
+        $this->queue->choose($this->user->name . '_' . Constants::DOCUMENTS_SIGNED_REPORT_TUBE);
+        $this->queue->put(
+            [
+                'lead_id' => $leadId,
+                'action'  => 'addLeadToReport',
+            ]
+        );
+        $this->log->notice("Добавили Сделку $leadId в очередь для выгрузки отчета.");
+
+        return true;
     }
 }

@@ -27,7 +27,8 @@ define(function (require) {
 
     const BASE_URL = 'https://core.mmco-expo.ru';
 
-    const POST_LEAD_ID_URL = `${BASE_URL}/mmcoexpo/google_table/import_logic/tmldm0zrdkvsu0f4whhhehzozdlqzz09`;
+    const POST_LEAD_ID_IMPOR = `${BASE_URL}/mmcoexpo/google_table/import_logic/tmldm0zrdkvsu0f4whhhehzozdlqzz09`;
+    const POST_LEAD_ID_UPDATE_REPORT = `${BASE_URL}/mmcoexpo/google_table/import_logic/tmldm0zrdkvsu0f4whhhehzozdlqzz09`;
 
     const AREA_LEAD_CARD = 'leads.card';
 
@@ -38,7 +39,11 @@ define(function (require) {
     };
 
     const sendLeadId = function sendLeadId(leadId) {
-        return $.post(POST_LEAD_ID_URL, {lead_id : leadId}).promise();
+        return $.post(POST_LEAD_ID_IMPOR, {lead_id : leadId}).promise();
+    };
+
+    const sendLeadIdUpdateReport = function sendLeadId(leadId) {
+        return $.post(POST_LEAD_ID_UPDATE_REPORT, {lead_id : leadId}).promise();
     };
 
     return function Widget() {
@@ -133,6 +138,12 @@ define(function (require) {
                         sendLeadId(AMOCRM.data.current_card.id);
                     });
 
+                $(document)
+                    .off(self.ns)
+                    .on(AMOCRM.click_event + self.ns, '#button_report_update', function () {
+                        sendLeadIdUpdateReport(AMOCRM.data.current_card.id);
+                    });
+
                 return true;
             },
             render() {
@@ -147,7 +158,24 @@ define(function (require) {
                         $('#card_name_holder')
                             .find('.button-input__context-menu')
                             .append(
-                                liTemplate.render(),
+                                liTemplate.render({
+                                    id: "button_import_logic",
+                                    title: "Сгенерировать Заявку",
+                                    icon: "icon-import-lead"
+                                }),
+                            );
+                    });
+
+                getTemplate('widget_li')
+                    .then(function (liTemplate) {
+                        $('#card_name_holder')
+                            .find('.button-input__context-menu')
+                            .append(
+                                liTemplate.render({
+                                    id: "button_report_update",
+                                    title: "Обновить Отчет",
+                                    icon: "icon-report-update"
+                                }),
                             );
                     });
 

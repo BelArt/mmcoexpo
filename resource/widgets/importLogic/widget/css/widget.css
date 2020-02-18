@@ -5,3 +5,11 @@
     width: 15px;
     height: 18px;
 }
+
+.icon-report-update {
+    background-image: url("../images/update_report.png");
+    background-repeat: no-repeat;
+    background-position: center center;
+    width: 15px;
+    height: 18px;
+}

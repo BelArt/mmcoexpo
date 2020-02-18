@@ -3,7 +3,8 @@
     "name": "Сгенерировать Заявку",
     "short_description": "Сгенерировать Заявку",
     "description": "Сгенерировать Заявку",
-    "button": "Сгенерировать Заявку"
+    "button": "Сгенерировать Заявку",
+    "button_exponents_report": "Обновить Отчет"
   },
   "settings": {
     "fake": "fake"
