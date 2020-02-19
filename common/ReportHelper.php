@@ -26,7 +26,7 @@ class ReportHelper extends Component
      *
      * @var int
      */
-    const TOP_LEVEL_REPORT_METER_NUMBER = 6383;
+    const TOP_LEVEL_REPORT_METER_NUMBER = 6380;
 
     /**
      * План по фактической выручке
