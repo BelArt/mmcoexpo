@@ -136,10 +136,7 @@ define(function (require) {
                     .off(self.ns)
                     .on(AMOCRM.click_event + self.ns, '#button_import_logic', function () {
                         sendLeadId(AMOCRM.data.current_card.id);
-                    });
-
-                $(document)
-                    .off(self.ns)
+                    })
                     .on(AMOCRM.click_event + self.ns, '#button_report_update', function () {
                         sendLeadIdUpdateReport(AMOCRM.data.current_card.id);
                     });
