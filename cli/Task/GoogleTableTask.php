@@ -213,7 +213,12 @@ class GoogleTableTask extends Task
             $rowData[17][2] = $dataToInsert['registration_fee']; // РЕГИСТРАЦИОННЫЙ ВЗНОС
             $rowData[17][3] = 1; // РЕГИСТРАЦИОННЫЙ ВЗНОС кол-во
             $rowData[17][4] = $dataToInsert['registration_fee']; // РЕГИСТРАЦИОННЫЙ ВЗНОС итого
-            $rowData[18][3] = floor($dataToInsert['total_footage'] / 3); // КОЛИЧЕСТВО БЕЙДЖЕЙ
+            $rowData[18][3] = floor($dataToInsert['total_footage'] / 2); // КОЛИЧЕСТВО БЕЙДЖЕЙ
+
+            $this->log->notice(
+                'Рассчитали количетсво бейджей: '
+                . $dataToInsert['total_footage'] . '/2 = ' . floor($dataToInsert['total_footage'] / 2)
+            );
 
             $rowByLocation = [
                 'Линейная'   => 21,
