@@ -26,7 +26,7 @@ return [
         $client = new \Google_Client();
         $client->setClientId($config['google']['client_id']);
         $client->setClientSecret($config['google']['secret']);
-        $client->setRedirectUri('http://core.dev-mmco-expo.ru/mmcoexpo/google_table/code/tmldm0zrdkvsu0f4whhhehzozdlqzz09');
+        $client->setRedirectUri('https://core.mmco-expo.ru/mmcoexpo/google_table/code/tmldm0zrdkvsu0f4whhhehzozdlqzz09');
         $client->setScopes(['https://www.googleapis.com/auth/spreadsheets', 'https://www.googleapis.com/auth/drive']);
         $client->setAccessType('offline');
         $client->setApprovalPrompt('force');

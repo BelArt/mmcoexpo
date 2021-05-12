@@ -26,6 +26,7 @@ class GoogleTableController extends Controller
      * Генерирует access_token на основе code. Необходимо просто пройти по ссылке.
      *
      * @link https://core.mmco-expo.ru/mmcoexpo/google_table/code/tmldm0zrdkvsu0f4whhhehzozdlqzz09
+     * @link http://core.dev-mmco-expo.ru/mmcoexpo/google_table/code/tmldm0zrdkvsu0f4whhhehzozdlqzz09
      *
      * @return Response
      */
