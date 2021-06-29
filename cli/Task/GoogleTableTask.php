@@ -207,13 +207,13 @@ class GoogleTableTask extends Task
             $rowData[12][2] = $dataToInsert['price_meter']; // АРЕНДА ПЛОЩАДИ ставка за 1 кв. м.
             $rowData[12][3] = $dataToInsert['total_footage']; // АРЕНДА ПЛОЩАДИ кол-во кв. м
             $rowData[12][4] = $dataToInsert['price_meter'] * $dataToInsert['total_footage']; // АРЕНДА ПЛОЩАДИ итого
-            $rowData[13][2] = $dataToInsert['building_price_meter']; // ЗАСТРОЙКА ставка за 1 кв. м.
-            $rowData[13][3] = $dataToInsert['total_footage']; // ЗАСТРОЙКА кол-во кв. м
-            $rowData[13][4] = $dataToInsert['building_price_meter'] * $dataToInsert['total_footage']; // ЗАСТРОЙКА итого
-            $rowData[17][2] = $dataToInsert['registration_fee']; // РЕГИСТРАЦИОННЫЙ ВЗНОС
-            $rowData[17][3] = 1; // РЕГИСТРАЦИОННЫЙ ВЗНОС кол-во
-            $rowData[17][4] = $dataToInsert['registration_fee']; // РЕГИСТРАЦИОННЫЙ ВЗНОС итого
-            $rowData[18][3] = floor($dataToInsert['total_footage'] / 2); // КОЛИЧЕСТВО БЕЙДЖЕЙ
+            $rowData[14][2] = $dataToInsert['building_price_meter']; // ЗАСТРОЙКА ставка за 1 кв. м.
+            $rowData[14][3] = $dataToInsert['total_footage']; // ЗАСТРОЙКА кол-во кв. м
+            $rowData[14][4] = $dataToInsert['building_price_meter'] * $dataToInsert['total_footage']; // ЗАСТРОЙКА итого
+            $rowData[18][2] = $dataToInsert['registration_fee']; // РЕГИСТРАЦИОННЫЙ ВЗНОС
+            $rowData[18][3] = 1; // РЕГИСТРАЦИОННЫЙ ВЗНОС кол-во
+            $rowData[18][4] = $dataToInsert['registration_fee']; // РЕГИСТРАЦИОННЫЙ ВЗНОС итого
+            $rowData[19][3] = floor($dataToInsert['total_footage'] / 2); // КОЛИЧЕСТВО БЕЙДЖЕЙ
 
             $this->log->notice(
                 'Рассчитали количетсво бейджей: '
@@ -221,10 +221,10 @@ class GoogleTableTask extends Task
             );
 
             $rowByLocation = [
-                'Линейная'   => 21,
-                'Угловая'    => 22,
-                'Полуостров' => 23,
-                'Остров'     => 24,
+                'Линейная'   => 22,
+                'Угловая'    => 23,
+                'Полуостров' => 24,
+                'Остров'     => 25,
             ];
 
             $saleByLocation = [
